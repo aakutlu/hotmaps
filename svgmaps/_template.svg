@@ -1,0 +1,33 @@
+<svg 
+  id="template" 
+  version="1.1"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  width="1000" 
+  height="1000" 
+  viewBox="-10 -10 1020 1020" 
+  xml:space="preserve">
+
+  <defs>
+    <style>
+      text{
+        font-family: Poppins, monospace;
+        pointer-events: none;
+        font-weight: 500;
+        font-size: 1em;
+        fill: black;
+      }
+      g#features g path{
+        stroke-width: .2px;
+        stroke: white;
+      }
+    </style>
+  </defs>
+
+  <g id="features">
+  
+  </g>
+
+
+</svg>

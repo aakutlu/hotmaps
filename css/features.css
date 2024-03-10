@@ -1,0 +1,11 @@
+g#features g:not([fill]) path{
+  fill: silver;
+}
+g#features g path{
+  stroke-width: 1px;
+  stroke: white;
+}
+g path:hover{
+  opacity: .5;
+  cursor: pointer;
+}

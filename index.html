@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="script/chosen_v1.8.7/chosen.css">
+    <link rel="stylesheet" href="css/tooltip.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/features.css">
+
+    <script src="script/jquery-3.7.1.js"></script>
+    <script src="script/chosen_v1.8.7/chosen.jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chroma-js@2.4.2/chroma.min.js"></script>
+    <script src="script/papaparse.js"></script>
+    <script src="script/popper.js"></script>
+    <script src="script/tooltip.js"></script>
+
+    <title>Easy Map</title>
+  </head>
+  <body>
+    <!-- TOOLTIP -->
+    <div id="tooltip" role="tooltip">
+      <div id="arrow" data-popper-arrow></div>
+      <div id="tooltipcontent">
+        <ul>
+          <li> <span>CHP</span> <span>%34</span> </li>
+          <li> <span>AKP</span> <span>%14</span> </li>
+          <li> <span>MEMLEKET</span> <span>%98</span> </li>
+        </ul>
+      </div>
+    </div>
+
+    <input type="color" name="color" id="color-picker" value="#ffffff" style="position: absolute; visibility: hidden; z-index: -99" />
+    <h3 style="font-family: Poppins">
+      Create easy <span style="font-family: Poppins; font-weight: 100; font-size: xx-large">colorfull</span> maps...
+    </h3>
+    <!-- User Interaction -->
+    <div class="buttonGroup" style="display: flex; justify-content: center; gap: 1em">
+      <input type="file" name="inputfile" id="inputfile" accept=".csv,.json"/>
+
+      <!-- Fetch data from remote resource -->
+      <span style="display:inline-block; padding: 0; margin: 0;">
+        <input type="url" name="url" id="data-url" value="http://" style="margin-right: 0px;">
+        <button id="fetch-data">Fetch</button>
+      </span>
+
+      <select id="select-local-storage" data-placeholder="Load from Local Saves" class="select" tabindex="1" style="width:20em;">
+        <option value=""></option>
+      </select>
+      <select id="select-map" data-placeholder="Load Country Svg..." class="select" tabindex="1">
+        <option value=""></option>
+        <option value="TR">Türkiye</option>
+        <option value="KKTC">Kıbrıs</option>
+        <option value="AZ">Azerbaycan</option>
+        <option value="GE">Gürcistan</option>
+        <option value="XK">Kosova</option>
+        <option value="IT">Italy</option>
+        <option value="africa">Africa</option>
+        <option value="GR">Greece</option>
+        <option value="USA-WDC">Washington, DC</option>
+        <option value="HT">Haiti</option>
+        <option value="usa-ia">USA | Iowa</option>
+        <option value="usa-nm">USA | New Mexico</option>
+        <option value="usa-counties">USA | Counties</option>
+        <option value="world">World</option>
+      </select>
+      <select id="select-strategy" data-placeholder="Choose a Strategy..." class="select" tabindex="1">
+        <option value=""></option>
+        <option value="max">MaxValue</option>
+        <option value="choropleth">Choropleth</option>
+        <option value="choropleth2">Choropleth2</option>
+      </select>
+      
+      <div class="radios">
+        <input type="radio" id="qwerty1" name="featuretitle" value="rowHeader" checked>
+        <label for="qwerty1">CityName</label>
+        <input type="radio" id="qwerty2" name="featuretitle" value="value">
+        <label for="qwerty2">Value</label>
+      </div>
+
+      <button id="toggle">Toggle</button>
+      <button id="log">logTable</button>
+      <button id="load-random-data">Load Random Data</button>
+      <button id="fill-random-data">Fill Random Data</button>
+      <button id="color-map">colorMap()</button>
+    </div>
+
+    <div id="legend-container" class="legend-container"></div>
+
+    <div id="container" style="border: solid 1px black">
+      <div id="handsontable-container">
+        <div id="jtable" style="border: solid 1px black"></div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <!-- Download Buttons -->
+    <div id="downloadGroup" class="downloadGroup">
+      <button id="downloadAsCSV">Download As CSV</button>
+      <button id="downloadTemplate">Download Template CSV</button>
+      <button id="downloadAsJSON">Download As JSON</button>
+      <button id="downloadAsPNG">Download As PNG</button>
+      <button id="saveToLocalStorage">Save To Browser's Local Storage</button>
+    </div>
+    <script>
+
+      //when page load finished, load svg image
+      window.addEventListener("load", async (event) => {
+        rainbow();
+        //setTooltipListeners();
+      });
+
+      function rainbow() {
+        let span = document.querySelector("h3 span");
+        let text = span.textContent;
+        span.textContent = "";
+        text.split("").forEach((elem) => {
+          span.insertAdjacentHTML("beforeend", `<b style="color: ${chroma.random()}">${elem}</b>`);
+        });
+      }
+
+    </script>
+    <script type="module" src="lib/app.js"></script>
+  </body>
+</html>
