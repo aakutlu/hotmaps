@@ -19,7 +19,7 @@
          fill: black;
       }
       g#features g path{
-         stroke-width: .05px;
+         stroke-width: 1px;
          stroke: white;
       }
     </style>

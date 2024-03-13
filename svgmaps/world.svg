@@ -16,8 +16,8 @@
 					fill: black;
 				}
 				g#features g path{
-					stroke-width: 1px;
 					stroke: white;
+					stroke-width: .5px;
 				}
       </style>
    </defs>

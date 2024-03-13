@@ -72,7 +72,9 @@ td.hot-focus {
   width: 1em;
   height: 1em;
   border: solid 1px gray;
-  transform: translateY(2.5px)
+  transform: translateY(2.5px);
+  background: url("../img/palette.svg");
+  background-size: contain;
 }
 .legend-container > span > span:first-child:hover {
   border: solid 1px black;
