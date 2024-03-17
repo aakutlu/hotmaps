@@ -44,13 +44,14 @@
 
       <!-- Fetch data from remote resource -->
       <span style="display:inline-block; padding: 0; margin: 0;">
-        <input type="url" name="url" id="data-url" value="http://" style="margin-right: 0px;">
+        <input type="url" name="url" id="data-url" value="https://raw.githubusercontent.com/aakutlu/hotmaps/main/samplesheets/1995genelse%C3%A7imler.csv" style="margin-right: 0px; width: 30em;">
         <button id="fetch-data">Fetch</button>
       </span>
-
+      <!-- Load from local saves -->
       <select id="select-local-storage" data-placeholder="Load from Local Saves" class="select" tabindex="1" style="width:20em;">
         <option value=""></option>
       </select>
+      <!-- Select Map -->
       <select id="select-map" data-placeholder="Load Country Svg..." class="select" tabindex="1">
         <option value=""></option>
         <option value="world">World</option>
@@ -70,6 +71,8 @@
         <option value="GR">Greece</option>
         <option value="HT">Haiti</option>
       </select>
+      
+      <!-- Select Strategy -->
       <select id="select-strategy" data-placeholder="Choose a Strategy..." class="select" tabindex="1">
         <option value=""></option>
         <option value="max">MaxValue</option>
@@ -84,9 +87,7 @@
         <label for="qwerty2">Value</label>
       </div>
 
-      <button id="toggle">Toggle</button>
       <button id="log">logTable</button>
-      <button id="load-random-data">Load Random Data</button>
       <button id="fill-random-data">Fill Random Data</button>
       <button id="color-map">colorMap()</button>
     </div>
@@ -105,6 +106,9 @@
             <img id="zoomer-default" src="img/dot.svg" alt=".">
           </div>
         </div>
+        <div class="download-image-btns">
+          <img id="download-image-btn" src="img/download.svg" alt="download">
+        </div>
         <div id="map"></div>
       </div>
     </div>
@@ -112,8 +116,6 @@
     <div id="downloadGroup" class="downloadGroup">
       <button id="downloadAsCSV">Download As CSV</button>
       <button id="downloadTemplate">Download Template CSV</button>
-      <button id="downloadAsJSON">Download As JSON</button>
-      <button id="downloadAsPNG">Download As PNG</button>
       <button id="saveToLocalStorage">Save To Browser's Local Storage</button>
     </div>
     <script>

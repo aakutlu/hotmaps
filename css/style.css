@@ -101,3 +101,23 @@ select{
 .downloadGroup button{
   margin: 0 1em 0 0;
 }
+
+/* Download Image */
+.download-image-btns{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+#download-image-btn {
+  width: 40px;
+  height: 40px;
+  opacity: .5;
+  cursor: pointer;
+}
+
+#download-image-btn:hover{
+  transform: scale(1.1);
+  opacity: .9;
+}
+
