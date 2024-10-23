@@ -24,5 +24,5 @@ let matrix = [
   [null, 7, null, 9 ],
 ]
 
-console.log(JSON.stringify(matrixToObjectArray(matrix)))
+console.log( JSON.stringify(matrixToObjectArray(matrix)) )
 console.log( matrixToObjectArray(matrix) )

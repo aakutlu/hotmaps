@@ -19,7 +19,7 @@
     <script src="script/popper.js"></script>
     <script src="script/tooltip.js"></script>
 
-    <title>Easy Map</title>
+    <title>HotMaps</title>
   </head>
   <body>
     <!-- TOOLTIP -->
@@ -59,10 +59,11 @@
         <option value="TR">Türkiye</option>
         <option value="TR-ilce">Türkiye | İlceler</option>
         <option value="TR-34">TR | İstanbul</option>
+        <option value="USA">USA</option>
+        <option value="usa-counties">USA | Counties</option>
         <option value="usa-ia">USA | Iowa</option>
         <option value="usa-nm">USA | New Mexico</option>
         <option value="USA-WDC">USA | Washington, DC</option>
-        <option value="usa-counties">USA | Counties</option>
         <option value="KKTC">Kıbrıs</option>
         <option value="AZ">Azerbaycan</option>
         <option value="GE">Gürcistan</option>
@@ -89,7 +90,7 @@
 
       <button id="log">logTable</button>
       <button id="fill-random-data">Fill Random Data</button>
-      <button id="color-map">colorMap()</button>
+      <button id="update-system">updateSystem()</button>
     </div>
 
     <div id="legend-container" class="legend-container"></div>
@@ -101,13 +102,13 @@
       <div id="map-container">
         <div id="zoomer-container">
           <div class="zoomer-btns">
-            <img id="zoomer-in" src="img/plus.svg" alt="+">
-            <img id="zoomer-out" src="img/minus.svg" alt="-">
-            <img id="zoomer-default" src="img/dot.svg" alt=".">
+            <img id="zoomer-in" src="img/plus.svg" alt="+" title="Zoom in">
+            <img id="zoomer-out" src="img/minus.svg" alt="-" title="Zoom out">
+            <img id="zoomer-default" src="img/dot.svg" alt="." title="Zoom center">
           </div>
         </div>
         <div class="download-image-btns">
-          <img id="download-image-btn" src="img/download.svg" alt="download">
+          <img id="download-image-btn" src="img/download.svg" alt="download" title="Download as *.png">
         </div>
         <div id="map"></div>
       </div>

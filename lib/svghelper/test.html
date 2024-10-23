@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="svghelper.js"></script>
+    <style>
+      .container{
+        display: block;
+        border: solid 1px black;
+        width: 90vw;
+      }
+    </style>
+  </head>
+  <body>
+    <button>asdasdsadsadsad</button>
+    <div class="container">
+      <svg
+        viewBox="0 0 500 250"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xml:space="preserve"
+      >
+      <ellipse cx="100" cy="70" rx="85" ry="55" stroke="green" fill="none"/>
+      <rect x="50" y="100" width="200" height="100" stroke="blue" fill="none"/>
+      <circle cx="280" cy="80" r="80" fill="none" stroke="red"/>
+      <g></g>
+
+      </svg>
+    </div>
+  <script>
+
+
+    let svg = document.querySelector("svg")
+    let boxArr = SVGHelper.calcFittingViewBox(svg)
+    let [x,y,width,height] = boxArr
+    console.log( boxArr )
+    let rect = SVGHelper.createElement("rect", {...{x,y,width,height}, ...{fill:'none', stroke:'black', "stroke-width":.1}})
+    SVGHelper.appendElement(svg, rect)
+
+
+
+
+  </script>
+  </body>
+</html>

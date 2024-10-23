@@ -24,6 +24,7 @@
   height: 100%;
   box-sizing: border-box;
   display: block;
+  /* border: solid 2px red; */
 }
 
 /*       .visible{

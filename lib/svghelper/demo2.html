@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="svghelper.js"></script>
+    <style>
+      .container{
+        border: solid 1px black;
+        width: 90vw;
+      }
+      svg text{
+        font-family:Georgia, Tahoma, Verdana, Geneva, Tahoma, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <svg
+        viewBox="0 0 500 250"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xml:space="preserve"
+        style="background: radial-gradient(at left top, rgb(255, 255, 255), rgb(199, 199, 196));"
+      >
+      </svg>
+    </div>
+  <script>
+    let svgElem
+    let myTextElem
+    window.addEventListener('load', (event) => {
+
+      svgElem = document.querySelector("svg");
+
+    
+      // Inline svg helper borders
+      // ---------------------------------------------------------------------------------------------------
+      let [x,y,width,height] = SVGHelper.getViewBoxArr(svgElem)
+      let gap = 20;
+      SVGHelper.appendElement(svgElem, SVGHelper.createElement('rect', {x:x,y:y, width: width, height: height, fill: 'none', opacity: '1', stroke: 'red', "stroke-width": 1}))
+      SVGHelper.appendElement(svgElem, SVGHelper.createElement('rect', {x:x+gap,y:y+gap, width: width-2*gap, height: height-2*gap, fill: 'none', opacity: '1', stroke: 'green', "stroke-width": 1}))
+
+      //<text x="85" y="-4" fill="black" dominant-baseline="auto" text-anchor="middle" style="font-size: 7px;">C. Halk Partisi</text>
+      myTextElem = SVGHelper.createElement('text', {id:'vbar', x:0,y:0,fill:'black','dominant-baseline':'auto','text-anchor':'middle','style':'font-size: 7px;'})
+      myTextElem.textContent = 'HOWDY'
+
+      //SVGHelper.upsertElement(svgElem, myTextElem)
+
+    })
+
+
+  </script>
+  </body>
+</html>
