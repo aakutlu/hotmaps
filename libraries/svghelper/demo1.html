@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="_svghelper.js"></script>
+    <style>
+      .container {
+        display: block;
+        border: solid 1px black;
+        width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="loadBtn" name="" accept=".svg" style="margin-bottom: 1em" />
+
+    <button id="insertElem">Insert Element</button>
+
+    <button id="alignBottomLeftInside">Align Bottom Left Inside</button>
+    <button id="alignBottomCenterInside">Align Bottom Center Inside</button>
+    <button id="legendType1Btn">Legend1</button>
+    <button id="legendType2Btn">Legend2</button>
+    <button id="legendType3Btn">Legend3</button>
+    <button id="legendType4Btn">Choropleth</button>
+    <button id="legendType5Btn">Histogram</button>
+
+    <div id="mycontainer" class="container">
+      <svg viewBox="-10 -10 520 520" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <g id="grids">
+          <line x1=" 0" y1=" 0" x2="500" y2=" 0" stroke="black" stroke-width=".1" />
+          <line x1=" 0" y1="50" x2="500" y2="50" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="100" x2="500" y2="100" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="150" x2="500" y2="150" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="200" x2="500" y2="200" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="250" x2="500" y2="250" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="300" x2="500" y2="300" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="350" x2="500" y2="350" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="400" x2="500" y2="400" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="450" x2="500" y2="450" stroke="black" stroke-width=".1" />
+          <line x1="0" y1="500" x2="500" y2="500" stroke="black" stroke-width=".1" />
+
+          <line x1=" 0" y1="0" x2=" 0" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="50" y1="0" x2="50" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="100" y1="0" x2="100" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="150" y1="0" x2="150" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="200" y1="0" x2="200" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="250" y1="0" x2="250" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="300" y1="0" x2="300" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="350" y1="0" x2="350" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="400" y1="0" x2="400" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="450" y1="0" x2="450" y2="500" stroke="black" stroke-width=".1" />
+          <line x1="500" y1="0" x2="500" y2="500" stroke="black" stroke-width=".1" />
+        </g>
+
+        <g id="features">
+          <rect id="refElem" x="100" y="100" width="300" height="200" rx="0" fill="white" stroke-width="1" stroke="black" opacity=".5" />
+        </g>
+
+        <g id="legendRulerH">
+          <rect x="100" y="460" width="300" height="20" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
+        </g>
+        
+        <g id="legendRulerV">
+          <rect x="10" y="400" width="100" height="90" fill="red" stroke="black" stroke-width=".2" opacity=".5" />
+        </g>
+
+        <rect
+          id="blueElem"
+          x="0"
+          y="0"
+          width="50"
+          height="50"
+          rx="0"
+          fill="blue"
+          stroke-width="1"
+          opacity=".5"
+          stroke="black"
+          transform=""
+          transform-origin=""
+        />
+      </svg>
+    </div>
+    <script>
+      let refElem = document.getElementById("refElem");
+      let floatingElem = document.getElementById("blueElem");
+      let container = document.getElementById("mycontainer");
+
+      const sampleLegendObj = {
+      title: "LegendTitle",
+      list: [
+        {color: "red", label: "Label1 | %10", range: [0,10]},
+        {color: "blue", label: "Label2 | %20", range: [10,20]},
+        {color: "yellow", label: "Label3 | %30", range: [20,30]},
+        {color: "pink", label: "Label4 | %40", range: [30,40]},
+        {color: "green", label: "Label5 | %50", range: [40,50]}
+      ]
+    }
+
+      SVGHelper.transformElementOutside(refElem, floatingElem);
+
+      document.getElementById("loadBtn").addEventListener("change", function () {
+        console.log(this.files[0]);
+        this.files[0]
+          .text()
+          .then((svgText) => {
+            container.replaceChildren()
+            container.insertAdjacentHTML("beforeend", svgText)
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      });
+
+      function insertAnElement(){
+        let svg = document.querySelector("svg")
+
+        let legendSVG1 = `
+        <g id="legend">
+          <rect x="0" y="0" width="10" height="20" rx="3" fill="gray" stroke-width="1" stroke="black" opacity=".5" />
+          <circle cx="25" cy="25" r="10" fill="purple" opacity="0.5" />
+          <polygon points="50,0 50,25 25,0" fill="red" stroke="black" />
+        </g>`
+
+        let legendSVG = `
+        <g id="legend">
+          <rect x="0" y="0" width="10" height="5" fill="gray" stroke="black" opacity=".5" />
+          <rect x="10" y="0" width="10" height="5" fill="red" stroke="black" opacity=".5" />
+          <rect x="20" y="0" width="10" height="5" fill="yellow" stroke="black" opacity=".5" />
+          <rect x="30" y="0" width="10" height="5" fill="blue" stroke="black" opacity=".5" />
+          <rect x="40" y="0" width="10" height="5" fill="pink" stroke="black" opacity=".5" />
+        </g>`
+
+        svg.insertAdjacentHTML("beforeend", legendSVG)
+      }
+
+      document.getElementById("insertElem").addEventListener("click", (event) => {
+        insertAnElement()
+      })
+
+      document.getElementById("alignBottomLeftInside").addEventListener("click", (event) => {
+        let floatingElem = document.getElementById("legend")
+        if(floatingElem)
+          SVGHelper.transformElementInside(refElem, floatingElem, {gap: 0, widthRatio:100, position: "top-center"})
+      })
+
+      document.getElementById("alignBottomCenterInside").addEventListener("click", (event) => {
+        let floatingElem = document.getElementById("legend")
+        if(floatingElem)
+          SVGHelper.transformElementInside(refElem, floatingElem, {gap: 0, widthRatio: 50, position: "top-center"})
+      })
+
+      document.getElementById("legendType1Btn").addEventListener("click", (event) => {
+        let svg = document.querySelector("svg")
+        let legendElem = SVGHelper.generateLegendType1(sampleLegendObj)
+        SVGHelper.appendElement(svg, legendElem)
+        let refElem = document.getElementById("legendRulerV")
+        //await new Promise(resolve => setTimeout(resolve, 200));
+        //legendElem = document.getElementById("legendType1")
+        SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+      })
+
+      document.getElementById("legendType2Btn").addEventListener("click", (event) => {
+        let svg = document.querySelector("svg")
+        let legendElem = SVGHelper.generateLegendType2(sampleLegendObj)
+        SVGHelper.appendElement(svg, legendElem)
+        let refElem = document.getElementById("legendRulerV")
+        SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+      })
+
+      document.getElementById("legendType3Btn").addEventListener("click", (event) => {
+        let svg = document.querySelector("svg")
+        let legendElem = SVGHelper.generateLegendType3(sampleLegendObj)
+        SVGHelper.appendElement(svg, legendElem)
+        let refElem = document.getElementById("legendRulerH")
+        SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+      })
+
+      document.getElementById("legendType4Btn").addEventListener("click", (event) => {
+        let svg = document.querySelector("svg")
+        let legendElem = SVGHelper.generateChoroplethBar(sampleLegendObj)
+        SVGHelper.appendElement(svg, legendElem)
+        let refElem = document.getElementById("legendRulerH")
+        SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 50, position: "top-center"} )
+      })
+
+      document.getElementById("legendType5Btn").addEventListener("click", (event) => {
+        let svg = document.querySelector("svg")
+        let numbers = new Array(500).fill(0)
+        numbers  = numbers.map(elem => parseInt( Math.random()*100 ) )
+        let legendElem = SVGHelper.generateHistogram( numbers )
+        SVGHelper.appendElement(svg, legendElem)
+        let refElem = document.getElementById("legendRulerH")
+        SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+      })
+
+    </script>
+  </body>
+</html>

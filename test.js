@@ -1,28 +1,32 @@
-function matrixToObjectArray(matrix){
-  return matrix.map((row,i,arr) => {
-    let rowId = row[0]
-    let cols = row.map((el,i,arr) => {
-      return {
-        column: matrix[0][i],
-        value: el
-      }
-    }).filter(el => el.column)
-
-    if(rowId)
-      return {
-        id: rowId,
-        cols: cols
-      }
-    else return null;
-  }).filter(el => el)
+function clearRightMostEmptyColumns(sheet){
+  sheet.forEach((rowArr) => {
+    for(let j = rowArr.length-1; j>=0; j--){
+      if(rowArr[j]) break; 
+      rowArr.splice(j,1)
+    }
+  })
 }
 
-let matrix = [
-  [null, 'col1', null, 'col3'],
-  ['ankara', 1, 2, 3 ],
-  ['istanbul', 4, null, null ],
-  [null, 7, null, 9 ],
+function clearBottomMostEmptyRows(sheet){
+  let isEmpty = (arr) => arr.every(elem => !elem && elem!==0 )
+  for(let i = sheet.length-1; i>=0; i--){
+    if(!isEmpty(sheet[i])) break;
+    sheet.splice(i,1)
+  }
+}
+let sheet = [
+  [1,1,1,null,null,null],
+  [2,2,2,null,null,null],
+  [3,3,3,null,null,""],
+  [4,4,4,null,4,undefined],
+  [null,undefined,"",0,1,2],
+  [null],
+  [null,undefined],
+  [null,undefined,""],
+  [],
+  [null]
 ]
 
-console.log( JSON.stringify(matrixToObjectArray(matrix)) )
-console.log( matrixToObjectArray(matrix) )
+clearBottomMostEmptyRows(sheet)
+//clearRightMostEmptyColumns(sheet)
+console.log(sheet)

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./_svghelper.js"></script>
+    <style>
+      .container{
+        border: solid 1px black;
+        width: 90vw;
+      }
+      svg text{
+        font-family:Georgia, Tahoma, Verdana, Geneva, Tahoma, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <svg
+        viewBox="0 0 500 250"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xml:space="preserve"
+        style="background: radial-gradient(at left top, rgb(255, 255, 255), rgb(199, 199, 196));"
+      >
+      <g id="features"> 
+        <rect x="50" y="50" width="400" height="150" rx="0" fill="white" stroke-width="1" stroke="black"/>
+      </g>
+      </svg>
+    </div>
+  <script>
+    let svgElem
+    let myTextElem
+    window.addEventListener('load', (event) => {
+
+      svgElem = document.querySelector("svg");
+
+      // Add Legend Type1 to SVG
+      // ----------------------------------------------------------------------------
+      const legendObj = {
+        title: 'Lecant', 
+        list: [
+          {color: 'red', label: 'Red | %50'},
+          {color: 'blue', label: 'Blue | %50'},
+          {color: 'green', label: 'Green | %50'},
+        ]
+      }
+      let legend1 = SVGHelper.generateLegendType1( legendObj )
+      SVGHelper.appendElement( svgElem, legend1 )
+    
+
+    })
+
+
+  </script>
+  </body>
+</html>

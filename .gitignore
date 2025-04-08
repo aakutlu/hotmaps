@@ -1,7 +1,5 @@
-_trash/
-_filescsv/
-_filesjson/
-_svg-parser/
+__MAPLIB/
+__script/
+__trash/
+_test_maplip/
 samplesheets/
-MAPLIB/
-GENMAP/

@@ -5,12 +5,20 @@
 
 <defs>
   <style>
-    text{
+    g#features *{
+      cursor: pointer;
+      stroke: white;
+      stroke-width: 2px;
+      vector-effect:non-scaling-stroke;
+    }
+    g#labels *{
       font-family: Poppins, monospace;
       pointer-events: none;
-      font-weight: 500;
-      font-size: 1em;
+      user-select: none;
       fill: black;
+    }
+    path:hover{
+      opacity: .5;
     }
   </style>
 </defs>
@@ -89,7 +97,7 @@
     <text x="350" y="480">Güney Kıbrıs Rum Yönetimi</text>
   </g>
 
-  <g id="features">
+  <g id="features" fill="silver">
     <g id="iskele">
       <path d="M1178.715,53.53 1179.155,54.64 1176.335,56.63 1175.185,58.14 1174.085,59.59 1172.925,65.88 
         1170.785,68.46 1170.495,78 1170.485,78.71 1168.395,82.28 1165.935,83.51 1164.085,83.82 1154.085,85.5 1151.415,89.5 
@@ -112,7 +120,6 @@
         1138.315,66.94 1140.395,65.98 1144.054,67.57 1147.995,66.54 1148.465,66.21 1159.045,58.97 1165.015,56.1 1171.405,56.45 
         1173.455,55.63z"/>
       <title>İskele</title>
-      <text x="880" y="230" text-anchor="middle" dominant-baseline="middle" >İskele</text>
     </g>
     <g id="gazimağusa">
       <path d="M827.825,397.98c-1.74,2.18-5.68-0.72-10.38-3.67c-4.7-2.96-8.98,1.39-11.12,2.79
@@ -136,7 +143,6 @@
                 l1.96-3.03l3.3-3.1l1.021-3.351l-9.21-14.21l-4.271-0.19l1.16-2.37l-3.68-3.11l-5.29,1.56l2.14,9.36l-2.14,5.47l2.29,4.15
                 c0,0-2.96,2.35-4.12,3.13C833.785,391.25,829.575,395.8,827.825,397.98z"/>
       <title>Gazimağusa</title>
-      <text x="774" y="336" text-anchor="middle" dominant-baseline="middle" >Gazimağusa</text>
     </g>
     <g id="girne">
       <path d="M544.825,248.76l4.92-1.77l2.12,0.02l5.96,2.17l2.5-0.27l3.32-1.92l7.36,2.19l3.28,0.98l14,1.62l9.6,3.23
@@ -158,7 +164,6 @@
             l2.03-0.2l6.64-0.66l2.97,0.71l8.06,3.91l7.8,2.05l6.74-0.24l4.94-1.28l5.7-2.07l3.79-2.84l3.03-0.16l19.11,5.57l5.71,1.67l21-2.78
             l3.76,3.16l6.16,0.92l2.63,2.1L544.825,248.76z"/>
       <title>Girne</title>
-      <text x="550" y="276" text-anchor="middle" dominant-baseline="middle" >Girne</text>
     </g>
 
     <g id="lefkoşa">
@@ -188,7 +193,6 @@
             c-0.33-0.04-7.03-0.8-8.49-3c-1.5-2.25-5.75-4.25-8-4.25s-6.75-2-10.5-5.5s-7.5-2.5-9-2.5s-14,0.5-14,0.5l-3.5,3.25
             c0,0-3.5,3.5-6.25,4.5S483.455,344.73,483.455,344.73z"/>
     <title>Lefkoşa</title>
-    <text x="570" y="320" text-anchor="middle" dominant-baseline="middle" >Lefkoşa</text>
     </g>
 
     <g id="güzelyurt">
@@ -205,12 +209,26 @@
       <path d="M248.915,331.87l-2.76,0.17l-3.12,4.73l-0.35,0.54l-2.28,1.215l-2.221-0.062l-0.559,0.124l-1.99-0.047
             l-2.27,0.99l0.363,0.922l3.696,2.218l4.928,0.986l6.653-1.479c0.17-0.5,3.719-8.798,3.719-8.798L248.915,331.87z"/>
       <title>Güzelyurt</title>
-      <text x="434" y="330" text-anchor="middle" dominant-baseline="middle" >Güzelyurt</text>
     </g>
 
 
   </g>
 
+  <g id="labels">
+    <text x="880" y="230" text-anchor="middle" dominant-baseline="middle" >İskele</text>
+    <text x="774" y="336" text-anchor="middle" dominant-baseline="middle" >Gazimağusa</text>
+    <text x="550" y="276" text-anchor="middle" dominant-baseline="middle" >Girne</text>
+    <text x="570" y="320" text-anchor="middle" dominant-baseline="middle" >Lefkoşa</text>
+    <text x="434" y="330" text-anchor="middle" dominant-baseline="middle" >Güzelyurt</text>
+  </g>
+  
+  <g id="legendRulerV">
+    <rect x="980" y="450" width="120" height="180" fill="red" stroke="black" stroke-width=".2" opacity=".5" />
+  </g>
+
+  <g id="legendRulerH">
+    <rect x="630" y="620" width="600" height="60" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
+  </g>
 </svg>
   
   
