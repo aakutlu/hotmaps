@@ -4,7 +4,16 @@
 #container {
   display: flex;
   flex-direction: row;
+  gap: 1em;
   height: 700px;
+}
+#settings-container{
+  display: flex; 
+  flex-direction: column; 
+  justify-content: left; 
+  gap: .4em; 
+  width: 40em;
+  border: solid 2px red;
 }
 #handsontable-container {
   width: 500px;
@@ -27,17 +36,6 @@
   /* border: solid 2px red; */
 }
 
-/*       .visible{
-  width: 500px;
-  height: 100%;
-  display: block;
-}
-.hidden{
-  width: 0px !important;
-  overflow-x: hidden !important;
-  height: 0% !important;
-  display: none;
-} */
 .handsontable .red {
   background-color: red;
   font-size: larger;
@@ -142,22 +140,32 @@ fieldset legend{
   font-size: small;
 }
 
-#paletteSample{
+
+#palette-container{
   display:flex;
   justify-content: start;
   align-items: end;
-  width: 10em;
-  height: 3em;
+  width:200px;
+  height:1em;
+  border: solid 1px black;
 }
-
-#paletteSample span{
-  height: 1em;
-  margin-bottom: .6em;
+#select-palette-interval{
+  width: 200px;
+}
+.palette > * {
   flex-grow: 1;
+  height: 1em;
 }
 
-datalist {
-  display: flex;
-  justify-content: space-between;
-  writing-mode: horizontal-tb;
+output#interval-count{
+  width: 20em;
+}
+
+input[type=radio], input[type=checkbox], input[type=range]{
+  cursor: pointer;
+}
+
+#histogramContainer{
+  width: 200px;
+  height: 40px;
 }

@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico?v=3" />
     <link rel="stylesheet" href="css/handsontable.full.min.css" />
-    <link rel="stylesheet" href="libraries/chosen_v1.8.7/chosen.css">
+    <link rel="stylesheet" href="libraries/chosen.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style-zoomer.css">
     <link rel="stylesheet" href="css/svg.css">
     <link rel="stylesheet" href="css/tooltip.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.0.1/plotly.min.js" integrity="sha512-GvBV4yZL+5zT68skQaXRW80H+S82WupIppDunAVt6pCLVdFmTv9tstetOqXv76L/z9WFl+0zY28QFKu0LAVFSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="libraries/jquery-3.7.1.js"></script>
-    <script src="libraries/chosen_v1.8.7/chosen.jquery.js"></script>
+    <script src="libraries/chosen.jquery.js"></script>
     <script src="libraries/handsontable.full.min.js" type="text/javascript"></script>
     <script src="libraries/chroma.js"></script>
     <script src="libraries/papaparse.js"></script>
@@ -27,9 +28,9 @@
       <div id="arrow" data-popper-arrow></div>
       <div id="tooltipcontent">
         <ul>
-          <li> <span>CHP</span> <span>%34</span> </li>
-          <li> <span>AKP</span> <span>%14</span> </li>
-          <li> <span>MEMLEKET</span> <span>%98</span> </li>
+          <li> <span>___</span> <span>%34</span> </li>
+          <li> <span>___</span> <span>%14</span> </li>
+          <li> <span>___</span> <span>%98</span> </li>
         </ul>
       </div>
     </div>
@@ -38,158 +39,238 @@
       Create easy <span style="font-family: Poppins; font-weight: 100; font-size: xx-large">colorfull</span> maps...
     </div>
 
-    <!-- User Interaction -->
-    <div class="buttonGroup" style="display: flex; justify-content: left; gap: .4em; ">
-      <!-- <input type="file" name="inputfile" id="inputfile" accept=".csv,.json" style="border:solid 1px red;"/> -->
-
-      <!-- Fetch data from remote resource -->
-      <!-- <span style="display:inline-block; padding: 0; margin: 0;">
-        <input type="url" name="url" id="data-url" value="https://raw.githubusercontent.com/aakutlu/hotmaps/main/samplesheets/1995genelse%C3%A7imler.csv" style="margin-right: 0px; width: 30em;">
-        <button id="fetch-data">Fetch</button>
-      </span> -->
 
 
-      <!-- Load from local saves -->
-       <fieldset>
-        <legend>Load Template</legend>
-        <select id="select-local-storage" data-placeholder="Load from Local Saves" class="select" tabindex="1" style="width:20em;">
-          <option value=""></option>
-        </select>
-       </fieldset>
-
-
-
-      <!-- Select Map -->
-      <fieldset>
-        <legend>Map</legend>
-        <select id="select-map" data-placeholder="Load Country Svg..." class="select" tabindex="1">
-          <option value=""></option>
-          <option value="world">World</option>
-          <option value="africa">Africa</option>
-          <option value="TR">Türkiye</option>
-          <option value="TR-ilce">Türkiye | İlceler</option>
-          <option value="TR-34">TR | İstanbul</option>
-          <option value="USA">USA</option>
-          <option value="usa-counties">USA | Counties</option>
-          <option value="usa-ia">USA | Iowa</option>
-          <option value="usa-nm">USA | New Mexico</option>
-          <option value="USA-WDC">USA | Washington, DC</option>
-          <option value="KKTC">Kıbrıs</option>
-          <option value="AZ">Azerbaycan</option>
-          <option value="GE">Gürcistan</option>
-          <option value="XK">Kosova</option>
-          <option value="IT">Italy</option>
-          <option value="GR">Greece</option>
-          <option value="HT">Haiti</option>
-        </select>
-      </fieldset>
-
-      
-      <!-- Select Strategy -->
-      <fieldset>
-        <legend>Coloring Method</legend>
-        <select id="select-strategy" data-placeholder="Choose a Strategy..." class="select" tabindex="1">
-          <option value=""></option>
-          <option value="max">MaxValue</option>
-          <option value="secondHighestValue">Second Highest Value</option>
-          <option value="choropleth1">Choropleth1</option>
-          <option value="choropleth2">Choropleth2</option>
-          <option value="stringSimilarity">String Similarity</option>
-        </select>
-      </fieldset>
-
-
-      <!-- Select Intervals -->
-      <fieldset>
-        <legend># of Intervals</legend>
-        <select id="select-intervals" data-placeholder="# of Intervals..." class="select" tabindex="1">
-          <option value=""></option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-      </fieldset>
-
-      <!-- Select Interval Mode -->
-      <fieldset>
-        <legend>Interval Mode</legend>
-        <select id="select-intervalMode" data-placeholder="Interval Mode..." class="select" tabindex="1">
-          <option value=""></option>
-          <option value="e">equidistant (e)</option>
-          <option value="q">quantile (q)</option>
-          <option value="l">logarithmic (l)</option>
-          <option value="k">k-means (k)</option>
-        </select>
-      </fieldset>
-
-      <!-- Select Palette -->
-      <fieldset>
-        <legend>Custom Palette</legend>
-        <select id="select-custom-palette" data-placeholder="Choose a Palette..." class="select" tabindex="1">
-          <option value=""></option>
-          <option value="none">None(use user defined)</option>
-          <!-- <option value="YlGn">Brewer-YlGn</option>
-          <option value="YlGnBu">Brewer-YlGnBu</option> -->
-        </select>
-      </fieldset>
-
-      <span id="paletteSample">
-        <span></span>
-      </span>
-
-<!--       <div>
-        <label for="volume">classes</label><br/>
-        <output id="value"></output><br/>
-        <input type="range" id="palette-classes" name="volume" min="3" max="12" step="1" value="3" list="values" style="width: 10em;"/>
-        <datalist id="values" style="width: 10em;">
-          <option value="0" label="3"></option>
-          <option value="100" label="12"></option>
-        </datalist>
-      </div> -->
-
-<!--       <script>
-        document.querySelector("#palette-classes").addEventListener("input", (event) => {
-        document.querySelector("#value").textContent = event.target.value;
-        });
-      </script> -->
-      
-<!--       <div class="radios">
-        <input type="radio" id="qwerty1" name="featuretitle" value="rowHeader" checked>
-        <label for="qwerty1">CityName</label>
-        <input type="radio" id="qwerty2" name="featuretitle" value="value">
-        <label for="qwerty2">Value</label>
-      </div> -->
-
-    </div>
     <div class="">
       <button id="log">logTable</button>
       <button id="fill-random-data">Fill Random Integers</button>
       <button id="fill-random-strings">Fill Random Strings</button>
+      <button id="fill-normal-distrubution">Fill Normal Dist</button>
+      <button id="fill-exponential-distrubution" style="background-color:chocolate;">Fill Exponential Dist</button>
+      <button id="fill-gama-distrubution" style="background-color:crimson;">Gama</button>
+      <button id="fill-beta-distrubution" style="background-color:teal;">Beta</button>
       <button id="update-system">updateSystem()</button>
     </div>
 
     <div id="legend-container" class="legend-container"></div>
 
-    <div id="container" style="border: solid 1px black">
+
+    <div id="container" style="border: solid 1px black; gap:1em;">
+
+      <!-- User Interaction SETTINGS -->
+      <div id="settings-container">
+        <!-- <input type="file" name="inputfile" id="inputfile" accept=".csv,.json" style="border:solid 1px red;"/> -->
+
+        <!-- Fetch data from remote resource -->
+        <!-- <span style="display:inline-block; padding: 0; margin: 0;">
+          <input type="url" name="url" id="data-url" value="https://raw.githubusercontent.com/aakutlu/hotmaps/main/samplesheets/1995genelse%C3%A7imler.csv" style="margin-right: 0px; width: 30em;">
+          <button id="fetch-data">Fetch</button>
+        </span> -->
+
+
+        <!-- Load from local saves -->
+        <fieldset>
+          <legend>Load Template</legend>
+          <select id="select-local-storage" data-placeholder="Load from Local Saves" class="select" tabindex="1">
+            <option value=""></option>
+          </select>
+        </fieldset>
+
+
+
+        <!-- Select Map -->
+        <fieldset>
+          <legend>Map</legend>
+          <select id="select-map" data-placeholder="Load Country Svg..." class="select" tabindex="1">
+            <option value=""></option>
+            <option value="world">World</option>
+            <option value="africa">Africa</option>
+            <option value="TR">Türkiye</option>
+            <option value="TR-ilce">Türkiye | İlceler</option>
+            <option value="TR-34">TR | İstanbul</option>
+            <option value="USA">USA</option>
+            <option value="usa-counties">USA | Counties</option>
+            <option value="usa-ia">USA | Iowa</option>
+            <option value="usa-nm">USA | New Mexico</option>
+            <option value="USA-WDC">USA | Washington, DC</option>
+            <option value="KKTC">Kıbrıs</option>
+            <option value="AZ">Azerbaycan</option>
+            <option value="GE">Gürcistan</option>
+            <option value="XK">Kosova</option>
+            <option value="IT">Italy</option>
+            <option value="GR">Greece</option>
+            <option value="HT">Haiti</option>
+          </select>
+        </fieldset>
+
+        
+        <!-- Select Strategy -->
+        <fieldset>
+          <legend>Coloring Method</legend>
+          <select id="select-strategy" data-placeholder="Choose a Strategy..." class="select" tabindex="1">
+            <option value=""></option>
+            <option value="max">MaxValue</option>
+            <option value="secondHighestValue">Second Highest Value</option>
+            <option value="choropleth1">Choropleth1</option>
+            <option value="choropleth2">Choropleth2</option>
+            <option value="stringSimilarity">String Similarity</option>
+          </select>
+        </fieldset>
+
+
+        <!-- Select Interval Mode -->
+        <fieldset>
+          <legend>Interval Mode</legend>
+          <select id="select-intervalMode" data-placeholder="Interval Mode..." class="select" tabindex="1">
+            <option value=""></option>
+            <option value="e">equidistant (e)</option>
+            <option value="q">quantile (q)</option>
+            <option value="l">logarithmic (l)</option>
+            <option value="k">k-means (k)</option>
+          </select>
+        </fieldset>
+
+        <!-- Select Palette -->
+        <fieldset>
+          <legend>Custom Palette</legend>
+          <select id="select-custom-palette" data-placeholder="Choose a Palette..." class="select" tabindex="1">
+            <option value=""></option>
+            <optgroup label="Brewer Single Color">
+              <option value="Oranges">Oranges</option>
+              <option value="Reds">Reds</option>
+              <option value="Greens">Greens</option>
+              <option value="Blues">Blues</option>
+              <option value="Greys">Greys</option>
+              <option value="Purples">Purples</option>
+            </optgroup>
+            <optgroup label="Brewer Two Colors">
+              <option value="OrRd">Orange-Red</option>
+              <option value="PuBu">Purple-Blue</option>
+              <option value="BuPu">Blue-Purple</option>
+              <option value="BuGn">Blue-Green</option>
+              <option value="YlGn">Yellow-Green</option>
+              <option value="RdPu">Red-Purple</option>
+              <option value="GnBu">Green-Blue</option>
+              <option value="PuRd">Purple-Red</option>
+              <option value="RdBu">Red-Blue</option>
+              <option value="PuOr">Purple-Orange</option>
+              <option value="RdGy">Red-Gray</option>
+              <option value="BrBG">Brown-Green</option>
+              <option value="PRGn">Purple-Green</option>
+              <option value="PiYG">Pink-Green</option>
+            </optgroup>
+            <optgroup label="Brewer Tree Colors">
+              <option value="YlOrBr">Yellow-Orange-Brown</option>
+              <option value="YlOrRd">Yellow-Orange-Red</option>
+              <option value="PuBuGn">Purple-Blue-Green</option>
+              <option value="YlGnBu">Yellow-Green-Blue</option>
+              <option value="RdYlGn">Red-Yellow-Green</option>
+              <option value="RdYlBu">Red-Yellow-Blue</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="Viridis">Viridis</option>
+              <option value="Spectral">Spectral</option>
+              <option value="Set1">Set1</option>
+              <option value="Set2">Set2</option>
+              <option value="Set3">Set3</option>
+              <option value="Accent">Accent</option>
+              <option value="Dark2">Dark2</option>
+              <option value="Paired">Paired</option>
+              <option value="Pastel1">Pastel1</option>
+              <option value="Pastel2">Pastel2</option>
+            </optgroup>
+            
+          </select>
+        </fieldset>
+
+        <span id="paletteSample">
+          <span></span>
+        </span>
+
+        <!-- Select # of Intervals -->
+        <fieldset>
+          <legend># of Intervals</legend>
+          <div>
+            <span id="palette-container" class="palette"></span>
+            <input id="select-palette-interval" type="range" name="volume" min="3" max="12" step="1" value="10"/>  
+            <output id="interval-num">10</output>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Misc.</legend>
+        
+          <div>
+            <input id="sheet_coloring_option" type="checkbox" checked />
+            <label for="sheet_coloring_option">Allow Sheet Colorings</label>
+          </div>
+        
+<!--           <div>
+            <input id="city_names_option" type="checkbox" />
+            <label for="city_names_option">Show Citynames</label>
+          </div> -->
+
+
+          <div>
+            <input id="legend_option" type="checkbox" />
+            <label for="legend_option">Add Legend</label>
+          </div>
+
+        </fieldset>
+
+        <fieldset>
+          <legend>Show City Labels</legend>
+          <div>
+            <input type="radio" id="radio1" name="preferred_city_labels" value="none" checked/>
+            <label for="radio1">None</label>
+            <input type="radio" id="radio2" name="preferred_city_labels" value="cityname" />
+            <label for="radio2">Cityname</label>
+            <input type="radio" id="radio3" name="preferred_city_labels" value="cellvalue" />
+            <label for="radio3">Cellvalue</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Data Analysis</legend>
+          <div id="histogramContainer"></div>
+          <output>Data is suitable for chropleth type1</output>
+          <output>mean, stdDeviation, max, min</output>
+          <output style="color:red;">sheeet contains nonnumeric values</output>
+        </fieldset>
+
+
+  <!--       <script>
+          document.querySelector("#palette-classes").addEventListener("input", (event) => {
+          document.querySelector("#value").textContent = event.target.value;
+          });
+        </script> -->
+        
+  <!--       <div class="radios">
+          <input type="radio" id="qwerty1" name="featuretitle" value="rowHeader" checked>
+          <label for="qwerty1">CityName</label>
+          <input type="radio" id="qwerty2" name="featuretitle" value="value">
+          <label for="qwerty2">Value</label>
+        </div> -->
+
+      </div>
+
+      <!-- Spreadsheet area -->
       <div id="handsontable-container">
         <div id="jtable" style="border: solid 1px black"></div>
       </div>
+
+      <!-- Map Container area -->
       <div id="map-container">
         <div id="svg-container"></div>
         <div class="download-image-btns">
           <img id="download-image-btn" src="img/download.svg" alt="download" title="Download as *.png">
         </div>
       </div>
+
     </div>
+
+
+
     <!-- Download Buttons -->
     <div id="downloadGroup" class="downloadGroup">
       <button id="downloadAsCSV">Download As CSV</button>

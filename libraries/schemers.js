@@ -15,62 +15,6 @@ const SAMPLESHEET = [
   ["artvin" ,100, 5, 0],
 ];
 
-/** SAMPLE RESULT
- * {
- *    type:        : "_type_",
- *    colormappings: {...},
- *    legend       : {...},
- *    colorbar     : {...},
- *    
- *    
- * }
- * 
- * {
- *    samsun:  "#XXXXXX",
- *    sinop:   "#XXXXXX",
- *    ordu:    "#XXXXXX",
- *    giresun: "#XXXXXX",
- *    trabzon: "#XXXXXX",
- * }
- */
-
-/** SAMPLE PALETTE
- * {
- *    colgroup1: #XXXXXX,
- *    colgroup2: #XXXXXX,
- *    colgroup3: #XXXXXX,
- * }
-*/
-
-const SAMPLEPALETTE = { // for max, choropleth1, choropleth2
-  type: "userdefined",
-  classes:{
-    col1: "#AABBCC",
-    col2: "green",
-    col3: "blue"
-  }
-}
-const SAMPLEPALETTE2 = { //for choropleth1, choropleth2
-  type: "predefined",
-  palette:{
-    col1: "red",
-    col2: "blue",
-    col3: "green"
-  },
-  classes: 3
-}
-const SAMPLEPALETTE3 = { //for stringmatcher
-  type: "predefined",
-  palette:{
-    col1: "red",
-    col2: "blue",
-    col3: "green"
-  },
-  classes: 3
-}
-
-
-
 function findMaxIndex(array){
   let index = -1;
   let maxValue = -Infinity;
@@ -97,20 +41,7 @@ function findSecondHighestValueIndex(array){
   else return -1
 }
 
-let __options_template = {
-  map: "TR",
-  strategy: "choropleth",
-  refColumn: "1",
-  featureTitle: "This Data is about ...",
-  palette: "BuPu",
-  intervalNumber: 10,
-  intervalMode: 'e',  //equidistant (e), quantile (q), logarithmic (l), and k-means (k)
-  colorGroups: {
-    akp: "#FF2345",
-    chp: "#ffddss"
-  }
-}
-
+//maxSchemer and secondHighestValueSchemer both uses this fn
 const conditionalSchemer = function(sheet, options, compareFunction){
   let colorMappings = {};
   let cellMappings = []
@@ -232,7 +163,7 @@ const choropleth2Schemer = function(sheet, options){
 
   const data = MatrixHelpers.getColumn(sheet, refColumn)
   data.splice(0,1)
-  const boundaries = chroma.limits(data, intervalMode, intervalNumber);
+  let boundaries = chroma.limits(data, intervalMode, intervalNumber);
   console.log({boundaries})
   const colorGenerator = chroma.scale(colorRanges).classes(boundaries)
 
@@ -247,7 +178,7 @@ const choropleth2Schemer = function(sheet, options){
     }
   }
 
-  // Generate colorBar
+  // Generate chropleth bar obj
   choroplethBar.list = []
   for(let i=0; i<intervalNumber; i++){
     let color = colorGenerator.colors(intervalNumber)[i]
@@ -256,7 +187,10 @@ const choropleth2Schemer = function(sheet, options){
     to = parseFloat(to.toFixed(1))
     choroplethBar.list.push({color: color, range: [from,to]})
   }
-  console.log({choroplethBar})
+  if(!boundaries.every(elem => isFinite(elem))) {
+    choroplethBar.list = [] 
+  }
+  console.warn("choroplethBar", {choroplethBar})
 
   return {
     type: "choropleth2",

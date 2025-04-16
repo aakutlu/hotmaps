@@ -255,7 +255,7 @@ export class Maplib{
   }
 
   static async  loadMap(url){
-    const response = await fetch(url, /* {cache: "force-cache"} */);
+    const response = await fetch(url, {"Cache-Control": "no-cache"}/* {cache: "force-cache"} */);
     if (!response.ok) {
       const message = `An Error has occured: ${response.status}`;
       throw new Error(message);
@@ -299,9 +299,9 @@ export class Maplib{
     this.zoomer = new Zoomer(svgElem, { zoominBtn: zoomerInBtn, zoomoutBtn: zoomerOutBtn, zoomDefaultBtn: zoomerDefaultBtn , lockBtn: zoomerLockBtn});
 
     // apply predefined options
-    if(this.options.backgroundColor) svgElem.setAttribute("style", `background-color: ${this.options.backgroundColor};`) //style["background-color"] = this.options.backgroundColor;
-    if(this.options.defaultFillColor) featureGElem.setAttribute("fill", this.options.defaultFillColor)
-    if(this.options.defaultBorderColor) featureGElem.setAttribute("stroke", this.options.defaultBorderColor)
+    //if(this.options.backgroundColor) svgElem.setAttribute("style", `background-color: ${this.options.backgroundColor};`) //style["background-color"] = this.options.backgroundColor;
+    //if(this.options.defaultFillColor) featureGElem.setAttribute("fill", this.options.defaultFillColor)
+    ///if(this.options.defaultBorderColor) featureGElem.setAttribute("stroke", this.options.defaultBorderColor)
 
     this.container.addEventListener('onSVGMapReady', (event) => {
       if(this.options?.onSVGMapReady){
@@ -343,6 +343,29 @@ export class Maplib{
     this.runHook('afterColorMap')
   }
 
+  labelsMap = function(cellMappings){
+    this.labelsRemove()
+    cellMappings.forEach(cell => {
+      let textElem = this.container.querySelector(`g#labels text[id="${cell.rowName}"]`)
+      if(textElem) textElem.textContent = cell.value
+    })
+  }
+
+  labelsCityNames = function(){
+    this.labelsRemove()
+    let allTexts = this.container.querySelectorAll(`g#labels text`)
+    Array.from(allTexts).forEach(elem => {
+      elem.textContent = elem.getAttribute("title")
+    })
+  }
+
+  labelsRemove = function(){
+    let allTexts = this.container.querySelectorAll(`g#labels text`)
+    Array.from(allTexts).forEach(elem => {
+      elem.textContent = ""
+    })
+  }
+
   colorRandom = function(colors){
     colors ??= ["red", "yellow", "blue", "green"] 
     const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -370,15 +393,21 @@ export class Maplib{
 
     if(settings.strategy == "choropleth1" || settings.strategy == "choropleth2"){
       legendElem = SVGHelper.generateChoroplethBar(legendObj)
-      console.log(legendElem)
       refElem = this.container.querySelector("g#legendRulerH")
+      SVGHelper.upsertElement(svg, legendElem)
+      SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, heightRatio: 100, position: "top-center"} )
     }
     else if(["max", "secondHighestValue", "stringSimilarity"].indexOf(settings.strategy) != -1){
       legendElem = SVGHelper.generateLegendType2(legendObj)
       refElem = this.container.querySelector("g#legendRulerV")
+      SVGHelper.upsertElement(svg, legendElem)
+      SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
     }
-    SVGHelper.upsertElement(svg, legendElem)
-    SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-left"} )
+  }
+
+  emptyLegendContainer = function(){
+    let legendCont = this.container.querySelector("svg g#legendContainer")
+    if(legendCont) legendCont.replaceChildren()
   }
 
   setAttributeAll = function(attributes){ //todo

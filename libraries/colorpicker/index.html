@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./colorpicker.js"></script>
+    <style>
+      #buttonContainer {
+        height: 2em;
+        user-select: none;
+      }
+      #buttonContainer > span {
+        display: inline-block;
+        width: 10em;
+        height: 100%;
+        user-select: none;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: aqua;
+      }
+
+      #buttonContainer > span:hover {
+        text-decoration: underline;
+        background-color: yellow;
+      }
+    </style>
+    <title>Color Picker Test</title>
+  </head>
+  <body>
+    <div id="___paletteContainer" class="flex-grid"></div>
+
+    <div id="buttonContainer">
+      <span>col1</span>
+      <span>col2</span>
+      <span>col3</span>
+    </div>
+
+    <div id="selectedColor" style="width: 5em; height: 5em; border: solid 1px black" data-colorcode=""></div>
+
+    <script>
+      Array.from(document.querySelectorAll("#buttonContainer")).forEach(elem => {
+        elem.addEventListener("click", (event) => {
+          event.stopPropagation()
+          let options = {}
+
+          ColorPicker.fire( event.target, options, (colorcode) => {
+            let div = document.querySelector("#selectedColor");
+            div.setAttribute("data-colorcode", colorcode);
+            div.style.backgroundColor = colorcode;
+          })
+        })
+      })
+
+    </script>
+
+  </body>
+</html>

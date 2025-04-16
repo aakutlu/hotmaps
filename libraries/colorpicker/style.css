@@ -1,0 +1,27 @@
+#colorPickerPaletteContainer{
+  position: absolute;
+  display: none;
+  background-color: white;
+  width: 160px;
+  height: 320px;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(19, 1fr);
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
+  padding: 3px;
+  border: solid 1px gray;
+}
+
+#colorPickerPaletteContainer > span{
+  cursor: pointer;
+  user-select: none;
+  border-radius: 10%;
+  border: solid 1px black;
+}
+#colorPickerPaletteContainer > span:hover{
+  cursor: pointer;
+  user-select: none;
+  border: solid 2px black;
+  border-style: dashed;
+}
+

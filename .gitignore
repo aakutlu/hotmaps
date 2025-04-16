@@ -1,5 +1,9 @@
 __MAPLIB/
+__plotly/
 __script/
+__test/
 __trash/
-_test_maplip/
+_lib/
+_test_maplib/
 samplesheets/
+_*.*

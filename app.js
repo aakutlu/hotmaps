@@ -3,6 +3,7 @@ import MatrixHelpers from "./libraries/matrixhelpers.js"
 import SVGHelper from "./libraries/svghelper/svghelper.js"
 import {Maplib} from "./libraries/maplib.js"
 import Schemers from './libraries/schemers.js'
+import Stats from './libraries/stats.js'
 
 let popperInstance = null
 const COLORPICKER = document.getElementById("color-picker");
@@ -15,22 +16,23 @@ var handsOnTableObj = null
 let cellMappings = null
 
 let SETTINGS = {
-  map: 'KKTC',
+  map: 'TR',
   strategy: 'max',             // max, secondHighestValue, choropleth1, choropleth1, stringSimilarity
   refColumn: 1,               // 0 || 'col1' || 
   featureTitle: 'rowHeader', // rowHeader || value || default
   intervalMode: "e", 
   intervalNumber: 10,
   palette: "Oranges",
+  allowSheetColoring: true, //todo
+  includeCityLabel: "none",   //none, cityname, cellvalue
+  includeLegend: true,
+  /* show_citynames: false, */
   colorGroups: {
-    col1: '#ffAA26',
-    col2: '#ff0026',
-    col3: '#f00726',
+    col1: 'orange',
+    col2: 'crimson',
+    col3: 'teal',
     akp: '#ffa726',
     chp: '#ff0000',
-    dem: '#734d96',
-    mem: '#185fa7',
-    yrp: '#009599',
     mhp: '#610816'
   }
 }
@@ -44,7 +46,7 @@ function syncSettings (obj = {}){
 Handsontable.renderers.registerRenderer('cellColorsRenderer', (instance, td, row, col, prop, value, cellProperties) => {
   Handsontable.renderers.TextRenderer(instance, td, row, col, prop, value, cellProperties);
   let item = cellMappings?.find(el => !!el.color && el.row == row && el.col == col)
-  if (item){
+  if (item && SETTINGS.allowSheetColoring){
     td.style.background = chroma(item.color).hex() // .alpha(.8)
     td.style.fontWeight = 'bold';
     //td.style["-webkit-text-stroke"] =  ".01em whitesmoke"
@@ -100,7 +102,7 @@ handsOnTableObj = new Handsontable(document.querySelector("#jtable"),
     } 
 
     if (col === 0){
-      cellProperties.readOnly = true;
+      cellProperties.readOnly = false;
       cellProperties.type = 'text';
       cellProperties.className = 'htLeft'
     } 
@@ -226,46 +228,93 @@ function setTooltipListeners(){
 // INITIALIZATION
 // ***********************
 window.addEventListener("load", async (event) => {
-/*   setTimeout(()=>{
-    setTooltipListeners();
-  },500) */
 
   //settings
   SETTINGS = JSON.parse(localStorage.getItem('settings')) || SETTINGS
+  console.log('%cSettings', 'color: red; background: silver; font-size: 20px');
+  console.log(SETTINGS)
 
-  // load selectBox Local Saves
-  updateLocalStorageSelectBox()
-
-  //update select2 Map default value
-  let select2Map = document.getElementById('select-map')
-  $(select2Map).val(SETTINGS.map).trigger('chosen:updated');
-
-  // update select2 to choropleth
-  let select2Strategy = document.getElementById('select-strategy')
-  $(select2Strategy).val(SETTINGS.strategy).trigger('chosen:updated');
-
-  // update select2 to IntervalNumber
-  let select2IntervalNum = document.getElementById('select-intervals')
-  $(select2IntervalNum).val(SETTINGS.intervalNumber).trigger('chosen:updated');
-
-  // update select2 to IntervalMode
-  let select2IntervalMode = document.getElementById('select-intervalMode')
-  $(select2IntervalMode).val(SETTINGS.intervalMode).trigger('chosen:updated');
-
-
-  // update select2 to palette
-  let select2Palette = document.getElementById('select-custom-palette')
-  select2Palette.replaceChildren()
-  select2Palette.insertAdjacentHTML("beforeend",`<option value=""></option>`)
-  select2Palette.insertAdjacentHTML("beforeend",`<option value="none">None(user defined)</option>`)
-  Object.keys(chroma.brewer).forEach((colorCode,i) => {
-    select2Palette.insertAdjacentHTML("beforeend",`<option value="${colorCode}">Brewer-${colorCode}</option>`)
-  })
-  $(select2Palette).val(SETTINGS.palette || "").trigger('chosen:updated');
+  updateUserInputElements()
 
   // load default map, legend, csv Template
   await loadMapTemplateDataUpdate(SETTINGS.map)
 });
+
+function updateUserInputElements(){
+
+  //update selectBox Local Saves
+  updateLocalStorageSelectBox()
+
+
+  //update SelectBox "select-map" saved (or default)
+  let selectBoxMap = document.getElementById('select-map')
+  $(selectBoxMap).val(SETTINGS.map).trigger('chosen:updated');
+  
+  // update SelectBox "select-strategy" to saved (or default)
+  let selectBoxStrategy = document.getElementById('select-strategy')
+  $(selectBoxStrategy).val(SETTINGS.strategy).trigger('chosen:updated');
+
+  // update SelectBox "select-intervalMode" to saved (or default)
+  let selectBoxIntervalMode = document.getElementById('select-intervalMode')
+  $(selectBoxIntervalMode).val(SETTINGS.intervalMode).trigger('chosen:updated');
+
+  // update SelectBox "select-custom-palette" to saved (or default)
+  let selectBoxPalette = document.getElementById('select-custom-palette')
+  $(selectBoxPalette).val(SETTINGS.palette || "").trigger('chosen:updated');
+
+  //update SLIDER "select-palette-interval" to saved (or default)
+  document.querySelector("#select-palette-interval").value = SETTINGS.intervalNumber
+  document.querySelector("#interval-num").textContent = SETTINGS.intervalNumber
+  updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.intervalNumber)) 
+
+  //update Checkbox "allowSheetColoring" to saved (or default)
+  let checkbox1 = document.querySelector("#sheet_coloring_option")
+  SETTINGS.allowSheetColoring ? checkbox1.checked = true: checkbox1.checked = false;
+
+  //update Checkbox "includeLegend" to saved (or default)
+  let checkbox2 = document.querySelector("#legend_option")
+  SETTINGS.includeLegend ? checkbox2.checked = true: checkbox2.checked = false;
+
+  //update RADIO BUTTONS  "includeCityLabel" to saved (or default)
+  let radio1 = document.querySelector("#radio1")
+  let radio2 = document.querySelector("#radio2")
+  let radio3 = document.querySelector("#radio3")
+  //let radios = document.querySelectorAll("input[name=preferred_city_labels]")
+  if(SETTINGS.includeCityLabel === "none")
+    radio1.checked = true
+  else if(SETTINGS.includeCityLabel === "cityname")
+    radio2.checked = true
+  else if(SETTINGS.includeCityLabel === "cellvalue")
+    radio3.checked = true
+
+
+  //-----------------------------------
+  // Disable SELECTBOXES
+  //-----------------------------------
+
+  $(selectBoxIntervalMode).prop('disabled', false).trigger("chosen:updated");
+  $(selectBoxPalette).prop('disabled', false).trigger("chosen:updated");
+  document.querySelector("#select-palette-interval").disabled = false
+
+
+  if(SETTINGS.strategy === "max" || SETTINGS.strategy === "secondHighestValue" || SETTINGS.strategy === "stringSimilarity"){
+    $(selectBoxIntervalMode).prop('disabled', true).trigger("chosen:updated");
+    $(selectBoxPalette).prop('disabled', true).trigger("chosen:updated");
+    document.querySelector("#select-palette-interval").disabled = true
+  }else if(SETTINGS.strategy === "choropleth1"){
+    $(selectBoxIntervalMode).prop('disabled', true).trigger("chosen:updated");
+    SETTINGS.intervalNumber = 10
+    document.querySelector("#select-palette-interval").value = SETTINGS.intervalNumber
+    document.querySelector("#interval-num").textContent = SETTINGS.intervalNumber
+    updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.intervalNumber)) 
+    document.querySelector("#select-palette-interval").disabled = true
+  }
+
+
+}
+
+
+
 
 // ***********************
 // FUNCTIONS
@@ -274,12 +323,12 @@ window.addEventListener("load", async (event) => {
 async function loadMapTemplateDataUpdate(mapId){
 
   let svgMapContainer = document.querySelector("#svg-container")
-  let maplibOptions = {backgroundColor: 'whitesmoke', defaultFillColor: 'silver', defaultBorderColor: 'white', }
+  let maplibOptions = {/* backgroundColor: 'whitesmoke',  */defaultFillColor: 'silver', defaultBorderColor: 'white', }
   mapLibObj = new Maplib(svgMapContainer, `svgmaps/${mapId}.svg`, maplibOptions)
   await mapLibObj.initialize();
 
   //load template table
-  const resp = await fetch(`sheets/${mapId}.csv`);
+  const resp = await fetch(`sheets/${mapId}.csv`, {"Cache-Control": "no-cache"});
   if (!resp.ok) {
     const message = `When downloading "${mapId}.csv", an Error has occured: ${resp.status}`;
     throw new Error(message);
@@ -295,15 +344,106 @@ async function loadMapTemplateDataUpdate(mapId){
 
 }
 
+function updateHistogram(dataset){
+  if(!dataset || dataset.length <= 1) return 
+  //const dataset1 = Stats.generateExponentialSamples(.001,10_000);
+  const intervals = Stats.generateEqualIntervals(dataset, 20)
+  const frequencyObjList = Stats.generateFrequencyArray(dataset, intervals)
+  
+  // Prepare data for Plotly
+  const rangeIdentifiers = []
+  const frequencyNumbers = []
+  frequencyObjList.forEach(elem => {
+    let {range: [start,end], frequency} = elem;
+    [start, end] = [Stats.trimDecimal(start,1), Stats.trimDecimal(end,1)]
+     rangeIdentifiers.push(`${start}`)  // gens something like that [0,1,2,3,]
+     frequencyNumbers.push(frequency)
+  })
+  
+  const trace = {
+    x: rangeIdentifiers,
+    y: frequencyNumbers,
+    type: "bar", // Vertical bar chart
+    marker: {
+      color: chroma.scale(SETTINGS.palette).classes(intervals).colors(frequencyNumbers.length), //"rgba(182, 54, 139, 0.6)", // Optional: customize bar color
+/*       line: {
+        color: "rgba(75, 192, 192, 1)",
+        width: 0,
+      }, */
+    },
+  };
+  
+  const layout = {
+    margin: { l: 3, r: 3, t: 3, b: 3 },
+    title: {
+      text: "", //Title 
+      x: 0.5,  // Center the title
+      xanchor: "center",
+    },
+    xaxis: {
+      title: "Values",
+      tickmode: "auto", //linear, auto, array
+      nticks: 10, //max number of ticks
+      visible: false, // Hide x-axis labels and ticks
+      zeroline: false // Remove x-axis line
+      //tickvals: Object.keys(frequency),
+      //ticktext: Object.keys(frequency), // Ensure clean labels
+    },
+    yaxis: {
+      title: "Frequency",
+      tickmode: "auto",
+      nticks: 10,
+  
+      visible: false, // Hide y-axis labels and ticks
+      zeroline: false // Remove y-axis line
+      //dtick: findClosestInSeries(Stats.findMax(frequencyNumbers1) / 10), // Ensure integer ticks for frequency
+    },
+    showlegend: false, // Hide legend
+    showTitle: false,
+    bargap: ".1px", // Remove gap between bars
+    plot_bgcolor: 'rgba(0,0,0,0)', // Transparent plot background
+    paper_bgcolor: 'rgba(0,0,0,0)', // Transparent paper background
+    autosize: true, // Fit to container
+    template: 'none' // Remove default styling
+  };
+  Plotly.newPlot("histogramContainer", [trace], layout, {staticPlot: true, displayModeBar: false});
+
+}
+
 function updateWholeSystem(){
-  let schema = generateScheme(handsOnTableObj.getData(), SETTINGS)
+  let sheet = handsOnTableObj.getData()
+  let schema = generateScheme(sheet, SETTINGS)
   console.log(schema)
   mapLibObj.resetAllFeatureColors()
   mapLibObj.colorMap(schema.colorMappings)
   cellMappings = schema.cellMappings
-  mapLibObj.updateLegend(schema.legend, SETTINGS)
+  console.log(cellMappings)
+  mapLibObj.emptyLegendContainer()
+  if(SETTINGS.includeLegend) mapLibObj.updateLegend(schema.legend, SETTINGS)
+
+  // update city labels
+  let showLabel = {
+    "cityname" : () => mapLibObj.labelsCityNames(),
+    "cellvalue" : () => mapLibObj.labelsMap(cellMappings),
+    "none"     : () => mapLibObj.labelsRemove(),
+    undefined  : () => console.warn("not defined")
+  }
+  let labelIdentifier = SETTINGS.includeCityLabel
+  showLabel[labelIdentifier]()
+
+  //update histogram
+  if(["choropleth1", "choropleth2"].indexOf(SETTINGS.strategy) !== -1){
+    let fulldataset = MatrixHelpers.getColumn(sheet, SETTINGS.refColumn)
+    let cleandataset = fulldataset.filter(num => num !=="" && num !== null && !Array.isArray(num) && isFinite(num)).map(Number)
+    console.log("%c--------------------------", "background-color: red;")
+    console.log(">>", fulldataset, cleandataset)
+    updateHistogram(cleandataset)
+  }
+
   handsOnTableObj.render()
 }
+
+
 
 function generateScheme(sheet, options) {
 
@@ -381,6 +521,16 @@ function updateLocalStorageSelectBox(){
 }
 
 
+function updatePaletteSample(colorArray){
+  let container = document.querySelector(".palette")
+  container.replaceChildren()
+  colorArray.forEach(colorCode => {
+    let span = document.createElement("span");
+    span.setAttribute("style", `background-color:${colorCode}`)
+    container.appendChild(span)
+  })
+}
+
 
 
 // ***********************
@@ -406,13 +556,8 @@ $("#select-map").chosen().change((event) => {
 
 $("#select-strategy").chosen().change((event) => {
   SETTINGS.strategy = event.target.value
-  syncSettings({refColumn: 1})
-  updateWholeSystem();
-});
-
-$("#select-intervals").chosen().change((event) => {
-  SETTINGS.intervalNumber = parseInt(event.target.value)
-  syncSettings()
+  syncSettings() //todo
+  updateUserInputElements()
   updateWholeSystem();
 });
 
@@ -426,18 +571,39 @@ $("#select-intervalMode").chosen().change((event) => {
 $("#select-custom-palette").chosen().change((event) => {
   SETTINGS.palette = event.target.value
   syncSettings()
+  updateUserInputElements()
   updateWholeSystem();
 });
 
+document.querySelector("#select-palette-interval").addEventListener("input", (event) => {
+  SETTINGS.intervalNumber = parseInt(event.target.value)
+  syncSettings()
+  updateUserInputElements()
+  updateWholeSystem();
+});
 
-/* document.querySelectorAll("input[name=featuretitle]").forEach(elem => {
-  elem.addEventListener('click', (event) => {
-    //SETTINGS.featureTitle = event.target.value
-    //localStorage.setItem('settings', JSON.stringify(SETTINGS))
-    syncSettings({featureTitle: event.target.value})
-    BUNDLE.updateSystem(SETTINGS)
+document.querySelector("#sheet_coloring_option").addEventListener("click", (event) => {
+  SETTINGS.allowSheetColoring = event.target.checked
+  syncSettings()
+  updateWholeSystem()
+})
+
+document.querySelector("#legend_option").addEventListener("click", (event) => {
+  SETTINGS.includeLegend = event.target.checked
+  syncSettings()
+  updateWholeSystem()
+})
+
+let radios = document.querySelectorAll("input[name=preferred_city_labels]")
+Array.from(radios).forEach(radio => {
+  radio.addEventListener("click", (event) => {
+    SETTINGS.includeCityLabel = event.target.value
+    event.target.checked = true
+    syncSettings()
+    updateWholeSystem()
   })
-}) */
+})
+
 
 
 
@@ -464,7 +630,57 @@ document.getElementById('fill-random-strings').addEventListener('click', () => {
   let rowLabels = MatrixHelpers.getColumn(sheetData, 0).filter(elem => elem)
   let svgElement = document.querySelector('#svg-container svg')
   let legendContainer = document.querySelector('#legend-container')
-  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { return Mock.oneof(["abc", "def", "ghi", "jkl", "mno"])})
+  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { return Mock.oneof(["group1", "group2", "group3", "group4", "group5"])})
+  handsOnTableObj.updateData(data)
+  updateWholeSystem()
+})
+
+// Fill with "Normal Distribution" data to "Hands on Table"
+document.getElementById('fill-normal-distrubution').addEventListener('click', () => {
+  let sheetData =  handsOnTableObj.getData()
+  let columnLabels =  MatrixHelpers.getRow(sheetData, 0).filter(elem => elem)
+  let rowLabels = MatrixHelpers.getColumn(sheetData, 0).filter(elem => elem)
+  
+  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { 
+    return Stats.trimDecimal(Stats.generateSingleNormalDistributionValue(50, 30),2)
+  })
+  handsOnTableObj.updateData(data)
+  updateWholeSystem()
+})
+
+// Fill with "Exponential Distribution" data to "Hands on Table"
+document.getElementById('fill-exponential-distrubution').addEventListener('click', () => {
+  let sheetData =  handsOnTableObj.getData()
+  let columnLabels =  MatrixHelpers.getRow(sheetData, 0).filter(elem => elem)
+  let rowLabels = MatrixHelpers.getColumn(sheetData, 0).filter(elem => elem)
+  
+  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { 
+    return Stats.trimDecimal(Stats.generateSingleExponentialDistributionValue(.001),2)
+  })
+  handsOnTableObj.updateData(data)
+  updateWholeSystem()
+})
+// Fill with "Gama Distribution" data to "Hands on Table"
+document.getElementById('fill-gama-distrubution').addEventListener('click', () => {
+  let sheetData =  handsOnTableObj.getData()
+  let columnLabels =  MatrixHelpers.getRow(sheetData, 0).filter(elem => elem)
+  let rowLabels = MatrixHelpers.getColumn(sheetData, 0).filter(elem => elem)
+  
+  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { 
+    return Stats.trimDecimal(Stats.gammaRandom(3, 7),2)
+  })
+  handsOnTableObj.updateData(data)
+  updateWholeSystem()
+})
+// Fill with "Beta Distribution" data to "Hands on Table"
+document.getElementById('fill-beta-distrubution').addEventListener('click', () => {
+  let sheetData =  handsOnTableObj.getData()
+  let columnLabels =  MatrixHelpers.getRow(sheetData, 0).filter(elem => elem)
+  let rowLabels = MatrixHelpers.getColumn(sheetData, 0).filter(elem => elem)
+  
+  const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => { 
+    return Stats.trimDecimal(Stats.betaRandom(3, 7) * 201, 2)
+  })
   handsOnTableObj.updateData(data)
   updateWholeSystem()
 })
@@ -516,7 +732,7 @@ document.querySelector('#inputfile')?.addEventListener('change',  (event) => {
   // load data from remote URL
   document.getElementById('fetch-data')?.addEventListener('click', (event) => {
     let url = document.getElementById('data-url').value
-    fetch(url)
+    fetch(url, {"Cache-Control": "no-cache"})
       .then(response => {
         return response.text()
       })

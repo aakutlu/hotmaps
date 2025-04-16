@@ -1,9 +1,24 @@
-<svg version="1.1" id="kibris"
+<svg version="1.1" 
+  id="kktc"
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1275.57px" height="760.619px" viewBox="0 0 1275.57 760.619" xml:space="preserve">
+  viewBox="0 0 1275.57 760.619"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  x="0px"
+  y="0px"
+  width="1275.57px" 
+  height="760.619px"
+  xml:space="preserve">
 
 <defs>
+  <filter x="0" y="0" width="1" height="1" id="solid">
+    <feFlood flood-color="white" result="bg" />
+    <feMerge>
+      <feMergeNode in="bg"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  <!-- filter="url(#solid)" -->
   <style>
     g#features *{
       cursor: pointer;
@@ -13,17 +28,21 @@
     }
     g#labels *{
       font-family: Poppins, monospace;
+      font-size: 1em;
       pointer-events: none;
       user-select: none;
-      fill: black;
+      stroke:white;
+      stroke-width:0.3em;
+      fill:black;
+      paint-order:stroke;
+      stroke-linejoin:round
     }
     path:hover{
       opacity: .5;
     }
   </style>
 </defs>
-  <g id="other">
-    <rect x="0" y="0" fill="#C6ECFF" width="1275.57" height="760.619"/>
+  <g id="other" opacity=".1">
     <polygon id="kibris-coastline" fill="gray" stroke="black" stroke-width="0" stroke-linejoin="round" stroke-miterlimit="3.8637" points="
 		932.561,434.673 931.564,433.436 931.223,432.922 929.136,429.739 918.52,413.574 898.138,397.306 890.752,389.805 
 		885.489,382.805 884.806,381.31 883.718,378.939 880.555,372.058 875.056,367.832 870.566,362.928 870.357,362.64 861.118,350.07 
@@ -94,7 +113,6 @@
 		910.473,445.161 916.628,449.493 920.211,449.945 932.848,457.34 933.492,457.446 933.844,457.506 934.567,457.628 
 		936.076,457.189 938.295,456.54 938.595,456.451 938.871,456.843 940.302,458.865 942.285,459.152 944.62,456.042 943.688,454.625 
 		943.334,454.111 938.819,453.191 934.763,446.262 938.623,442.099 	"/>
-    <text x="350" y="480">Güney Kıbrıs Rum Yönetimi</text>
   </g>
 
   <g id="features" fill="silver">
@@ -214,20 +232,20 @@
 
   </g>
 
-  <g id="labels">
-    <text x="880" y="230" text-anchor="middle" dominant-baseline="middle" >İskele</text>
-    <text x="774" y="336" text-anchor="middle" dominant-baseline="middle" >Gazimağusa</text>
-    <text x="550" y="276" text-anchor="middle" dominant-baseline="middle" >Girne</text>
-    <text x="570" y="320" text-anchor="middle" dominant-baseline="middle" >Lefkoşa</text>
-    <text x="434" y="330" text-anchor="middle" dominant-baseline="middle" >Güzelyurt</text>
+  <g id="labels" text-anchor="middle" dominant-baseline="middle">
+    <text id="iskele" x="880" y="230" title="İskele">İskele</text>
+    <text id="gazimağusa" x="774" y="336" title="Gazimağusa">Gazimağusa</text>
+    <text id="girne" x="550" y="276" title="Girne">Girne</text>
+    <text id="lefkoşa" x="570" y="320" title="Lefkoşa">Lefkoşa</text>
+    <text id="güzelyurt" x="434" y="330" title="Güzelyurt">Güzelyurt</text>
   </g>
   
   <g id="legendRulerV">
-    <rect x="980" y="450" width="120" height="180" fill="red" stroke="black" stroke-width=".2" opacity=".5" />
+    <rect x="980" y="370" width="160" height="240" fill="red" stroke="black" stroke-width="0" opacity=".5" />
   </g>
 
   <g id="legendRulerH">
-    <rect x="630" y="620" width="600" height="60" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
+    <rect x="600" y="620" width="638" height="44" fill="blue" stroke="black" stroke-width="0" opacity=".5" />
   </g>
 </svg>
   

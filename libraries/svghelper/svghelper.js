@@ -399,6 +399,39 @@ export default class SVGHelper{
     return [topleftX, topleftY, bottomrightX-topleftX, bottomrightY-topleftY]
   }
 
+  static calculateBoundingViewBox(viewBoxes) {
+    // If no viewBoxes provided, return null or default values
+    if (viewBoxes.length === 0) {
+        return [0, 0, 0, 0];
+    }
+
+    // Initialize min/max values from the first viewBox
+    let [minX, minY, maxX, maxY] = [
+        viewBoxes[0][0],                    // x
+        viewBoxes[0][1],                    // y
+        viewBoxes[0][0] + viewBoxes[0][2], // x + width
+        viewBoxes[0][1] + viewBoxes[0][3]  // y + height
+    ];
+
+    // Iterate through all viewBoxes to find the extremes
+    for (let i = 1; i < viewBoxes.length; i++) {
+        const [x, y, width, height] = viewBoxes[i];
+        const right = x + width;
+        const bottom = y + height;
+
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, right);
+        maxY = Math.max(maxY, bottom);
+    }
+
+    // Calculate final width and height
+    const width = maxX - minX;
+    const height = maxY - minY;
+
+    return [minX, minY, width, height];
+  }
+
   static calcFittingViewBox(svg){
     
     let vbs = Array.from(svg.children).map(elem => {

@@ -1,7 +1,8 @@
 <svg version="1.1" 
   viewBox="-20 -20 800 650" 
   xmlns="http://www.w3.org/2000/svg" 
-  xml:space="preserve">
+  xml:space="preserve"
+  style="background-color:floralwhite;">
   <defs>
     <style>
       text{
@@ -21,6 +22,10 @@
         font-family: Poppins, monospace;
         pointer-events: none;
         fill: black;
+      }
+      g#legendContainer *{
+        pointer-events: none;
+        user-select: none;
       }
       path:hover{
         opacity: .5;
@@ -334,83 +339,83 @@
     </g>
   </g>
 
-  <g id="labels">
-    <text x="586" y="286" text-anchor="middle" dominant-baseline="middle" >Abşeron</text>
-    <text x="96" y="104" text-anchor="middle" dominant-baseline="middle" >Ağstafa</text>
-    <text x="350" y="330" text-anchor="middle" dominant-baseline="middle" >Ağcabədi</text>
-    <text x="342" y="241" text-anchor="middle" dominant-baseline="middle" >Ağdaş</text>
-    <text x="290" y="330" text-anchor="middle" dominant-baseline="middle" >Ağdam</text>
-    <text x="470" y="244" text-anchor="middle" dominant-baseline="middle" >Ağsu</text>
-    <text x="526" y="590" text-anchor="middle" dominant-baseline="middle" >Astara</text>
-    <text x="82" y="450" text-anchor="middle" dominant-baseline="middle" >Babək</text>
-    <text x="218" y="32" text-anchor="middle" dominant-baseline="middle" >Balakən</text>
-    <text x="680" y="260" text-anchor="middle" dominant-baseline="middle" >Bakı</text>
-    <text x="324" y="280" text-anchor="middle" dominant-baseline="middle" >Bərdə</text>
-    <text x="384" y="374" text-anchor="middle" dominant-baseline="middle" >Beyləqan</text>
-    <text x="494" y="420" text-anchor="middle" dominant-baseline="middle" >Biləsuvar</text>
-    <text x="290" y="450" text-anchor="middle" dominant-baseline="middle" >Cəbrayıl</text>
-    <text x="490" y="470" text-anchor="middle" dominant-baseline="middle" >Cəlilabab</text>
-    <text x="124" y="476" text-anchor="middle" dominant-baseline="middle" >Culfa</text>
-    <text x="168" y="260" text-anchor="middle" dominant-baseline="middle" >Daşkəsən</text>
-    <text x="340" y="410" text-anchor="middle" dominant-baseline="middle" >Füzuli</text>
-    <text x="120" y="240" text-anchor="middle" dominant-baseline="middle">Gədəbəy</text>
-    <text x="254" y="241" text-anchor="middle" dominant-baseline="middle">Goranboy</text>
-    <text x="400" y="236" text-anchor="middle" dominant-baseline="middle">Göyçay</text>
-    <text x="208" y="240" text-anchor="middle" dominant-baseline="middle">Göygöl</text>
-    <text x="551" y="320" text-anchor="middle" dominant-baseline="middle">Hacıqabul</text>
-    <text x="430" y="360" text-anchor="middle" dominant-baseline="middle">İmişli</text>
-    <text x="448" y="195" text-anchor="middle" dominant-baseline="middle">İsmayıllı</text>
-    <text x="200" y="320" text-anchor="middle" dominant-baseline="middle">Kəlbəcər</text>
-    <text x="64" y="434" text-anchor="middle" dominant-baseline="middle">Kǝngǝrli</text>
-    <text x="450" y="290" text-anchor="middle" dominant-baseline="middle">Kürdəmir</text>
-    <text x="200" y="370" text-anchor="middle" dominant-baseline="middle">Laçın</text>
-    <text x="536" y="540" text-anchor="middle" dominant-baseline="middle">Lənkəran</text>
-    <text x="490" y="550" text-anchor="middle" dominant-baseline="middle">Lerik</text>
-    <text x="522" y="510" text-anchor="middle" dominant-baseline="middle">Masallı</text>
-    <text x="578" y="440" text-anchor="middle" dominant-baseline="middle">Neftçala</text>
-    <text x="89" y="478" text-anchor="middle" dominant-baseline="middle">NV</text>
-    <text x="360" y="144" text-anchor="middle" dominant-baseline="middle">Oğuz</text>
-    <text x="154" y="500" text-anchor="middle" dominant-baseline="middle">Ordubad</text>
-    <text x="396" y="180" text-anchor="middle" dominant-baseline="middle">Qəbələ</text>
-    <text x="268" y="100" text-anchor="middle" dominant-baseline="middle">Qax</text>
-    <text x="66" y="124" text-anchor="middle" dominant-baseline="middle">Qazax</text>
-    <text x="480" y="140" text-anchor="middle" dominant-baseline="middle">Quba</text>
-    <text x="242" y="454" text-anchor="middle" dominant-baseline="middle">Qubadlı</text>
-    <text x="554" y="250" text-anchor="middle" dominant-baseline="middle">Qobustan</text>
-    <text x="440" y="100" text-anchor="middle" dominant-baseline="middle">Qusar</text>
-    <text x="511" y="338" text-anchor="middle" dominant-baseline="middle">Sabirabad</text>
-    <text x="4" y="386" text-anchor="middle" dominant-baseline="middle">Sədərək</text>
-    <text x="114" y="430" text-anchor="middle" dominant-baseline="middle">Şahbuz</text>
-    <text x="310" y="150" text-anchor="middle" dominant-baseline="middle">Şəki</text>
-    <text x="578" y="380" text-anchor="middle" dominant-baseline="middle">Salyan</text>
-    <text x="41" y="406" text-anchor="middle" dominant-baseline="middle">Şərur</text>
-    <text x="490" y="368" text-anchor="middle" dominant-baseline="middle">Saatlı</text>
-    <text x="550" y="116" text-anchor="middle" dominant-baseline="middle">Şabran</text>
-    <text x="568" y="154" text-anchor="middle" dominant-baseline="middle">Siyəzən</text>
-    <text x="164" y="190" text-anchor="middle" dominant-baseline="middle">Şəmkir</text>
-    <text x="652" y="220" text-anchor="middle" dominant-baseline="middle">Sumqayıt</text>
-    <text x="511" y="200" text-anchor="middle" dominant-baseline="middle">Şamaxı</text>
-    <text x="228" y="170" text-anchor="middle" dominant-baseline="middle">Samux</text>
-    <text x="250" y="386" text-anchor="middle" dominant-baseline="middle">Şuşa</text>
-    <text x="266" y="286" text-anchor="middle" dominant-baseline="middle">Tərtər</text>
-    <text x="128" y="160" text-anchor="middle" dominant-baseline="middle">Tovuz</text>
-    <text x="390" y="264" text-anchor="middle" dominant-baseline="middle">Ucar</text>
-    <text x="526" y="66" text-anchor="middle" dominant-baseline="middle">Xaçmaz</text>
-    <text x="254" y="356" text-anchor="middle" dominant-baseline="middle">Xocalı</text>
-    <text x="590" y="206" text-anchor="middle" dominant-baseline="middle">Xızı</text>
-    <text x="304" y="376" text-anchor="middle" dominant-baseline="middle">Xocavənd</text>
-    <text x="460" y="522" text-anchor="middle" dominant-baseline="middle">Yardımlı</text>
-    <text x="294" y="218" text-anchor="middle" dominant-baseline="middle">Yevlax</text>
-    <text x="254" y="490" text-anchor="middle" dominant-baseline="middle">Zəngilan</text>
-    <text x="254" y="62" text-anchor="middle" dominant-baseline="middle">Zaqatala</text>
-    <text x="388" y="294" text-anchor="middle" dominant-baseline="middle">Zərdab</text>
-    <text x="550" y="552" text-anchor="middle" dominant-baseline="middle">LA</text>
-    <text x="254" y="256" text-anchor="middle" dominant-baseline="middle">NA</text>
-    <text x="325" y="118" text-anchor="middle" dominant-baseline="middle">SA</text>
-    <text x="560" y="340" text-anchor="middle" dominant-baseline="middle">SR</text>
-    <text x="306" y="237" text-anchor="middle" dominant-baseline="middle">YE</text>
-    <text x="216" y="204" text-anchor="middle" dominant-baseline="middle">GA</text>
-    <text x="295" y="193" text-anchor="middle" dominant-baseline="middle">MI</text>
+  <g id="labels" text-anchor="middle" dominant-baseline="middle">
+    <text x="586" y="286" title="Abşeron">Abşeron</text>
+    <text x="96" y="104"  title="Ağstafa">Ağstafa</text>
+    <text x="350" y="330" title="Ağcabədi">Ağcabədi</text>
+    <text x="342" y="241" title="Ağdaş">Ağdaş</text>
+    <text x="290" y="330" title="Ağdam">Ağdam</text>
+    <text x="470" y="244" title="Ağsu">Ağsu</text>
+    <text x="526" y="590" title="Astara">Astara</text>
+    <text x="82" y="450"  title="Babək">Babək</text>
+    <text x="218" y="32"  title="Balakən">Balakən</text>
+    <text x="680" y="260" title="Bakı">Bakı</text>
+    <text x="324" y="280" title="Bərdə">Bərdə</text>
+    <text x="384" y="374" title="Beyləqan">Beyləqan</text>
+    <text x="494" y="420" title="Biləsuvar">Biləsuvar</text>
+    <text x="290" y="450" title="Cəbrayıl">Cəbrayıl</text>
+    <text x="490" y="470" title="Cəlilabab">Cəlilabab</text>
+    <text x="124" y="476" title="Culfa">Culfa</text>
+    <text x="168" y="260" title="Daşkəsən">Daşkəsən</text>
+    <text x="340" y="410" title="Füzuli">Füzuli</text>
+    <text x="120" y="240" title="Gədəbəy">Gədəbəy</text>
+    <text x="254" y="241" title="Goranboy">Goranboy</text>
+    <text x="400" y="236" title="Göyçay">Göyçay</text>
+    <text x="208" y="240" title="Göygöl">Göygöl</text>
+    <text x="551" y="320" title="Hacıqabul">Hacıqabul</text>
+    <text x="430" y="360" title="İmişli">İmişli</text>
+    <text x="448" y="195" title="İsmayıllı">İsmayıllı</text>
+    <text x="200" y="320" title="Kəlbəcər">Kəlbəcər</text>
+    <text x="64" y="434"  title="Kǝngǝrli">Kǝngǝrli</text>
+    <text x="450" y="290" title="Kürdəmir">Kürdəmir</text>
+    <text x="200" y="370" title="Laçın">Laçın</text>
+    <text x="536" y="540" title="Lənkəran">Lənkəran</text>
+    <text x="490" y="550" title="Lerik">Lerik</text>
+    <text x="522" y="510" title="Masallı">Masallı</text>
+    <text x="578" y="440" title="Neftçala">Neftçala</text>
+    <text x="89" y="478"  title="NV">NV</text>
+    <text x="360" y="144" title="Oğuz">Oğuz</text>
+    <text x="154" y="500" title="Ordubad">Ordubad</text>
+    <text x="396" y="180" title="Qəbələ">Qəbələ</text>
+    <text x="268" y="100" title="Qax">Qax</text>
+    <text x="66" y="124"  title="Qazax">Qazax</text>
+    <text x="480" y="140" title="Quba">Quba</text>
+    <text x="242" y="454" title="Qubadlı">Qubadlı</text>
+    <text x="554" y="250" title="Qobustan">Qobustan</text>
+    <text x="440" y="100" title="Qusar">Qusar</text>
+    <text x="511" y="338" title="Sabirabad">Sabirabad</text>
+    <text x="4" y="386"   title="Sədərək">Sədərək</text>
+    <text x="114" y="430" title="Şahbuz">Şahbuz</text>
+    <text x="310" y="150" title="Şəki">Şəki</text>
+    <text x="578" y="380" title="Salyan">Salyan</text>
+    <text x="41" y="406"  title="Şərur">Şərur</text>
+    <text x="490" y="368" title="Saatlı">Saatlı</text>
+    <text x="550" y="116" title="Şabran">Şabran</text>
+    <text x="568" y="154" title="Siyəzən">Siyəzən</text>
+    <text x="164" y="190" title="Şəmkir">Şəmkir</text>
+    <text x="652" y="220" title="Sumqayıt">Sumqayıt</text>
+    <text x="511" y="200" title="Şamaxı">Şamaxı</text>
+    <text x="228" y="170" title="Samux">Samux</text>
+    <text x="250" y="386" title="Şuşa">Şuşa</text>
+    <text x="266" y="286" title="Tərtər">Tərtər</text>
+    <text x="128" y="160" title="Tovuz">Tovuz</text>
+    <text x="390" y="264" title="Ucar">Ucar</text>
+    <text x="526" y="66"  title="Xaçmaz">Xaçmaz</text>
+    <text x="254" y="356" title="Xocalı">Xocalı</text>
+    <text x="590" y="206" title="Xızı">Xızı</text>
+    <text x="304" y="376" title="Xocavənd">Xocavənd</text>
+    <text x="460" y="522" title="Yardımlı">Yardımlı</text>
+    <text x="294" y="218" title="Yevlax">Yevlax</text>
+    <text x="254" y="490" title="Zəngilan">Zəngilan</text>
+    <text x="254" y="62"  title="Zaqatala">Zaqatala</text>
+    <text x="388" y="294" title="Zərdab">Zərdab</text>
+    <text x="550" y="552" title="LA">LA</text>
+    <text x="254" y="256" title="NA">NA</text>
+    <text x="325" y="118" title="SA">SA</text>
+    <text x="560" y="340" title="SR">SR</text>
+    <text x="306" y="237" title="TE">YE</text>
+    <text x="216" y="204" title="GA">GA</text>
+    <text x="295" y="193" title="MI">MI</text>
   </g>
 
   <g id="title"></g>
@@ -421,10 +426,10 @@
   <g id="data-section"></g>
 
   <g id="legendRulerV">
-    <rect x="650" y="360" width="100" height="150" fill="red" stroke="black" stroke-width=".2" opacity=".5" />
+    <rect x="650" y="360" width="102" height="150" fill="red" stroke="black" stroke-width=".2" opacity=".5" />
   </g>
 
   <g id="legendRulerH">
-    <rect x="20" y="560" width="400" height="40" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
+    <rect x="20" y="560" width="410" height="30" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
   </g>
 </svg>

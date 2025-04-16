@@ -153,8 +153,12 @@ const Mock = {
   genMockData: function(){
     return this.genMatrix(cityList, partyList)
   },
+
+  generateSampleAnalysis: function(samples){
+
+  },
   
-  generateDistributionNormal: function(mean, stdDev) {
+  generateNormalDistributionValue: function(mean, stdDev) {
     // Box-Muller transform to generate standard normal random variable
     const u1 = Math.random();
     const u2 = Math.random();
@@ -164,7 +168,7 @@ const Mock = {
     return mean + stdDev * z;
   },
   
-  generateNormalDistributionArray: function(mean, stdDev, count) {
+  generateNormalDistributionSamples: function(mean=50, stdDev=13, count=100) {
     const results = [];
     for (let i = 0; i < count; i++) {
         const u1 = Math.random();
@@ -173,7 +177,55 @@ const Mock = {
         results.push(mean + stdDev * z);
     }
     return results;
+  },
+
+  trimDecimal: function(num, decimals){
+    const factor = Math.pow(10, decimals)
+    return Math.round(num * factor) / factor
+  },
+  
+  __trimDecimal: (num, decimals) => parseFloat(num.toFixed(decimals)),
+  
+  generateExponentialSamples: function(rate, size = 1) {
+    /**
+     * Generate random samples from an exponential distribution.
+     * f(x) = λe^(-λx) for x ≥ 0.
+     * rate - The rate parameter (lambda) of the exponential distribution (must be positive).
+     * size - Number of samples to generate.
+     */
+    if (rate <= 0) {
+        throw new Error("Rate parameter must be positive.");
+    }
+    
+    // Generate an array of samples
+    const samples = new Array(size);
+    for (let i = 0; i < size; i++) {
+        samples[i] = -Math.log(1 - Math.random()) / rate;
+    }
+    return samples;
+  },
+
+  findMax: function (arr) {
+    if (arr.length === 0) return null; // Handle empty array
+    let max = arr[0]; // Initialize with first element
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] > max) {
+        max = arr[i];
+      }
+    }
+    return max;
+  },
+  findMin: function (arr) {
+    if (arr.length === 0) return null; // Handle empty array
+    let min = arr[0]; // Initialize with first element
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] < min) {
+        min = arr[i];
+      }
+    }
+    return min;
   }
+  
   
   //console.log(genMatrix(['foo', 'bar', 'zar', 'har', 'kar'], ['chp', 'akp', 'mhp', 'hdp', 'mem'], 20,30) )
 };
