@@ -1,0 +1,87 @@
+<svg version="1.1" id="SHAPES"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 500 500" xml:space="preserve" style="background-color:whitesmoke;">
+
+   <defs>
+      <style>
+         g#features *{
+            cursor: pointer;
+            stroke: white;
+            stroke-width: 2px;
+            vector-effect:non-scaling-stroke;
+         }
+         g#labels *{
+            font-family: Poppins, monospace;
+            font-size: .8em;
+            pointer-events: none;
+            user-select: none;
+            stroke: white;
+            stroke-width:0.3em;
+            fill:black;
+            paint-order:stroke;
+            stroke-linejoin: round;
+         }
+         g#legendContainer *{
+         pointer-events: none;
+         user-select: none;
+         }
+         g#features g:hover{
+            opacity: .5;
+         }
+      </style>
+   </defs>
+
+   <g id="features" fill="silver">
+      <g id="path" fill="gold">
+         <path d="M192,29 183,29 176,30 170,35 164,37 160,39 150,41 138,42 124,48 120,53 112,59 105,65 102,66 97,73 92,80 84,85 81,91 77,97 76,107 80,112 86,118 95,128 90,130 82,130 75,128 68,125 60,129 55,134 37,142 28,144 20,142 17,146 21,150 26,152 33,152 42,149 51,146 60,141 69,141 70,146 68,153 65,157 66,162 73,163 83,155 88,148 97,142 101,142 109,141 120,140 126,140 126,129 127,121 130,113 140,113 149,115 159,110 165,108 172,102 176,106 185,110 199,105 202,100 211,93 219,90 222,83 224,75 223,70 219,63 218,58 214,53 208,50 201,50 200,50 194,42 192,37z" title="Path"/>
+         <title>Path</title>
+      </g>
+      <g id="square" fill="lime">
+         <rect x="200" y="130" width="120" height="120"/>
+         <title>Square</title>
+      </g>
+      <g id="rectangle" fill="crimson">
+         <rect x="90" y="390" width="100" height="50"/>
+         <title>Rectangle</title>
+      </g>
+      <g id="hexagon" fill="cornflowerblue">
+         <polygon points="350,40 380,40 395,65.98 380,91.96 350,91.96 335,65.98"/>
+         <polygon points="350,91.96 380,91.96 395,117.94 380,143.92 350,143.92 335,117.94"/>
+         <polygon points="395,65.98 425,65.98 440,91.96 425,117.94 395,117.94 380,91.96"/>
+         <title>Hexagon</title>
+      </g>
+      <g id="ellipse" fill="cyan">
+         <ellipse rx="60" ry="40" cx="340" cy="380"/>
+         <title>Ellipse</title>
+      </g>
+      <g id="greatcircleislands" fill="teal">
+         <circle cx="100" cy="220" r="10"/>
+         <circle cx="130" cy="240" r="14"/>
+         <circle cx="160" cy="264" r="18"/>
+         <circle cx="180" cy="310" r="26"/>
+         <title>Great Circle Islands</title>
+      </g>
+   </g>
+
+   <g id="labels" text-anchor="middle" dominant-baseline="middle">
+      <text id="path" x="140" y="86" title="Path">Path</text>
+      <text id="square" x="260" y="190" title="Square">Square</text>
+      <text id="rectangle" x="140" y="415" title="Rectangle">Rectangle</text>
+      <text id="hexagon" x="390" y="104" title="Hexagon">Hexagon</text>
+      <text id="ellipse" x="340" y="380" title="Ellipse">Ellipse</text>
+      <text id="greatcircleislands" x="120" y="280" title="G. Circle Islands">G. Circle Islands</text>
+   </g>
+
+   <g id="legendRulerV">
+      <rect x="500" y="520" width="88" height="132" fill="red" stroke="black" stroke-width="0" opacity="0" />
+   </g>
+
+   <g id="legendRulerH">
+      <rect x="300" y="600" width="350" height="23" fill="blue" stroke="black" stroke-width="0" opacity="0" />
+   </g>
+
+   <g id="other">
+      <path d="M95.5,190.625L100.5625,191.375L105.6875,192.625L110.875,194.375L116.125,196.625L121.25,198.875L126.25,201.125L131.125,203.375L135.875,205.625L140.75,208.3125L145.75,211.4375L150.875,215L156.125,219L161.1875,223.1875L166.0625,227.5625L170.75,232.125L175.25,236.875L179.875,241.75L184.625,246.75L189.5,251.875L194.5,257.125L198.8125,262.3125L202.4375,267.4375L205.375,272.5L207.625,277.5L209.8125,283.0625L211.9375,289.1875L214,295.875L216,303.125L217.375,309.8125L218.125,315.9375L218.25,321.5L217.75,326.5L216.5,330.875L214.5,334.625L211.75,337.75L208.25,340.25L204.3125,342.625L199.9375,344.875L195.125,347L189.875,349L185.375,350.375L181.625,351.125L178.625,351.25L176.375,350.75L173.6875,350.25L170.5625,349.75L167,349.25L163,348.75L158.75,347.9375L154.25,346.8125L149.5,345.375L144.5,343.625L139.75,341.5L135.25,339L131,336.125L127,332.875L122.6875,329.25L118.0625,325.25L113.125,320.875L107.875,316.125L103.375,311.625L99.625,307.375L96.625,303.375L94.375,299.625L91.9375,295.5625L89.3125,291.1875L86.5,286.5L83.5,281.5L80.5625,276.1875L77.6875,270.5625L74.875,264.625L72.125,258.375L69.9375,252.1875L68.3125,246.0625L67.25,240L66.75,234L66.625,228.1875L66.875,222.5625L67.5,217.125L68.5,211.875L70.0625,207.0625L72.1875,202.6875L74.875,198.75L78.125,195.25L81.8125,192.6875L85.9375,191.0625L90.5,190.375Z" fill="none" stroke="gray" stroke-width=".5" stroke-dasharray="4 2" opacity=".5"/>
+   </g>
+</svg>

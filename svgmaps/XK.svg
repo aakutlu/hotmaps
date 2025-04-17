@@ -32,7 +32,7 @@
          pointer-events: none;
          user-select: none;
          }
-         path:hover{
+         g#features g:hover{
             opacity: .5;
          }
       </style>
