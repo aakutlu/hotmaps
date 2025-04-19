@@ -32,9 +32,11 @@ class ColorPicker{
     // if Color Picker Palette does not exist, create it
     if(!cppContainer){
       window.COLORPICKER = {
+        colorPickerContainer: null,
         lastClickedElem: null,
         lastSelectedColor: null,
-        callback: null
+        callback: null,
+        timeoutId: null
       };
       cppContainer = document.createElement("div")
       cppContainer.setAttribute("id", "colorPickerPaletteContainer")
@@ -45,8 +47,10 @@ class ColorPicker{
         colorBox.style.backgroundColor = colorcode;
         cppContainer.appendChild(colorBox);
       })
-      // place cppContainer to decument
+      // place cppContainer to document
       document.body.appendChild(cppContainer)
+      window.COLORPICKER.colorPickerContainer = cppContainer
+
 
       // Attach event listeners
       cppContainer.addEventListener("click", (event) => {
@@ -58,23 +62,60 @@ class ColorPicker{
           event.target.style.border = "solid 2px black";
         }
         let colorcode = event.target.getAttribute("data-colorcode");
-        console.log(colorcode);
+        console.log(`%c${colorcode}`, `background-color: ${colorcode}`)
         window.COLORPICKER.callback(colorcode)
       });
+
+      // debounce helper function
+      const debounce = (callback) => {
+        clearTimeout(window.COLORPICKER.timeoutId)
+        window.COLORPICKER.timeoutId = setTimeout(() => callback(), 200)
+      }
+
+      // Mouseover Event Listeners
+      cppContainer.addEventListener("mouseleave", (event) => {
+        console.log(".")
+        debounce(() => {
+          window.COLORPICKER.colorPickerContainer.style.display = "none";
+        })
+
+      });
+
+/*       let timeoutId
+
+      const debounce = (callback) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => callback(), 1200)
+      }
+  
+      input.addEventListener('input', () => {
+        debounce(() => {
+          console.log(`Searching data from database...`)
+        })
+      }) */
+
+
+
     }
 
-    window.addEventListener("click", (event) => {
-      cppContainer.style.display = "none";
-    })
+/*     window.addEventListener("click", (event) => {
+      console.log("window clicked")
+      console.log("event.target => ", event.target)
+      console.log("last clicked => ", window.COLORPICKER.lastClickedElem)
+      console.log(event.target == window.COLORPICKER.lastClickedElem)
+      if(event.target != window.COLORPICKER.lastClickedElem){
+        cppContainer.style.display = "none";
+      }
+    }) */
   }
 
   static fire(target, options, callback){
     let cppContainer = document.querySelector("#colorPickerPaletteContainer")
-    if (window.COLORPICKER.lastClickedElem === target && cppContainer.style.display === "grid") {
+    if (window.COLORPICKER.lastClickedElem === target && cppContainer.style.display === "grid"){
       // make palette invisible
       window.COLORPICKER.lastClickedElem = null;
       cppContainer.style.display = "none";
-    } else {
+    } else{
       // make palette visible
       window.COLORPICKER.lastClickedElem = target;
       const rect = target.getBoundingClientRect();
@@ -82,6 +123,8 @@ class ColorPicker{
       cppContainer.style.top = `${rect.bottom + 2}px`; // 5px below button
       cppContainer.style.display = "grid";
     }
+
+    
 
     window.COLORPICKER.callback = callback
   }

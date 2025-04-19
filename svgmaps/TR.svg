@@ -1,8 +1,10 @@
 ﻿<svg id="TR" 
 	xmlns="http://www.w3.org/2000/svg"
+	xmlns:svg="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	version="1.1"
-	viewBox="-40 -40 880 440">
+	viewBox="-40 -40 880 440"
+	xml:space="preserve">
 	<defs>
 		<style type="text/css">
     g#features *{

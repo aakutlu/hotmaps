@@ -395,13 +395,13 @@ export class Maplib{
       legendElem = SVGHelper.generateChoroplethBar(legendObj)
       refElem = this.container.querySelector("g#legendRulerH")
       SVGHelper.upsertElement(svg, legendElem)
-      SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, heightRatio: 100, position: "top-center"} )
+      if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, heightRatio: 100, position: "top-center"} )
     }
     else if(["max", "secondHighestValue", "stringSimilarity"].indexOf(settings.strategy) != -1){
       legendElem = SVGHelper.generateLegendType2(legendObj)
       refElem = this.container.querySelector("g#legendRulerV")
       SVGHelper.upsertElement(svg, legendElem)
-      SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+      if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
     }
   }
 

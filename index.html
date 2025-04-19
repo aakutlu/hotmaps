@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="css/handsontable.full.min.css" />
     <link rel="stylesheet" href="libraries/chosen/chosen.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/style-zoomer.css">
-    <link rel="stylesheet" href="css/svg.css">
-    <link rel="stylesheet" href="css/tooltip.css">
+    <link rel="stylesheet" href="css/maplib.css">
+    <link rel="stylesheet" href="libraries/colorpicker/style.css">
+    <!-- <link rel="stylesheet" href="css/svg.css"> -->
+    <!-- <link rel="stylesheet" href="css/tooltip.css"> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.0.1/plotly.min.js" integrity="sha512-GvBV4yZL+5zT68skQaXRW80H+S82WupIppDunAVt6pCLVdFmTv9tstetOqXv76L/z9WFl+0zY28QFKu0LAVFSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="libraries/jquery-3.7.1.js"></script>
@@ -18,13 +19,14 @@
     <script src="libraries/chroma.js"></script>
     <script src="libraries/papaparse.js"></script>
     <script src="libraries/popper.js"></script>
+    <script src="libraries/colorpicker/colorpicker.js"></script>
     <!-- <script src="script/tooltip.js"></script> -->
 
     <title>HotMaps</title>
   </head>
   <body>
     <!-- TOOLTIP -->
-    <div id="tooltip" role="tooltip">
+<!--     <div id="tooltip" role="tooltip">
       <div id="arrow" data-popper-arrow></div>
       <div id="tooltipcontent">
         <ul>
@@ -33,7 +35,7 @@
           <li> <span>___</span> <span>%98</span> </li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
     <div class="intro" style="font-family: Poppins">
       Create easy <span style="font-family: Poppins; font-weight: 100; font-size: xx-large">colorfull</span> maps...
@@ -91,16 +93,15 @@
             <option value="TR-34">TR | İstanbul</option>
             <option value="USA">USA</option>
             <option value="usa-counties">USA | Counties</option>
-            <option value="usa-ia">USA | Iowa</option>
-            <option value="usa-nm">USA | New Mexico</option>
-            <option value="USA-WDC">USA | Washington, DC</option>
             <option value="KKTC">Kıbrıs</option>
+            <option value="CL">Chili</option>
+            <option value="BG">Bulgaria</option>
+            <option value="CU">Cuba</option>
             <option value="AZ">Azerbaycan</option>
             <option value="GE">Gürcistan</option>
             <option value="XK">Kosova</option>
             <option value="IT">Italy</option>
             <option value="GR">Greece</option>
-            <option value="HT">Haiti</option>
           </select>
         </fieldset>
 
@@ -205,12 +206,6 @@
             <input id="sheet_coloring_option" type="checkbox" checked />
             <label for="sheet_coloring_option">Allow Sheet Colorings</label>
           </div>
-        
-<!--           <div>
-            <input id="city_names_option" type="checkbox" />
-            <label for="city_names_option">Show Citynames</label>
-          </div> -->
-
 
           <div>
             <input id="legend_option" type="checkbox" />
@@ -239,20 +234,6 @@
           <output style="color:red;">sheeet contains nonnumeric values</output>
         </fieldset>
 
-
-  <!--       <script>
-          document.querySelector("#palette-classes").addEventListener("input", (event) => {
-          document.querySelector("#value").textContent = event.target.value;
-          });
-        </script> -->
-        
-  <!--       <div class="radios">
-          <input type="radio" id="qwerty1" name="featuretitle" value="rowHeader" checked>
-          <label for="qwerty1">CityName</label>
-          <input type="radio" id="qwerty2" name="featuretitle" value="value">
-          <label for="qwerty2">Value</label>
-        </div> -->
-
       </div>
 
       <!-- Spreadsheet area -->
@@ -262,7 +243,9 @@
 
       <!-- Map Container area -->
       <div id="map-container">
-        <div id="svg-container"></div>
+        <!-- <div id="svg-container-parent"> -->
+          <div id="svg-container"></div>
+        <!-- </div> -->
         <div class="download-image-btns">
           <img id="download-image-btn" src="img/download.svg" alt="download" title="Download as *.png">
         </div>
@@ -281,7 +264,6 @@
 
     <input type="color" name="color" id="color-picker" list="predefinedColors" value="#ffffff" style="position: absolute; visibility: hidden; z-index: -99" />
     <datalist id="predefinedColors">
-
       <option value="#67000d"></option>
       <option value="#a50f15"></option>
       <option value="#cb181d"></option>
@@ -313,6 +295,7 @@
       <option value="#9e9ac8"></option>
 
     </datalist>
+
     <script>
       //when page load finished, load svg image
       window.addEventListener("load", async (event) => {
@@ -327,6 +310,18 @@
         text.split("").forEach((elem) => {
           span.insertAdjacentHTML("beforeend", `<b style="color: ${chroma.random()}">${elem}</b>`);
         });
+      }
+
+      function logColorGroups(){
+       let settings = JSON.parse(localStorage.getItem('settings'))
+       let logStr = ""
+       let logStyles = []
+       //console.log("%cNAME1%cNAME2", "background-color:#CCCCCC", "background-color:#999999")
+       Object.entries(settings.colorGroups).forEach(([name,colorcode]) => {
+        logStr += `%c  ${name}  `
+        logStyles.push(`background-color:${colorcode}`)
+       })
+       console.log(logStr, ...logStyles)
       }
 
     </script>

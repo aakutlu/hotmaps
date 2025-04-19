@@ -141,10 +141,13 @@ export default class SVGHelper{
     let legendContainer = SVGHelper.createElement('g', {id: 'legendContainer'})
     if(!legendObj || !legendObj.list) return legendContainer
 
+    //
+    legendContainer.appendChild(SVGHelper.createElement('rect', {x: 0, y: 0, width: '60', height: '10', fill: "transparent"}))
+
     // add legend labels
     legendObj.list.forEach((item,i,arr) => {
-      let rect =  SVGHelper.createElement('rect', {x: 0, y: i*10+2*i, width: '20', height: '10', fill: item.color, stroke: 'black', "stroke-width": .4, rx: .5})
-      let text =  SVGHelper.createElement('text', {x: 22, y: i*10+2*i+6, fill: 'black', "dominant-baseline": 'middle', "text-anchor": "start", style: "font-size: 7px; font-weight:bold;"} )
+      let rect =  SVGHelper.createElement('rect', {x: 0, y: i*10+2*i, width: '10', height: '10', fill: item.color, stroke: 'black', "stroke-width": .4, rx: .5})
+      let text =  SVGHelper.createElement('text', {x: 12, y: i*10+2*i+8, fill: 'black', "dominant-baseline": 'middle', "text-anchor": "start", style: "font-size: 7px; font-weight:bold;"} )
       text.textContent = item.label
       legendContainer.appendChild(rect)
       legendContainer.appendChild(text)

@@ -1,4 +1,3 @@
-
 /* let sampleSheet = [
   ["", "1col", "col2", "col3"],
   ["ankara", "1", '2', `3`, "", "", ""],
@@ -9,190 +8,188 @@
   ["123", 1, 2, 3],
 ] */
 
-import Mock from './mock.js'
+import Mock from "./mock.js";
 
-export default class MatrixHelpers{
+export default class MatrixHelpers {
 
+  //static isConvertibleToNumber = (value) => value !== "" && value !== null && !Array.isArray(value) && isFinite(value);
+
+  static isConvertibleToNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value);
 
   // convert array cell values to "float" if possible, otherwise same.
-  static matrixNormalize(sheet){
-    sheet.forEach(array => {
-      array.forEach((el,i,arr) => {
-        if(el !== '' && el !== null && isFinite(el))
-          arr[i] = parseFloat(el)
-      })
-    })
-    return sheet
+  static matrixNormalize(sheet) {
+    sheet.forEach((array) => {
+      array.forEach((el, i, arr) => {
+        if (MatrixHelpers.isConvertibleToNumber(el)) arr[i] = parseFloat(el);
+      });
+    });
+    return sheet;
   }
 
   // same as above except don't touch first column and first row
-  static matrixNormalizeExceptLabels(sheet){
-    for(let i=0; i < sheet.length; i++){
-      for(let j=0; j < sheet[i].length; j++){
-        let cellValue = sheet[i][j]
-        if(i == 0 || j == 0) continue;
-        if(cellValue !== '' && cellValue !== null && isFinite(cellValue)){
-          sheet[i][j] = parseFloat(cellValue)
+  static matrixParseFloatExceptLabels(sheet) {
+    for (let i = 0; i < sheet.length; i++) {
+      for (let j = 0; j < sheet[i].length; j++) {
+        let cellValue = sheet[i][j];
+        if (i == 0 || j == 0) continue;
+        if (MatrixHelpers.isConvertibleToNumber(cellValue)) {
+          sheet[i][j] = parseFloat(cellValue);
         }
       }
     }
-    return sheet
+    return sheet;
   }
 
-  static getCell(sheet, row, col){
-    return sheet[row][col]
+  static genMatrix(rowNum, colNum, cellValueGeneratorFn) {
+    let matrix = new Array(rowNum);
+    matrix.fill(0);
+    matrix.forEach((row, i, arr) => {
+      arr[i] = new Array(colNum);
+    });
+
+    for (let i = 0; i < rowNum; i++) {
+      for (let j = 0; j < colNum; j++) {
+        matrix[i][j] = cellValueGeneratorFn();
+      }
+    }
+
+    return matrix;
   }
 
-  static setCell(sheet, row, col, value){
-    sheet[row][col] = value
+  static genSheet(rowHeaders, colHeaders, generator) {
+    generator = generator || Mock.integer;
+    let matrix = MatrixHelpers.genMatrix(rowHeaders.length, colHeaders.length, generator);
+
+    MatrixHelpers.insertRow(matrix, colHeaders, 0);
+    rowHeaders.unshift("");
+    MatrixHelpers.insertCol(matrix, rowHeaders, 0);
+
+    return matrix;
   }
 
-  static clearEmptyColumns(sheet){
-    let row0 = sheet[0]
-    for(let i = row0.length-1; i>=1; i--){
-      if(!row0[i]){
-        for(let j=0; j<sheet.length; j++){
-          let currRow = sheet[j]
-          currRow.splice(i,1)
+  static fillEmptyMatrixCells(sheet, generator) {
+    generator = generator || Mock.integer;
+    let isEmpty = (x) => x === null || x === "" || x === undefined;
+
+    for (let i = 0; i < sheet.length; i++) {
+      for (let j = 0; j < sheet[i].length; j++) {
+        if (j == 0 || i == 0) continue;
+        let cellvalue = sheet[i][j];
+        if (isEmpty(cellvalue) && !isEmpty(sheet[i][0]) && !isEmpty(sheet[0][j])) {
+          sheet[i][j] = generator();
+        }
+      }
+    }
+    return sheet;
+  }
+
+  static getCell(sheet, row, col) {
+    return sheet[row][col];
+  }
+
+  static setCell(sheet, row, col, value) {
+    sheet[row][col] = value;
+  }
+
+  static clearEmptyColumns(sheet) {
+    let row0 = sheet[0];
+    for (let i = row0.length - 1; i >= 1; i--) {
+      if (!row0[i]) {
+        for (let j = 0; j < sheet.length; j++) {
+          let currRow = sheet[j];
+          currRow.splice(i, 1);
         }
       }
     }
   }
 
-  static clearEmptyRows(sheet){
-    for(let i = sheet.length-1; i>=1; i--){
-      if(!sheet[i][0]) sheet.splice(i,1)
+  static clearEmptyRows(sheet) {
+    for (let i = sheet.length - 1; i >= 1; i--) {
+      if (!sheet[i][0]) sheet.splice(i, 1);
     }
   }
 
-  static clearRightMostEmptyColumns(sheet){
+  static clearRightMostEmptyColumns(sheet) {
     sheet.forEach((rowArr) => {
-      for(let j = rowArr.length-1; j>=0; j--){
-        if(rowArr[j]) break; 
-        rowArr.splice(j,1)
+      for (let j = rowArr.length - 1; j >= 0; j--) {
+        if (rowArr[j]) break;
+        rowArr.splice(j, 1);
       }
-    })
+    });
   }
-  
-  static clearBottomMostEmptyRows(sheet){
-    let isEmpty = (arr) => arr.every(elem => !elem && elem!==0 )
-    for(let i = sheet.length-1; i>=0; i--){
-      if(!isEmpty(sheet[i])) break;
-      sheet.splice(i,1)
+
+  static clearBottomMostEmptyRows(sheet) {
+    let isEmpty = (arr) => arr.every((elem) => !elem && elem !== 0);
+    for (let i = sheet.length - 1; i >= 0; i--) {
+      if (!isEmpty(sheet[i])) break;
+      sheet.splice(i, 1);
     }
   }
 
-  static deleteColumn(sheet,col){
-    sheet.forEach( row => {
-      row.splice(col,1)
-    })
+  static deleteColumn(sheet, col) {
+    sheet.forEach((row) => {
+      row.splice(col, 1);
+    });
   }
 
-  static deleteRow(sheet,row){
-    sheet.splice(row,1)
+  static deleteRow(sheet, row) {
+    sheet.splice(row, 1);
   }
 
-  static getColumn(sheet,col){
-    let column = []
-    sheet.forEach(row => {
-      column.push(row[col])
-    })
-    return column
+  static getColumn(sheet, col) {
+    let column = [];
+    sheet.forEach((row) => {
+      column.push(row[col]);
+    });
+    return column;
   }
 
-  static getRow(sheet,col){
-    return sheet[col]
+  static getRow(sheet, col) {
+    return sheet[col];
   }
 
-  static getCells(sheet,r1,c1,r2,c2){
+  static getCells(sheet, r1, c1, r2, c2) {
     // cell1 [r1,c1]
     // cell2 [r2,c2]
     // r1 - topleftcell row number,     c1 topleftcell column number
     // r2 - bottomrightcell row number, c2 bottomrightcell column number
-    let bottomRightCellColNum = sheet.at(-1).length -1
-    let bottomRightCellRowNum = sheet.length - 1
+    let bottomRightCellColNum = sheet.at(-1).length - 1;
+    let bottomRightCellRowNum = sheet.length - 1;
     // Check for ranges
-    if(r1 >= sheet.length || c1 >= sheet.at(-1).length || r1 > r2 || c1 > c2) 
-      return [[]]
+    if (r1 >= sheet.length || c1 >= sheet.at(-1).length || r1 > r2 || c1 > c2) return [[]];
 
-    if(r2 > bottomRightCellRowNum) r2 = bottomRightCellRowNum
-    if(c2 > bottomRightCellColNum) c2 = bottomRightCellColNum
-    
+    //check if r2,c2 out of sheet range
+    if (r2 > bottomRightCellRowNum) r2 = bottomRightCellRowNum;
+    if (c2 > bottomRightCellColNum) c2 = bottomRightCellColNum;
+
     // Generate empty sheet
-    let resultSheet = []
-    let colnum = c2 - c1 + 1
-    let rownum = r2 - r1 + 1
-    for(let i = 0; i<rownum;i++){
-      resultSheet.push(new Array(colnum))
+    let resultSheet = [];
+    let colnum = c2 - c1 + 1;
+    let rownum = r2 - r1 + 1;
+    for (let i = 0; i < rownum; i++) {
+      resultSheet.push(new Array(colnum));
     }
 
     // Fill empty sheet
-    for(let i = 0; i < resultSheet.length; i++){
-      for(let j = 0 ; j < resultSheet[i].length; j++){
-        resultSheet[i][j] = sheet[i+r1][j+c1]
+    for (let i = 0; i < resultSheet.length; i++) {
+      for (let j = 0; j < resultSheet[i].length; j++) {
+        resultSheet[i][j] = sheet[i + r1][j + c1];
       }
     }
-    return resultSheet
+    return resultSheet;
   }
 
-  static insertRow(sheet,rowArr,rowIndex){
-    sheet.splice(rowIndex,0,rowArr)
+  static insertRow(sheet, rowArr, rowIndex) {
+    sheet.splice(rowIndex, 0, rowArr);
   }
 
-  static insertCol(sheet,colArr,colIndex){
-    for(let i = 0; i<sheet.length; i++){
-      let currRow = sheet[i]
-      let currValue = colArr[i]
-      currRow.splice(colIndex, 0, currValue)
+  static insertCol(sheet, colArr, colIndex) {
+    for (let i = 0; i < sheet.length; i++) {
+      let currRow = sheet[i];
+      let currValue = colArr[i];
+      currRow.splice(colIndex, 0, currValue);
     }
   }
-
-/*   static genMatrix(rows, cols, min=0, max=100){
-    let height = rows.length + 1;
-    let width = cols.length + 1;
-    let matrix = new Array(height)
-    matrix.fill(0)
-    matrix.forEach((row,i,arr) => {
-      arr[i] = new Array(width)
-    })
-
-    for(let i = 0; i<height; i++){
-      for(let j = 0; j<width; j++){
-        matrix[i][j] = min + Math.floor(Math.random() * (max-min))
-        if(i == 0) matrix[0][j] = cols[j-1];
-        if(i > 0) matrix[i][0] = rows[i-1];
-      }
-    }
-  return matrix
-  } */
-
-  static genMatrix(rowNum, colNum, cellValueGeneratorFn){
-    let matrix = new Array(rowNum)
-    matrix.fill(0)
-    matrix.forEach((row,i,arr) => {
-      arr[i] = new Array(colNum)
-    })
-
-    for(let i = 0; i < rowNum; i++){
-      for(let j = 0; j < colNum; j++){
-        matrix[i][j] = cellValueGeneratorFn()
-      }
-    }
-
-  return matrix
-  }
-
-  static genSheet(rowHeaders, colHeaders, generator){
-    generator = generator || Mock.integer
-    let matrix = MatrixHelpers.genMatrix(rowHeaders.length, colHeaders.length, generator)
-
-    MatrixHelpers.insertRow( matrix, colHeaders, 0 )
-    rowHeaders.unshift("")
-    MatrixHelpers.insertCol( matrix, rowHeaders, 0 )
-
-    return matrix
-  }
-
 }
 /* let s = [
   ["cities", "color", "km", "region", "", ".", ""],

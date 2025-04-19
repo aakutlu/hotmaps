@@ -1,7 +1,13 @@
-<svg viewBox="0 0 15321 6296" version="1.1"
+<svg id="TR-ilce"
+  version="1.1"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
-  style="background-color:lightblue;">
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:svg="http://www.w3.org/2000/svg"
+  viewBox="0 0 15321 6296" 
+	width="15321"
+	height="6296"
+  xml:space="preserve"
+  style="background-color:whitesmoke;">
   <defs>
     <filter id="blurMe">
       <feGaussianBlur in="SourceGraphic" stdDeviation="30" />
@@ -12,19 +18,30 @@
     </pattern>
 
     <style>
-    :root{
-      --color1:white; 
-      --color2:dimgray; 
-    }
-    path{
-      cursor: pointer;
-      stroke: white;
-      stroke-width: 5px;
-      vector-effect:non-scaling-stroke;
-    }
-    path:hover{
-      opacity: .5;
-    }
+      g#features *{
+        cursor: pointer;
+        stroke: white;
+        stroke-width: 1px;
+        vector-effect:non-scaling-stroke;
+      }
+      g#labels *{
+        font-family: Poppins, monospace;
+        font-size: .8em;
+        pointer-events: none;
+        user-select: none;
+        stroke: white;
+        stroke-width:0.3em;
+        fill:black;
+        paint-order:stroke;
+        stroke-linejoin: round;
+      }
+      g#legendContainer *{
+      pointer-events: none;
+      user-select: none;
+      }
+      g#features g:hover{
+        opacity: .5;
+      }
     </style>
   </defs>
 
@@ -1004,7 +1021,7 @@
 <g id="81-kaynaşlı" name="kaynaşlı" data-ilname="düzce" data-type="ilçe"><path d="M4541,1458 4544,1455 4546,1453 4547,1450 4549,1447 4553,1445 4558,1439 4560,1434 4565,1428 4569,1419 4573,1412 4575,1406 4577,1401 4581,1388 4582,1381 4584,1375 4586,1365 4586,1360 4589,1347 4591,1337 4592,1334 4594,1327 4598,1320 4601,1315 4604,1307 4607,1303 4610,1298 4612,1291 4613,1290 4613,1290 4608,1288 4604,1286 4600,1284 4597,1282 4596,1279 4593,1274 4591,1272 4587,1270 4585,1269 4582,1265 4579,1261 4577,1256 4574,1249 4573,1245 4571,1242 4570,1240 4568,1238 4568,1238 4565,1245 4563,1248 4559,1254 4556,1259 4554,1261 4552,1264 4549,1269 4546,1272 4541,1276 4536,1279 4532,1282 4525,1285 4519,1287 4508,1291 4502,1294 4498,1295 4491,1298 4486,1299 4478,1301 4472,1301 4465,1302 4463,1302 4460,1301 4459,1302 4458,1302 4456,1303 4456,1304 4455,1307 4455,1313 4453,1322 4453,1325 4455,1327 4456,1330 4460,1336 4464,1342 4466,1347 4468,1351 4470,1357 4471,1363 4473,1367 4475,1371 4478,1374 4481,1377 4482,1380 4487,1391 4491,1402 4493,1407 4493,1410 4492,1415 4490,1419 4487,1427 4486,1431 4485,1437 4484,1443 4482,1448 4479,1453 4476,1459 4473,1464 4472,1467 4471,1471 4471,1471 4474,1471 4478,1471 4483,1470 4486,1471 4489,1471 4492,1472 4496,1474 4500,1475 4504,1475 4509,1473 4513,1472 4515,1469 4520,1465 4524,1463 4526,1462 4530,1461 4537,1460 4541,1458"><title>kaynaşlı</title></path></g>
 </g>
 
-<g id="legendRulerH"><rect x="9000" y="5600" width="6000" height="200" fill="blue" stroke="black" stroke-width=".2" opacity=".5" /></g>
+<g id="legendRulerH"><rect x="9000" y="5600" width="6000" height="800" fill="blue" stroke="black" stroke-width=".2" opacity=".5" /></g>
 <g id="legendRulerV"><rect x="100" y="4200" width="1000" height="2000" fill="red" stroke="black" stroke-width=".2" opacity=".5" /></g>
 
 </svg>

@@ -1,9 +1,0 @@
-/* g#features g:not([fill]) path{
-  fill: silver;
-} */
- 
-g#features *{
-  cursor: pointer;
-  stroke-width: 1px;
-  vector-effect: non-scaling-stroke;
-}
