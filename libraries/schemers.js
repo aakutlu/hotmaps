@@ -164,7 +164,6 @@ const choropleth2Schemer = function(sheet, options){
   const data = MatrixHelpers.getColumn(sheet, refColumn)
   data.splice(0,1)
   let boundaries = chroma.limits(data, intervalMode, intervalNumber);
-  console.log({boundaries})
   const colorGenerator = chroma.scale(colorRanges).classes(boundaries)
 
   // Generate colorMappings
@@ -190,7 +189,6 @@ const choropleth2Schemer = function(sheet, options){
   if(!boundaries.every(elem => isFinite(elem))) {
     choroplethBar.list = [] 
   }
-  console.warn("choroplethBar", {choroplethBar})
 
   return {
     type: "choropleth2",

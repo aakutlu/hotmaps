@@ -15,7 +15,7 @@ var handsOnTableObj = null;
 let cellMappings = null;
 
 let SETTINGS = {
-  map: "TR",
+  map: "USA",
   strategy: "max", // max, secondHighestValue, choropleth1, choropleth1, stringSimilarity
   refColumn: 1, // 0 || 'col1' ||
   featureTitle: "rowHeader", // rowHeader || value || default
@@ -43,26 +43,36 @@ Handsontable.renderers.registerRenderer("cellColorsRenderer", (instance, td, row
   Handsontable.renderers.TextRenderer(instance, td, row, col, prop, value, cellProperties);
 
   // Render Column Header Colors
-  if (["max", "secondHighestValue"].some((e) => e === SETTINGS.strategy) && row === 0 && SETTINGS.colorGroups[value]) {
+  if (["max", "secondHighestValue"].includes(SETTINGS.strategy) && row === 0 && SETTINGS.colorGroups[value]) {
     td.style.background = SETTINGS.colorGroups[value];
   }
 
   if (!SETTINGS.allowSheetColoring) return;
 
   let item = cellMappings?.find((el) => !!el.color && el.row == row && el.col == col);
-  if (item && ["max", "secondHighestValue"].some((e) => e === SETTINGS.strategy)) {
+
+  if (item && ["max", "secondHighestValue"].includes(SETTINGS.strategy)) {
     //td.style.background = chroma(item.color).hex() // .alpha(.8)
     td.style.color = chroma(item.color).hex();
     td.style.fontWeight = "bold";
     td.style.textDecoration = "underline";
     //td.style["text-shadow"] =  "1px 1px 4px rgba(255, 255, 255, 1)"
   }
-  if (item && ["choropleth1", "choropleth2", "stringSimilarity"].some((e) => e === SETTINGS.strategy)) {
+
+  if (item && ["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy)) {
     td.style.background = chroma(item.color).hex(); // .alpha(.8)
     td.style.fontWeight = "bold";
     td.style["text-shadow"] = "1px 1px 4px rgba(255, 255, 255, 1)";
     //td.style.color = chroma(item.color).hex()
     //td.style.textDecoration = 'underline';
+  }
+
+  if (["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0 && col === SETTINGS.refColumn) {
+    //td.style.background = chroma(item.color).hex(); // .alpha(.8)
+    td.style.fontWeight = "bold";
+    //td.style["text-shadow"] = "1px 1px 4px rgba(255, 255, 255, 1)";
+    //td.style.color = chroma(item.color).hex()
+    td.style.textDecoration = 'underline';
   }
 
   /* TD.style.fontWeight = 'bold';
@@ -143,25 +153,52 @@ handsOnTableObj.addHook("afterSelectColumns", function (start, end, ch) {
   setTimeout(() => updateWholeSystem(), 10); // !!! since this hook does not take effect immediately, add a little delay
 });
 
+
+
 handsOnTableObj.addHook("afterDeselect", function (row, col, row2, col2) {
   console.log("afterDeselect fired", row, col, row2, col2);
   //updateWholeSystem()
 });
 
+
+
+
 handsOnTableObj.addHook("afterSelection", function (row, col, row2, col2) {
   console.log("afterSelection fired", row, col, row2, col2);
-  if (!(row === 0 && row === row2 && col === col2)) return; // selection must be first row and single cell, otherwise do nothing
+
   let cellValue = handsOnTableObj.getDataAtCell(row, col);
-  if (typeof cellValue !== "string") return; //cell value must be string otherwise do nothing
+  if(typeof cellValue !== 'string') return;
+
   cellValue = cellValue.toLowerCase();
-  let selectedCell = handsOnTableObj.getCell(row, col);
-  ColorPicker.fire(selectedCell, {}, (colorcode) => {
-    //console.log(`%c${colorcode}`, `background-color: ${colorcode}`)
-    console.log([cellValue, colorcode]);
-    SETTINGS.colorGroups[cellValue] = colorcode;
+
+  if(["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0){
+    SETTINGS.refColumn = col;
     syncSettings();
     updateWholeSystem();
-  });
+  }
+
+  else if(["max", "secondHighestValue"].includes(SETTINGS.strategy) && (row === 0 && row === row2 && col === col2) ){
+    let selectedCell = handsOnTableObj.getCell(row, col);
+    ColorPicker.fire(selectedCell, {}, (colorcode) => {
+      //console.log(`%c${colorcode}`, `background-color: ${colorcode}`)
+      console.log([cellValue, colorcode]);
+      SETTINGS.colorGroups[cellValue] = colorcode;
+      syncSettings();
+      updateWholeSystem();
+    });
+  }
+
+  else if(["stringSimilarity"].includes(SETTINGS.strategy) && col === SETTINGS.refColumn && row !== 0){
+    let selectedCell = handsOnTableObj.getCell(row, col);
+    ColorPicker.fire(selectedCell, {}, (colorcode) => {
+      //console.log(`%c${colorcode}`, `background-color: ${colorcode}`)
+      console.log([cellValue, colorcode]);
+      SETTINGS.colorGroups[cellValue] = colorcode;
+      syncSettings();
+      updateWholeSystem();
+    });
+  }
+
 });
 
 // don't update empty cell inputs
@@ -252,9 +289,15 @@ function setTooltipListeners() {
 // ***********************
 window.addEventListener("load", async (event) => {
   //settings
+  let locale = navigator.language || navigator.userLanguage;
+  if(locale){
+    SETTINGS.map = locale.split("-")[0].toUpperCase();
+  }
+
   SETTINGS = JSON.parse(localStorage.getItem("settings")) || SETTINGS;
   syncSettings();
-  console.log("%cSettings", "color: red; background: silver; font-size: 20px");
+
+  console.log("%cSettings", "color: red; font-size: 14px");
   console.log(SETTINGS);
 
   updateUserInputElements();
@@ -425,11 +468,11 @@ function updateWholeSystem() {
   console.log("%c--------------------------updateWholeSystem()", `background-color: ${chroma.random().hex()};`);
   let sheet = handsOnTableObj.getData();
   let schema = generateScheme(sheet, SETTINGS);
-  console.log(schema);
+  //console.log(schema);
   mapLibObj.resetAllFeatureColors();
   mapLibObj.colorMap(schema.colorMappings);
   cellMappings = schema.cellMappings;
-  console.log(cellMappings);
+  //console.log(cellMappings);
   mapLibObj.emptyLegendContainer();
   if (SETTINGS.includeLegend) mapLibObj.updateLegend(schema.legend, SETTINGS);
 
@@ -667,7 +710,7 @@ document.getElementById("fill-random-strings").addEventListener("click", () => {
   let svgElement = document.querySelector("#svg-container svg");
   let legendContainer = document.querySelector("#legend-container");
   const data = MatrixHelpers.genSheet(rowLabels, columnLabels, () => {
-    return Mock.oneof(["group1", "group2", "group3", "group4", "group5"]);
+    return Mock.oneof(["group1", "group2", "group3", "group4", "group5", "group6", "group7",]); /* "group8", "group9", "group10", "group11", "group12", "group13", "xxxxx", "yyyyy", "aaaaa", "eeeee", "zzzzz"]); */
   });
   handsOnTableObj.updateData(data);
   updateWholeSystem();

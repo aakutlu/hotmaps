@@ -110,6 +110,12 @@ class ColorPicker{
   }
 
   static fire(target, options, callback){
+
+    if(!target){
+      console.warn("Clicked target element is null")
+      return;
+    } 
+
     let cppContainer = document.querySelector("#colorPickerPaletteContainer")
     if (window.COLORPICKER.lastClickedElem === target && cppContainer.style.display === "grid"){
       // make palette invisible
@@ -123,8 +129,6 @@ class ColorPicker{
       cppContainer.style.top = `${rect.bottom + 2}px`; // 5px below button
       cppContainer.style.display = "grid";
     }
-
-    
 
     window.COLORPICKER.callback = callback
   }

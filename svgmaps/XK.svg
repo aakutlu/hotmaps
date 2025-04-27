@@ -1,10 +1,8 @@
-<svg
-   version="1.1" id="XK"
+<svg id="XK"
+   version="1.1" 
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   width="700"
-   height="730"
    viewBox="-10 -10 700 730"
    xml:space="preserve"
    style="background-color:transparent;">
@@ -100,7 +98,7 @@
    <text id="Prizren" x="240" y="520" title="Prizren">Prizren</text>
   </g>
 
-   <g id="legendRulerV">
+  <g id="legendRulerV">
     <rect x="500" y="520" width="88" height="132" fill="red" stroke="black" stroke-width="0" opacity="0" />
   </g>
 

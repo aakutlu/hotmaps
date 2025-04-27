@@ -1,10 +1,21 @@
 # Hotmaps
-Hotmaps aims to create heatmap and choropleth type maps easily from spreadsheets. You can load .csv files and manipulate it with the help of handsontable.js library. Manipulation on spreadsheet triggers remapping of the SVG map colorings. While you manipulate the spreadsheet,  in parallel the map colorings updates. Hotmaps latest version has 5 coloring methods. Those are;
-- Max Value
-- Second Max Value
-- Choropleth Type ( Percentage Range[0,100] )
-- Choropleth Type ( Open Range[-Infinity, +Infinity] ) 
-- String Matching
+Hotmaps aims to create heatmap and choropleth type maps easily from spreadsheets. You can load .csv files and manipulate it with the help of handsontable.js library. Manipulation on spreadsheet triggers remapping of the SVG map colorings with respect to coloring method. While you manipulate the spreadsheet,  in parallel the map colorings updates. Hotmaps has 5 coloring methods;
+1. Max Value
+2. Second Max Value
+3. Choropleth Type ( Percentage Range[0,100] )
+4. Choropleth Type ( Open Range[-Infinity, +Infinity] ) 
+5. String Matching
+
+| _ids                 | donkeys | elephants | raccons | turtles |
+|----------------------|---------|-----------|---------|---------|
+| rectangle            |   42%   |    32%    |    13%  |   13%   |
+| square               |   12%   |    12%    |    12%  |   12%   |
+| perfectcircleislands |   12%   |    12%    |    12%  |   12%   |
+| hexagon              |   12%   |    12%    |    12%  |   12%   |
+| ellipse              |   12%   |    12%    |    12%  |   12%   |
+| path                 |   12%   |    12%    |    12%  |   12%   |
+
+Every coloring method works in their way. Max value colors the column which has the highest numeric value in a row. 
 
 Why hotmaps?
 Basic usage

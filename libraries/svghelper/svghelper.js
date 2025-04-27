@@ -50,12 +50,23 @@ export default class SVGHelper{
     let [x, y, width, height] = SVGHelper.getViewBoxArr(svg);
     SVGHelper.setViewBox(svg, [x-sides.left, y-sides.top, width+sides.left+sides.right, height+sides.top+sides.bottom])
   }
-
+/*
   static createElement(type, attributes = {}){
     let elem = document.createElementNS( SVGHelper.NAMESPACE, type);
     Object.entries(attributes).forEach(entry => {
       elem.setAttribute(entry[0],entry[1])
     })
+    return elem;
+  }
+*/
+  static createElement(type, attributes = {}, textContent = null){
+    let elem = document.createElementNS( "http://www.w3.org/2000/svg", type);
+    Object.entries(attributes).forEach(entry => {
+      elem.setAttribute(entry[0],entry[1])
+    })
+    if(textContent){
+      elem.textContent = textContent;
+    }
     return elem;
   }
 
@@ -133,10 +144,10 @@ export default class SVGHelper{
   }
 
 
-  //  ||||  Label1
-  //  ||||  Label2
-  //  ||||  Label3
-  //  ||||  Label4
+  //  |||  Label1
+  //  |||  Label2
+  //  |||  Label3
+  //  |||  Label4
   static generateLegendType2( legendObj ){
     let legendContainer = SVGHelper.createElement('g', {id: 'legendContainer'})
     if(!legendObj || !legendObj.list) return legendContainer
@@ -149,6 +160,42 @@ export default class SVGHelper{
       let rect =  SVGHelper.createElement('rect', {x: 0, y: i*10+2*i, width: '10', height: '10', fill: item.color, stroke: 'black', "stroke-width": .4, rx: .5})
       let text =  SVGHelper.createElement('text', {x: 12, y: i*10+2*i+8, fill: 'black', "dominant-baseline": 'middle', "text-anchor": "start", style: "font-size: 7px; font-weight:bold;"} )
       text.textContent = item.label
+      legendContainer.appendChild(rect)
+      legendContainer.appendChild(text)
+    })
+    return legendContainer
+  }
+
+  //  |||  Label1    |||  Label2    |||  Label3 
+  //  |||  Label4    |||  Label5    |||  Label6
+  //  |||  Label7    |||  Label8    |||  Label9
+  //  |||  Label10   |||  Label11   |||  Label12
+  static generateLegendType4( legendObj ){
+    let legendContainer = SVGHelper.createElement('g', {id: 'legendContainer'})
+    if(!legendObj || !legendObj.list) return legendContainer
+
+    //
+    legendContainer.appendChild(SVGHelper.createElement('rect', {x: 0, y: 0, width: '60', height: '10', fill: "transparent"}))
+    let maxcol = 3;
+    let legendwidth = 180;
+    let legendheight = 60;
+    
+    if(legendObj.list.length <= 15) maxcol = 3;
+    else if(legendObj.list.length <= 20) maxcol = 4;
+    else if(legendObj.list.length <= 25) maxcol = 5;
+    else if(legendObj.list.length <= 36) maxcol = 6;
+    else if(legendObj.list.length <= 42) maxcol = 7;
+    else maxcol = 8;
+
+    let maxtextlength = parseInt(36/maxcol)
+    // add legend labels
+    legendObj.list.forEach((item,i,arr) => {
+      let [x, y] = [0, 0];
+      let [row, col] = [ parseInt(i/maxcol), i%maxcol];
+      [x, y] = [col*legendwidth/maxcol, row*10];
+      let rect =  SVGHelper.createElement('rect', {x: x, y: y, width: '8', height: '8', fill: item.color, stroke: 'black', "stroke-width": .4, rx: .5})
+      let text =  SVGHelper.createElement('text', {x: x+9, y: y+5, fill: 'black', "dominant-baseline": 'middle', "text-anchor": "start", style: "font-size: 6px; font-weight:bold;"} )
+      text.textContent = item.label.length > maxtextlength ? (item.label).slice(0,maxtextlength) + ".." : item.label;
       legendContainer.appendChild(rect)
       legendContainer.appendChild(text)
     })

@@ -55,12 +55,12 @@
          <ellipse rx="60" ry="40" cx="340" cy="380"/>
          <title>Ellipse</title>
       </g>
-      <g id="greatcircleislands" fill="teal">
+      <g id="perfectcircleislands" fill="teal">
          <circle cx="100" cy="220" r="10"/>
          <circle cx="130" cy="240" r="14"/>
          <circle cx="160" cy="264" r="18"/>
          <circle cx="180" cy="310" r="26"/>
-         <title>Great Circle Islands</title>
+         <title>Perfect Circle Islands</title>
       </g>
    </g>
 
@@ -70,7 +70,7 @@
       <text id="rectangle" x="140" y="415" title="Rectangle">Rectangle</text>
       <text id="hexagon" x="390" y="104" title="Hexagon">Hexagon</text>
       <text id="ellipse" x="340" y="380" title="Ellipse">Ellipse</text>
-      <text id="greatcircleislands" x="120" y="280" title="G. Circle Islands">G. Circle Islands</text>
+      <text id="perfectcircleislands" x="120" y="280" title="P. Circle Islands">P. Circle Islands</text>
    </g>
 
    <g id="legendRulerV">

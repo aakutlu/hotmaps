@@ -397,9 +397,21 @@ export class Maplib{
       SVGHelper.upsertElement(svg, legendElem)
       if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, heightRatio: 100, position: "top-center"} )
     }
-    else if(["max", "secondHighestValue", "stringSimilarity"].indexOf(settings.strategy) != -1){
+    else if(["max", "secondHighestValue", "stringSimilarity"].includes(settings.strategy) && legendObj.list.length > 6){
+      legendElem = SVGHelper.generateLegendType4(legendObj)
+      refElem = this.container.querySelector("g#legendRulerWide") || this.container.querySelector("g#legendRulerH")
+      SVGHelper.upsertElement(svg, legendElem)
+      if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+    }
+    else if(["max", "secondHighestValue", "stringSimilarity"].includes(settings.strategy)){
       legendElem = SVGHelper.generateLegendType2(legendObj)
       refElem = this.container.querySelector("g#legendRulerV")
+      SVGHelper.upsertElement(svg, legendElem)
+      if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
+    }
+    else{
+      legendElem = SVGHelper.generateLegendType3(legendObj)
+      refElem = this.container.querySelector("g#legendRulerH")
       SVGHelper.upsertElement(svg, legendElem)
       if(refElem) SVGHelper.transformElementInside(refElem, legendElem, { gap: 0, widthRatio: 100, position: "top-center"} )
     }
