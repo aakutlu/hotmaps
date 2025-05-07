@@ -1,4 +1,3 @@
-import * as ExtendedColorsx11 from "./x11.js"
 import SVGHelper from "./svghelper/svghelper.js"
 export class Zoomer {
   static base64_dot = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBzdHlsZT0iZmlsbDogcmdiYSgwLCAwLCAwLCAxKTt0cmFuc2Zvcm06IDttc0ZpbHRlcjo7Ij4NCiAgPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNCIgLz4NCjwvc3ZnPg==";
@@ -237,7 +236,7 @@ export class Maplib{
   }
   
   constructor(container, mapsrc, options = {}){
-    this.options = Object.assign(Maplib.DEFAULT_OPTIONS, options) //{...Maplib.DEFAULT_OPTIONS, ...options}
+    this.options = Object.assign(Maplib.DEFAULT_OPTIONS, options);
     this.container = container;
     this.mapsrc = mapsrc;
     this.svgText = options.svgText
@@ -346,7 +345,7 @@ export class Maplib{
   labelsMap = function(cellMappings){
     this.labelsRemove()
     cellMappings.forEach(cell => {
-      let textElem = this.container.querySelector(`g#labels text[id="${cell.rowName}"]`)
+      let textElem = this.container.querySelector(`g#labels text[id="${cell.rowName}"]`) || this.container.querySelector(`g#labels text[id="${cell.rowName?.toLowerCase()}"]`)
       if(textElem) textElem.textContent = cell.value
     })
   }
@@ -382,7 +381,7 @@ export class Maplib{
 
   resetAllFeatureColors = function(){
     this.extractFeatureIds().forEach(id =>{
-      this.get(id).removeAttribute("fill")
+      this.get(id)?.removeAttribute("fill")
     })
   }
 
@@ -391,7 +390,7 @@ export class Maplib{
     let legendElem = undefined
     let refElem = undefined
 
-    if(settings.strategy == "choropleth1" || settings.strategy == "choropleth2"){
+    if(settings.strategy == "choropleth"){
       legendElem = SVGHelper.generateChoroplethBar(legendObj)
       refElem = this.container.querySelector("g#legendRulerH")
       SVGHelper.upsertElement(svg, legendElem)
@@ -436,17 +435,26 @@ export class Maplib{
 
   get = function(id){
     //id = id.toLocaleLowerCase('TR-tr');
-    let elem = this.container.querySelector(`g#features g[id="${id}"]`)
+    let lowercaseID = id.toLowerCase()
+    let uppercaseID = id.toUpperCase()
+    let elem = this.container.querySelector(`g#features g[id="${id}"]`) || 
+    this.container.querySelector(`g#features g[id="${lowercaseID}"]`) || 
+    this.container.querySelector(`g#features g[id="${uppercaseID}"]`);
     if(!elem) {
       console.warn(id, ' not found');
       return undefined;
     }
-    
     return new Elem(elem, this.zoomer)
   }
 
   extractFeatureIds = function(){
     return Array.from(this.container.querySelectorAll("svg g#features g")).map(elem => elem.getAttribute('id'))
+  }
+  extractFeatureIsoCodes = function(){
+    return Array.from(this.container.querySelectorAll("svg g#features g")).map(elem => elem.getAttribute('iso2'))
+  }
+  extractFeatureTitles = function(){
+    return Array.from(this.container.querySelectorAll("svg g#features g")).map(elem => elem.getAttribute('title'))
   }
 
   setViewBox = function(viewBox){

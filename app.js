@@ -16,10 +16,12 @@ let cellMappings = null;
 
 let SETTINGS = {
   map: "USA",
-  strategy: "max", // max, secondHighestValue, choropleth1, choropleth1, stringSimilarity
+  strategy: "choropleth", // max, secondHighestValue, choropleth1, choropleth1, stringSimilarity
   refColumn: 1, // 0 || 'col1' ||
   featureTitle: "rowHeader", // rowHeader || value || default
   intervalMode: "e",
+  userDefinedIntervals: "0,50,100",
+  bins: [],
   intervalNumber: 10,
   palette: "Oranges",
   allowSheetColoring: true, //todo
@@ -59,7 +61,7 @@ Handsontable.renderers.registerRenderer("cellColorsRenderer", (instance, td, row
     //td.style["text-shadow"] =  "1px 1px 4px rgba(255, 255, 255, 1)"
   }
 
-  if (item && ["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy)) {
+  if (item && ["choropleth", "stringSimilarity"].includes(SETTINGS.strategy)) {
     td.style.background = chroma(item.color).hex(); // .alpha(.8)
     td.style.fontWeight = "bold";
     td.style["text-shadow"] = "1px 1px 4px rgba(255, 255, 255, 1)";
@@ -67,7 +69,7 @@ Handsontable.renderers.registerRenderer("cellColorsRenderer", (instance, td, row
     //td.style.textDecoration = 'underline';
   }
 
-  if (["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0 && col === SETTINGS.refColumn) {
+  if (["choropleth", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0 && col === SETTINGS.refColumn) {
     //td.style.background = chroma(item.color).hex(); // .alpha(.8)
     td.style.fontWeight = "bold";
     //td.style["text-shadow"] = "1px 1px 4px rgba(255, 255, 255, 1)";
@@ -142,7 +144,7 @@ handsOnTableObj.addHook("afterSelectColumns", function (start, end, ch) {
   if (ch.col != 0) {
     let refColumn = this.getData()[0][ch.col];
     SETTINGS.refColumn = refColumn;
-    if (["choropleth1", "choropleth2", "stringSimilarity"].indexOf(SETTINGS.strategy) == -1) SETTINGS.strategy = "choropleth1"; //TODO
+    if (["choropleth", "stringSimilarity"].includes(SETTINGS.strategy)) SETTINGS.strategy = "choropleth"; //TODO
 
     // update strategy select-box
     let select2Strategy = document.getElementById("select-strategy");
@@ -171,13 +173,13 @@ handsOnTableObj.addHook("afterSelection", function (row, col, row2, col2) {
 
   cellValue = cellValue.toLowerCase();
 
-  if(["choropleth1", "choropleth2", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0){
+  if(["choropleth", "stringSimilarity"].includes(SETTINGS.strategy) && row === 0 && col !== 0){
     SETTINGS.refColumn = col;
     syncSettings();
     updateWholeSystem();
   }
 
-  else if(["max", "secondHighestValue"].includes(SETTINGS.strategy) && (row === 0 && row === row2 && col === col2) ){
+  else if(["max", "secondHighestValue"].includes(SETTINGS.strategy) && (row === 0 && row === row2 && col === col2) && col !== 0 ){
     let selectedCell = handsOnTableObj.getCell(row, col);
     ColorPicker.fire(selectedCell, {}, (colorcode) => {
       //console.log(`%c${colorcode}`, `background-color: ${colorcode}`)
@@ -291,10 +293,11 @@ window.addEventListener("load", async (event) => {
   //settings
   let locale = navigator.language || navigator.userLanguage;
   if(locale){
-    SETTINGS.map = locale.split("-")[0].toUpperCase();
+    //SETTINGS.map = locale.split("-")[0].toUpperCase();
   }
 
   SETTINGS = JSON.parse(localStorage.getItem("settings")) || SETTINGS;
+  SETTINGS.userDefinedIntervals = "";
   syncSettings();
 
   console.log("%cSettings", "color: red; font-size: 14px");
@@ -306,71 +309,6 @@ window.addEventListener("load", async (event) => {
   await loadMapTemplateDataUpdate(SETTINGS.map);
 });
 
-function updateUserInputElements() {
-  //update selectBox Local Saves
-  updateLocalStorageSelectBox();
-
-  //update SelectBox "select-map" saved (or default)
-  let selectBoxMap = document.getElementById("select-map");
-  $(selectBoxMap).val(SETTINGS.map).trigger("chosen:updated");
-
-  // update SelectBox "select-strategy" to saved (or default)
-  let selectBoxStrategy = document.getElementById("select-strategy");
-  $(selectBoxStrategy).val(SETTINGS.strategy).trigger("chosen:updated");
-
-  // update SelectBox "select-intervalMode" to saved (or default)
-  let selectBoxIntervalMode = document.getElementById("select-intervalMode");
-  $(selectBoxIntervalMode).val(SETTINGS.intervalMode).trigger("chosen:updated");
-
-  // update SelectBox "select-custom-palette" to saved (or default)
-  let selectBoxPalette = document.getElementById("select-custom-palette");
-  $(selectBoxPalette)
-    .val(SETTINGS.palette || "")
-    .trigger("chosen:updated");
-
-  //update SLIDER "select-palette-interval" to saved (or default)
-  document.querySelector("#select-palette-interval").value = SETTINGS.intervalNumber;
-  document.querySelector("#interval-num").textContent = SETTINGS.intervalNumber;
-  updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.intervalNumber));
-
-  //update Checkbox "allowSheetColoring" to saved (or default)
-  let checkbox1 = document.querySelector("#sheet_coloring_option");
-  SETTINGS.allowSheetColoring ? (checkbox1.checked = true) : (checkbox1.checked = false);
-
-  //update Checkbox "includeLegend" to saved (or default)
-  let checkbox2 = document.querySelector("#legend_option");
-  SETTINGS.includeLegend ? (checkbox2.checked = true) : (checkbox2.checked = false);
-
-  //update RADIO BUTTONS  "includeCityLabel" to saved (or default)
-  let radio1 = document.querySelector("#radio1");
-  let radio2 = document.querySelector("#radio2");
-  let radio3 = document.querySelector("#radio3");
-  //let radios = document.querySelectorAll("input[name=preferred_city_labels]")
-  if (SETTINGS.includeCityLabel === "none") radio1.checked = true;
-  else if (SETTINGS.includeCityLabel === "cityname") radio2.checked = true;
-  else if (SETTINGS.includeCityLabel === "cellvalue") radio3.checked = true;
-
-  //-----------------------------------
-  // Disable SELECTBOXES
-  //-----------------------------------
-
-  $(selectBoxIntervalMode).prop("disabled", false).trigger("chosen:updated");
-  $(selectBoxPalette).prop("disabled", false).trigger("chosen:updated");
-  document.querySelector("#select-palette-interval").disabled = false;
-
-  if (SETTINGS.strategy === "max" || SETTINGS.strategy === "secondHighestValue" || SETTINGS.strategy === "stringSimilarity") {
-    $(selectBoxIntervalMode).prop("disabled", true).trigger("chosen:updated");
-    $(selectBoxPalette).prop("disabled", true).trigger("chosen:updated");
-    document.querySelector("#select-palette-interval").disabled = true;
-  } else if (SETTINGS.strategy === "choropleth1") {
-    $(selectBoxIntervalMode).prop("disabled", true).trigger("chosen:updated");
-    SETTINGS.intervalNumber = 10;
-    document.querySelector("#select-palette-interval").value = SETTINGS.intervalNumber;
-    document.querySelector("#interval-num").textContent = SETTINGS.intervalNumber;
-    updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.intervalNumber));
-    document.querySelector("#select-palette-interval").disabled = true;
-  }
-}
 
 // ***********************
 // FUNCTIONS
@@ -400,17 +338,14 @@ async function loadMapTemplateDataUpdate(mapId) {
 function updateHistogram(dataset) {
   if (!dataset || dataset.length <= 1) return;
   //const dataset1 = Stats.generateExponentialSamples(.001,10_000);
-  const intervals = Stats.generateEqualIntervals(dataset, 20);
+  const intervals = Stats.generateEqualIntervals(dataset, 40);
   const frequencyObjList = Stats.generateFrequencyArray(dataset, intervals);
 
   // Prepare data for Plotly
   const rangeIdentifiers = [];
   const frequencyNumbers = [];
   frequencyObjList.forEach((elem) => {
-    let {
-      range: [start, end],
-      frequency,
-    } = elem;
+    let {range: [start, end], frequency } = elem;
     [start, end] = [Stats.trimDecimal(start, 1), Stats.trimDecimal(end, 1)];
     rangeIdentifiers.push(`${start}`); // gens something like that [0,1,2,3,]
     frequencyNumbers.push(frequency);
@@ -421,7 +356,7 @@ function updateHistogram(dataset) {
     y: frequencyNumbers,
     type: "bar", // Vertical bar chart
     marker: {
-      color: chroma.scale(SETTINGS.palette).classes(intervals).colors(frequencyNumbers.length), //"rgba(182, 54, 139, 0.6)", // Optional: customize bar color
+      color: "silver",//chroma.scale(SETTINGS.palette).classes(intervals).colors(frequencyNumbers.length), //"rgba(182, 54, 139, 0.6)", // Optional: customize bar color
       /*       line: {
         color: "rgba(75, 192, 192, 1)",
         width: 0,
@@ -448,8 +383,68 @@ function updateHistogram(dataset) {
     yaxis: {
       title: "Frequency",
       tickmode: "auto",
-      nticks: 10,
-      visible: false, // Hide y-axis labels and ticks
+      nticks: 3,
+      visible: true, // Hide y-axis labels and ticks
+      zeroline: true, // Remove y-axis line
+      //dtick: findClosestInSeries(Stats.findMax(frequencyNumbers1) / 10), // Ensure integer ticks for frequency
+    },
+    showlegend: false,
+    showTitle: false,
+    bargap: ".1px",
+    plot_bgcolor: "rgba(0,0,0,0)", // Transparent plot background
+    paper_bgcolor: "rgba(0,0,0,0)", // Transparent paper background
+    autosize: true, // Fit to container
+    template: "none", // Remove default styling
+  };
+  Plotly.newPlot("histogramContainer", [trace], layout, { staticPlot: true, displayModeBar: false });
+}
+
+
+function updateHistogramBins(dataset, bins) {
+  if (!dataset || dataset.length <= 2) return;
+
+  const frequencyObjList = Stats.generateFrequencyArray(dataset, bins);
+
+  // Prepare data for Plotly
+  const rangeIdentifiers = [];
+  const frequencyNumbers = [];
+  frequencyObjList.forEach((elem) => {
+    let {range: [start, end], frequency } = elem;
+    [start, end] = [Stats.trimDecimal(start, 1), Stats.trimDecimal(end, 1)];
+    rangeIdentifiers.push(start); // gens something like that [0,1,2,3,]
+    frequencyNumbers.push(frequency);
+  });
+
+  const trace = {
+    x: rangeIdentifiers,
+    y: frequencyNumbers,
+    type: "bar", // Vertical bar chart
+    marker: {
+      color: "rgb(141, 150, 150)",
+    },
+  };
+
+  const layout = {
+    margin: { l: 20, r: 10, t: 10, b: 15 },
+    title: {
+      text: "", //Title
+      x: 0.5, // Center the title
+      xanchor: "center",
+    },
+    xaxis: {
+      title: "Values",
+      tickmode: "auto", //possible values => "linear", "auto", "array"
+      nticks: 6,
+      visible: true,
+      zeroline: true,
+      //tickvals: Object.keys(frequency),
+      //ticktext: Object.keys(frequency), // Ensure clean labels
+    },
+    yaxis: {
+      title: "Frequency",
+      tickmode: "auto",
+      nticks: 4,
+      visible: true, // Hide y-axis labels and ticks
       zeroline: true, // Remove y-axis line
       //dtick: findClosestInSeries(Stats.findMax(frequencyNumbers1) / 10), // Ensure integer ticks for frequency
     },
@@ -468,7 +463,7 @@ function updateWholeSystem() {
   console.log("%c--------------------------updateWholeSystem()", `background-color: ${chroma.random().hex()};`);
   let sheet = handsOnTableObj.getData();
   let schema = generateScheme(sheet, SETTINGS);
-  //console.log(schema);
+  console.log(schema.dataAnalysis);
   mapLibObj.resetAllFeatureColors();
   mapLibObj.colorMap(schema.colorMappings);
   cellMappings = schema.cellMappings;
@@ -486,24 +481,109 @@ function updateWholeSystem() {
   let labelIdentifier = SETTINGS.includeCityLabel;
   showLabel[labelIdentifier]();
 
-  //update histogram
-  if (["choropleth1", "choropleth2"].indexOf(SETTINGS.strategy) !== -1) {
+  SETTINGS.bins = schema.bins;
+  syncSettings()
+
+  let analysis = {}
+
+  // update histogram
+  if ("choropleth" === SETTINGS.strategy) {
     let fulldataset = MatrixHelpers.getColumn(sheet, SETTINGS.refColumn);
     let cleandataset = fulldataset.filter((num) => MatrixHelpers.isConvertibleToNumber(num)).map(Number);
+    //SETTINGS.bins = SETTINGS.bins.map(num => Stats.trimDecimal(num, 1))
     updateHistogram(cleandataset);
+    analysis = cleandataset.length >= 2 ? Stats.dataAnalysis(cleandataset) : {};
   }
 
+  document.querySelector("#output-mean").textContent = analysis.mean
+  document.querySelector("#output-sum").textContent = analysis.sum
+  document.querySelector("#output-max").textContent = analysis.max
+  document.querySelector("#output-min").textContent = analysis.min
+  document.querySelector("#output-variance").textContent = analysis.variance
+  document.querySelector("#output-skewness").textContent = analysis.skewness
+
   handsOnTableObj.render();
+  updateUserInputElements();
+}
+
+
+function updateUserInputElements() {
+
+  //update SelectBoxes
+  updateLocalStorageSelectBox();
+  $("#select-map").val(SETTINGS.map).trigger("chosen:updated");
+  $("#select-strategy").val(SETTINGS.strategy).trigger("chosen:updated");
+  $("#select-intervalMode").val(SETTINGS.intervalMode).trigger("chosen:updated");
+  $("#select-custom-palette").val(SETTINGS.palette || "").trigger("chosen:updated");
+
+  //update Checkbox "allowSheetColoring" to saved (or default)
+  let checkbox1 = document.querySelector("#sheet_coloring_option");
+  SETTINGS.allowSheetColoring ? (checkbox1.checked = true) : (checkbox1.checked = false);
+
+  //update Checkbox "includeLegend" to saved (or default)
+  let checkbox2 = document.querySelector("#legend_option");
+  SETTINGS.includeLegend ? (checkbox2.checked = true) : (checkbox2.checked = false);
+
+  //update RADIO BUTTONS  "includeCityLabel" to saved (or default)
+  let radio1 = document.querySelector("#radio1");
+  let radio2 = document.querySelector("#radio2");
+  let radio3 = document.querySelector("#radio3");
+  //let radios = document.querySelectorAll("input[name=preferred_city_labels]")
+  if (SETTINGS.includeCityLabel === "none") radio1.checked = true;
+  else if (SETTINGS.includeCityLabel === "cityname") radio2.checked = true;
+  else if (SETTINGS.includeCityLabel === "cellvalue") radio3.checked = true;
+
+  //-----------------------------------
+  // Disable Some of SelectBoxes
+  //----------------------------------
+
+  // disable some input elements
+  if ( ["max", "secondHighestValue", "stringSimilarity"].includes(SETTINGS.strategy) ) {
+    $("#select-intervalMode").prop("disabled", true).trigger("chosen:updated");
+    document.querySelector("#user-defined-interval-string").disabled = true;
+    document.querySelector("#slider-bin-number").disabled = true;
+    document.querySelector("#palette-container").style.opacity = .5;
+    $("#select-custom-palette").prop("disabled", true).trigger("chosen:updated");
+  }
+  else if(SETTINGS.strategy === "choropleth" && SETTINGS.intervalMode === "u"){ // bins are user defined
+    $("#select-intervalMode").prop("disabled", false).trigger("chosen:updated");
+    document.querySelector("#user-defined-interval-string").disabled = false;
+    document.querySelector("#slider-bin-number").disabled = true;
+    document.querySelector("#palette-container").style.opacity = 1;
+    $("#select-custom-palette").prop("disabled", false).trigger("chosen:updated");
+
+    document.querySelector("#output-bin-number").textContent = SETTINGS.bins.length-1; // xxx
+    updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.bins.length-1), SETTINGS.bins);
+  }
+  else if(SETTINGS.strategy === "choropleth" && SETTINGS.intervalMode !== "u"){ // bins will automatic generated
+    $("#select-intervalMode").prop("disabled", false).trigger("chosen:updated");
+    document.querySelector("#user-defined-interval-string").disabled = true;
+    document.querySelector("#slider-bin-number").disabled = false;
+    document.querySelector("#palette-container").style.opacity = 1;
+    $("#select-custom-palette").prop("disabled", false).trigger("chosen:updated");
+
+
+    document.querySelector("#slider-bin-number").value = SETTINGS.intervalNumber
+    document.querySelector("#output-bin-number").textContent = SETTINGS.bins.length - 1;
+    updatePaletteSample(chroma.scale(SETTINGS.palette).colors(SETTINGS.bins.length-1), SETTINGS.bins);
+  }
+
+  
 }
 
 function generateScheme(sheet, options) {
   MatrixHelpers.clearEmptyColumns(sheet);
   MatrixHelpers.clearEmptyRows(sheet);
+  //make sheet row and column identifiers lowercase
+  sheet.forEach(elem => elem[0] = elem[0]?.toLocaleLowerCase("tr-TR") || elem[0])
+  sheet[0].forEach(cell => cell = cell?.toLocaleLowerCase("tr-TR") || cell)
+
+
   if (options.strategy !== "stringSimilarity") MatrixHelpers.matrixParseFloatExceptLabels(sheet);
 
   // get valid column headers(col1, col2, ... etc.)
   let columnHeaders = MatrixHelpers.getRow(sheet, 0).filter((cellvalue, i, arr) => {
-    return i !== 0 && cellvalue !== "_id" && cellvalue !== "_title" && typeof cellvalue === "string" && cellvalue.length > 0;
+    return i !== 0 && cellvalue !== "_id" && cellvalue !== "_title" && typeof cellvalue === "string" && cellvalue.length > 0 && cellvalue.charAt(0) !== "_" && cellvalue.charAt(1) !== "_";
   });
 
   // make random color assignments for any header have no color assignment
@@ -528,14 +608,12 @@ function generateScheme(sheet, options) {
   }
 
   // Scenerios
-  if (options.strategy === "max") {
+  if (options.strategy === "choropleth") {
+    return Schemers.choroplethSchemer(sheet, options);
+  }else if (options.strategy === "max") {
     return Schemers.maxSchemer(sheet, options);
   } else if (options.strategy === "secondHighestValue") {
     return Schemers.secondHighestSchemer(sheet, options);
-  } else if (options.strategy === "choropleth1") {
-    return Schemers.choropleth1Schemer(sheet, options);
-  } else if (options.strategy === "choropleth2") {
-    return Schemers.choropleth2Schemer(sheet, options);
   } else if (options.strategy === "stringSimilarity") {
     return Schemers.stringSimilaritySchemer(sheet, options);
   } else return [];
@@ -589,12 +667,14 @@ function updateLocalStorageSelectBox() {
   $(select2).trigger("chosen:updated");
 }
 
-function updatePaletteSample(colorArray) {
-  let container = document.querySelector(".palette");
+function updatePaletteSample(colorArray, bins = []) {
+  let container = document.querySelector("#palette-container");
   container.replaceChildren();
-  colorArray.forEach((colorCode) => {
+  colorArray.forEach((colorCode, i, arr) => {
     let span = document.createElement("span");
-    span.setAttribute("style", `background-color:${colorCode}`);
+    span.setAttribute("style", `background-color:${colorCode};`);
+    span.setAttribute("data-bin", Stats.shortenNumber(bins[i]));
+    if(i == arr.length-1) span.setAttribute("data-last-bin", Stats.shortenNumber(bins[i+1]));
     container.appendChild(span);
   });
 }
@@ -628,7 +708,6 @@ $("#select-strategy")
   .change((event) => {
     SETTINGS.strategy = event.target.value;
     syncSettings(); //todo
-    updateUserInputElements();
     updateWholeSystem();
   });
 
@@ -637,6 +716,7 @@ $("#select-intervalMode")
   .change((event) => {
     SETTINGS.intervalMode = event.target.value;
     syncSettings();
+    //document.querySelector("#user-defined-interval-string").value = SETTINGS.userDefinedIntervals
     updateWholeSystem();
   });
 
@@ -645,14 +725,18 @@ $("#select-custom-palette")
   .change((event) => {
     SETTINGS.palette = event.target.value;
     syncSettings();
-    updateUserInputElements();
     updateWholeSystem();
   });
 
-document.querySelector("#select-palette-interval").addEventListener("input", (event) => {
+document.querySelector("#slider-bin-number").addEventListener("input", (event) => {
   SETTINGS.intervalNumber = parseInt(event.target.value);
   syncSettings();
-  updateUserInputElements();
+  updateWholeSystem();
+});
+
+document.querySelector("#user-defined-interval-string").addEventListener("input", (event) => {
+  SETTINGS.userDefinedIntervals = event.target.value
+  syncSettings();
   updateWholeSystem();
 });
 
@@ -693,6 +777,7 @@ Array.from(radios).forEach((radio) => {
   handsOnTableObj.updateData(data)
   updateWholeSystem()
 }) */
+// Fill random data to "Hands on Table"
 document.getElementById("fill-random-data").addEventListener("click", () => {
   let sheetData = handsOnTableObj.getSourceData();
   const data = MatrixHelpers.fillEmptyMatrixCells(sheetData, () => {
@@ -702,7 +787,16 @@ document.getElementById("fill-random-data").addEventListener("click", () => {
   updateWholeSystem();
 });
 
-// Fill random data to "Hands on Table"
+document.getElementById("fill-random-data2").addEventListener("click", () => {
+  let sheetData = handsOnTableObj.getSourceData();
+  const data = MatrixHelpers.fillEmptyMatrixCells(sheetData, () => {
+    return Math.random()
+  });
+  handsOnTableObj.updateData(data);
+  updateWholeSystem();
+});
+
+// Fill random strings to "Hands on Table"
 document.getElementById("fill-random-strings").addEventListener("click", () => {
   let sheetData = handsOnTableObj.getData();
   let columnLabels = MatrixHelpers.getRow(sheetData, 0).filter((elem) => elem);

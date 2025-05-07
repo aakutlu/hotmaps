@@ -1,0 +1,39 @@
+.legend-container {
+  margin: 1em 0 1em 0;
+}
+.legend-container > span {
+  padding: 3px;
+  margin: 3px 10px 3px 10px;
+  opacity: 0.8;
+  border: solid 2px transparent;
+}
+.legend-container > span.selected {
+  padding: 3px;
+  margin: 3px 10px 3px 10px;
+  border-radius: 3px;
+  opacity: 0.8;
+  border: solid 2px black;
+}
+.legend-container > span > span:first-child {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: solid 1px gray;
+  transform: translateY(2.5px);
+  background: url("../img/palette.svg");
+  background-size: contain;
+}
+.legend-container > span > span:first-child:hover {
+  border: solid 1px black;
+  cursor: pointer;
+}
+.legend-container > span > span:nth-child(2) {
+  font-family: Poppins;
+  font-weight: 500;
+  margin-left: 3px;
+  
+}
+.legend-container > span > span:nth-child(2):hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

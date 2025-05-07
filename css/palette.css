@@ -1,0 +1,56 @@
+
+#palette-container{
+  display:flex;
+  justify-content: start;
+  align-items: end;
+  width:100%;
+  height:1em;
+  border: solid 1px black;
+  margin-bottom: 1em;
+}
+
+#palette-container>*{
+  flex-grow: 1;
+  height: 1em;
+  user-select: none;
+  position: relative;
+}
+#palette-container > *::before {
+  content: attr(data-bin);
+  font-size: .7em;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  transform: translateX(-50%); /* Centers it horizontally */
+  display: block; /* Ensures proper block-level positioning */
+  text-align: center;
+  line-height: 1; /* Prevents extra spacing */
+}
+#palette-container > *:last-child::after{
+  content: attr(data-last-bin);
+  font-size: .7em;
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  transform: translateX(50%);
+  display: block;
+  text-align: center;
+  line-height: 1;
+}
+  /* When there are more than 8 spans, hide all ::before content by default */
+  #palette-container:has(> :nth-child(9)) > *::before {
+    content: none;
+  }
+
+  /* Show ::before content for even-indexed spans */
+  #palette-container:has(> :nth-child(9)) > *:nth-child(odd)::before {
+    content: attr(data-bin);
+  }
+
+  /* Ensure the last child shows both data-bins and data-bins-last, even if it's odd-indexed */
+  #palette-container:has(> :nth-child(9)) > *:last-child::before{
+    content: none;
+  }
+  #palette-container:has(> :nth-child(9)) > *:last-child::after{
+    content: attr(data-last-bin);
+  }

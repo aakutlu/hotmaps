@@ -16,7 +16,7 @@
     }
     g#labels *{
       font-family: monospace;
-      font-size: .9em;
+      font-size: 1em;
       font-weight: bold;
       fill: black;
       stroke-linejoin: round;
@@ -31,7 +31,9 @@
       opacity: .5;
       cursor: pointer;
     }
-<!--     g#features > g:hover{
+    
+    <!--
+    g#features > g:hover{
       opacity: .5;
     } -->
     </style>
@@ -150,7 +152,7 @@
   <text id="eskişehir" x="405" y="252"  iso2="TR-26" title="Eskişehir">Eskişehir</text>
   <text id="gaziantep" x="872" y="498"  iso2="TR-27" title="Gaziantep">Gaziantep</text>
   <text id="giresun" x="959" y="141"  iso2="TR-28" title="Giresun">Giresun</text>
-  <text id="gümüşhane" x="1031" y="174"  iso2="TR-29" title="Gümüşhane">Gümüşhane</text>
+  <text id="gümüşhane" x="1036" y="174"  iso2="TR-29" title="Gümüşhane">Gümüşhane</text>
   <text id="hakkari" x="1371" y="457"  iso2="TR-30" title="Hakkari">Hakkari</text>
   <text id="hatay" x="789" y="569"  iso2="TR-31" title="Hatay">Hatay</text>
   <text id="ısparta" x="394" y="416"  iso2="TR-32" title="Isparta">Isparta</text>
@@ -162,7 +164,7 @@
   <text id="kayseri" x="756" y="353"  iso2="TR-38" title="Kayseri">Kayseri</text>
   <text id="kırklareli" x="137" y="44"  iso2="TR-39" title="Kırklareli">Kırklareli</text>
   <text id="kırşehir" x="633" y="279"  iso2="TR-40" title="Kırşehir">Kırşehir</text>
-  <text id="kocaeli" x="314" y="126"  iso2="TR-41" title="Kocaeli">Kocaeli</text>
+  <text id="kocaeli" x="314" y="124"  iso2="TR-41" title="Kocaeli">Kocaeli</text>
   <text id="konya" x="506" y="409"  iso2="TR-42" title="Konya">Konya</text>
   <text id="kütahya" x="293" y="282"  iso2="TR-43" title="Kütahya">Kütahya</text>
   <text id="malatya" x="915" y="357"  iso2="TR-44" title="Malatya">Malatya</text>
@@ -175,12 +177,12 @@
   <text id="niğde" x="676" y="416"  iso2="TR-51" title="Niğde">Niğde</text>
   <text id="ordu" x="886" y="130"  iso2="TR-52" title="Ordu">Ordu</text>
   <text id="rize" x="1133" y="119"  iso2="TR-53" title="Rize">Rize</text>
-  <text id="sakarya" x="362" y="145"  iso2="TR-54" title="Sakarya">Sakarya</text>
+  <text id="sakarya" x="366" y="145"  iso2="TR-54" title="Sakarya">Sakarya</text>
   <text id="samsun" x="778" y="96"  iso2="TR-55" title="Samsun">Samsun</text>
-  <text id="siirt" x="1223" y="420"  iso2="TR-56" title="Siirt">Siirt</text>
+  <text id="siirt" x="1232" y="420"  iso2="TR-56" title="Siirt">Siirt</text>
   <text id="sinop" x="695" y="44"  iso2="TR-57" title="Sinop">Sinop</text>
   <text id="sivas" x="868" y="260"  iso2="TR-58" title="Sivas">Sivas</text>
-  <text id="tekirdağ" x="126" y="111"  iso2="TR-59" title="Tekirdağ">Tekirdağ</text>
+  <text id="tekirdağ" x="130" y="100"  iso2="TR-59" title="Tekirdağ">Tekirdağ</text>
   <text id="tokat" x="821" y="178"  iso2="TR-60" title="Tokat">Tokat</text>
   <text id="trabzon" x="1057" y="130"  iso2="TR-61" title="Trabzon">Trabzon</text>
   <text id="tunceli" x="1024" y="297"  iso2="TR-62" title="Tunceli">Tunceli</text>
@@ -190,19 +192,19 @@
   <text id="yozgat" x="716" y="249"  iso2="TR-66" title="Yozgat">Yozgat</text>
   <text id="zonguldak" x="456" y="85"  iso2="TR-67" title="Zonguldak">Zonguldak</text>
   <text id="aksaray" x="615" y="372"  iso2="TR-68" title="Aksaray">Aksaray</text>
-  <text id="bayburt" x="1087" y="193"  iso2="TR-69" title="Bayburt">Bayburt</text>
+  <text id="bayburt" x="1090" y="188"  iso2="TR-69" title="Bayburt">Bayburt</text>
   <text id="karaman" x="564" y="494"  iso2="TR-70" title="Karaman">Karaman</text>
   <text id="kırıkkale" x="602" y="226"  iso2="TR-71" title="Kırıkkale">Kırıkkale</text>
-  <text id="batman" x="1165" y="409"  iso2="TR-72" title="Batman">Batman</text>
-  <text id="şırnak" x="1252" y="465"  iso2="TR-73" title="Şırnak">Şırnak</text>
+  <text id="batman" x="1178" y="434"  iso2="TR-72" title="Batman">Batman</text>
+  <text id="şırnak" x="1260" y="465"  iso2="TR-73" title="Şırnak">Şırnak</text>
   <text id="bartın" x="510" y="50"  iso2="TR-74" title="Bartın">Bartın</text>
-  <text id="ardahan" x="1285" y="100"  iso2="TR-75" title="Ardahan">Ardahan</text>
+  <text id="ardahan" x="1290" y="100"  iso2="TR-75" title="Ardahan">Ardahan</text>
   <text id="ığdır" x="1368" y="223"  iso2="TR-76" title="Iğdır">Iğdır</text>
   <text id="yalova" x="257" y="148"  iso2="TR-77" title="Yalova">Yalova</text>
   <text id="karabük" x="517" y="93"  iso2="TR-78" title="Karabük">Karabük</text>
   <text id="kilis" x="857" y="528"  iso2="TR-79" title="Kilis">Kilis</text>
-  <text id="osmaniye" x="807" y="483"  iso2="TR-80" title="Osmaniye">Osmaniye</text>
-  <text id="düzce" x="412" y="122"  iso2="TR-81" title="Düzce">Düzce</text>
+  <text id="osmaniye" x="798" y="483"  iso2="TR-80" title="Osmaniye">Osmaniye</text>
+  <text id="düzce" x="416" y="122"  iso2="TR-81" title="Düzce">Düzce</text>
 </g>
 
 

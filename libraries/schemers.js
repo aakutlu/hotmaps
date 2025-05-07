@@ -3,7 +3,7 @@
 // let chroma = require("./node_modules/chroma-js/dist/chroma.cjs")
 
 import MatrixHelpers from './matrixhelpers.js'
-import { mapFrequencySorted } from './mischelpers.js';
+import Stats from './stats.js';
 
 const SAMPLESHEET = [
   ["id", "col1", "col2", "col3"],
@@ -95,106 +95,87 @@ const secondHighestSchemer = function(sheet, options){
 }
 
 
-
-// cell values must be between [0, 100]
-const choropleth1Schemer = function(sheet, options){
-  let colorMappings = {};
-  let cellMappings = []
-  let {refColumn, palette, intervalNumber, intervalMode} = options
-  console.log({refColumn})
-
-  let choroplethBar = {
-    title: "Default",
-    list: [
-      {color: "white", label: "none", range: [0,10]},
-      {color: "white", label: "none", range: [10,20]},
-      {color: "white", label: "none", range: [20,30]},
-      {color: "white", label: "none", range: [30,40]},
-      {color: "white", label: "none", range: [40,50]},
-      {color: "white", label: "none", range: [50,60]},
-      {color: "white", label: "none", range: [60,70]},
-      {color: "white", label: "none", range: [70,80]},
-      {color: "white", label: "none", range: [80,90]},
-      {color: "white", label: "none", range: [90,100]},
-    ]
+const choroplethSchemer = function(sheet, options){
+  let isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value);
+  let parseCommaSeperatedValues = (string) => {
+    if(typeof string !== 'string') return undefined;
+    return [...new Set(string.trim().split(",").filter(elem => isNumeric(elem)).map(elem => parseFloat(elem)).sort((a,b) => a-b))]
   }
 
-  let colName = sheet[0][refColumn];
-  let mainColor = palette[colName] ? palette[colName] : chroma.random().hex();
-  let colorRanges = palette ? palette : ["white", mainColor, "black"];
-
-  // Generate colorMappings
-  for(let i=1; i < sheet.length; i++){
-    let value = sheet[i][refColumn];
-    let rowName = sheet[i][0];
-    if(typeof value == 'number'){
-      let hexColor = chroma.scale(colorRanges).domain([0,100])(value).hex()      
-      colorMappings[rowName] = hexColor
-      cellMappings.push({row: i, col: refColumn, rowName: rowName, colName: colName, color: hexColor, value: sheet[i][refColumn]})
-    }
-  }
-
-  choroplethBar.list.forEach( (elem,i) => {
-    elem.color = chroma.scale(colorRanges).domain([0,100]).colors(10)[i]
-  } )
-
-  return {
-    type: "choropleth1",
-    colorMappings: colorMappings,
-    cellMappings: cellMappings,
-    legend: choroplethBar
-  };
-}
-
-// cell values must be between [0, 100]
-const choropleth2Schemer = function(sheet, options){
   let colorMappings = {};
   let cellMappings = []
+  let bins = []
   let {refColumn, palette, colorGroups, intervalNumber, intervalMode} = options
+  let choroplethBar = { title: "Default", list: [] };
+  let refColName = sheet[0][refColumn];
+  let userDefinedColor = colorGroups[refColumn]
+  let colorRanges = palette || palette !== "none" ? palette : ["white", "black"];
 
-  let choroplethBar = {
-    title: "Default",
-    list: []
+  //Extract data from sheet
+  let data = MatrixHelpers.getColumn(sheet, refColumn);
+  data.splice(0,1); // delete first cell. It is column name
+  let cleanDataSet = data.filter(elem => isNumeric(elem)).map(elem => parseFloat(elem));
+
+  if(cleanDataSet.length < 2) { // no need to go further
+    return {
+      type: "choropleth",
+      colorMappings: colorMappings,
+      cellMappings: cellMappings,
+      legend: choroplethBar,
+      bins: ["-", "-", "-", "-", "-", "-"]
+    }; 
   }
 
-  let colName = sheet[0][refColumn];
-  let userDefinedColor = colorGroups[refColumn]
-  let colorRanges = palette !== "none" ? palette : ["white", userDefinedColor, "black"];
+  let minValue = Math.floor(Stats.min(cleanDataSet))
+  let maxValue = Math.ceil(Stats.max(cleanDataSet))
 
-  const data = MatrixHelpers.getColumn(sheet, refColumn)
-  data.splice(0,1)
-  let boundaries = chroma.limits(data, intervalMode, intervalNumber);
-  const colorGenerator = chroma.scale(colorRanges).classes(boundaries)
+  // Generate Bins 
+  if(options.intervalMode === "u"){
+    let userBins = parseCommaSeperatedValues(options.userDefinedIntervals)
+    bins = userBins.length >= 2 ? userBins : [minValue,maxValue];
+  }else{
+    // in quantile mode, if desired bin number has more items than actual data set, the returned bins maybe less numbers than the desired one.
+    let rawBins = Stats.generateBins(cleanDataSet, intervalMode, intervalNumber) 
+    //bins = cleanDataSet.length >= 2 ? rawBins.map(num => parseFloat((num).toFixed(1))) : new Array(intervalNumber+1).fill(0);
+    bins = rawBins.map(num => parseFloat((num).toFixed(1))); // TODO format number 1M, 2.3K etc.
+  }
 
-  // Generate colorMappings
+  // construct color generator
+  const colorGenerator = chroma.scale(colorRanges).classes(bins)
+
+  // Generate colorMappings and cellMappings
   for(let i=1; i < sheet.length; i++){
     let value = sheet[i][refColumn];
     let rowName = sheet[i][0];
     if(typeof value == 'number'){
       let hexColor = colorGenerator(value).hex()
       colorMappings[rowName] = hexColor
-      cellMappings.push({row: i, col: refColumn, rowName: rowName, colName: colName, color: hexColor, value: value})
+      cellMappings.push({row: i, col: refColumn, rowName: rowName, colName: refColName, color: hexColor, value: value})
     }
   }
 
   // Generate chropleth bar obj
   choroplethBar.list = []
-  for(let i=0; i<intervalNumber; i++){
-    let color = colorGenerator.colors(intervalNumber)[i]
-    let [from, to] = [boundaries[i], boundaries[i+1]]
+  for(let i=0; i<bins.length-1; i++){
+    let [from, to] = [bins[i], bins[i+1]]
+    //let color = colorGenerator.colors(intervalNumber)[i]
+    let color = colorGenerator(from+(to-from)/2).hex()
     from = parseFloat(from.toFixed(1))
     to = parseFloat(to.toFixed(1))
     choroplethBar.list.push({color: color, range: [from,to]})
   }
-  if(!boundaries.every(elem => isFinite(elem))) {
-    choroplethBar.list = [] 
+
+  // if bins has any non numeric value erase it
+  if(!bins.every(num => isNumeric(num))) {
+    console.warn("bins have non numeric value", bins)
   }
 
   return {
-    type: "choropleth2",
+    type: "choropleth",
     colorMappings: colorMappings,
     cellMappings: cellMappings,
-    legend: choroplethBar
+    legend: choroplethBar,
+    bins: bins
   };
 }
 
@@ -207,8 +188,9 @@ const stringSimilaritySchemer = function(sheet, options){
 
   for(let i=1; i < sheet.length; i++){
     let rowId = sheet[i][0]
-    let cellValue = sheet[i][refColumn]
-    if( rowId && cellValue ){
+    let cellValue = `${sheet[i][refColumn] || ""}`
+    cellValue = cellValue?.toLowerCase()
+    if( rowId && cellValue && typeof cellValue === 'string'){
       if(!uniqueColors.has(cellValue)){
         uniqueColors.set(cellValue, colorGroups[cellValue] || chroma.random().hex()) // random color not safe but enough for this job
       }
@@ -257,4 +239,4 @@ const stringSimilaritySchemer = function(sheet, options){
 }
 
 
-export default { maxSchemer, secondHighestSchemer, choropleth1Schemer, choropleth2Schemer, stringSimilaritySchemer }
+export default { choroplethSchemer, maxSchemer, secondHighestSchemer, stringSimilaritySchemer }

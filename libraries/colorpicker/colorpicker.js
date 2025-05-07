@@ -117,7 +117,7 @@ class ColorPicker{
     } 
 
     let cppContainer = document.querySelector("#colorPickerPaletteContainer")
-    if (window.COLORPICKER.lastClickedElem === target && cppContainer.style.display === "grid"){
+    if (window.COLORPICKER.lastClickedElem === target && cppContainer.style.display !== "none"){
       // make palette invisible
       window.COLORPICKER.lastClickedElem = null;
       cppContainer.style.display = "none";
