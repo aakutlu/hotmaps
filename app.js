@@ -15,9 +15,9 @@ var handsOnTableObj = null;
 let cellMappings = null;
 
 let SETTINGS = {
-  map: "USA",
+  map: "US",
   strategy: "choropleth", // max, secondHighestValue, choropleth1, choropleth1, stringSimilarity
-  refColumn: 1, // 0 || 'col1' ||
+  refColumn: 2, // 0 || 'col1' ||
   featureTitle: "rowHeader", // rowHeader || value || default
   intervalMode: "e",
   userDefinedIntervals: "0,50,100",
@@ -88,7 +88,7 @@ handsOnTableObj = new Handsontable(document.querySelector("#jtable"), {
   rowHeaders: true,
   colHeaders: true,
   columnSorting: true,
-  colWidths: 60,
+  /* colWidths: 60, */
   startCols: 10,
   startRows: 30,
   minCols: 10,
@@ -107,11 +107,12 @@ handsOnTableObj = new Handsontable(document.querySelector("#jtable"), {
   className: "htCenter",
   manualColumnResize: true,
   licenseKey: "non-commercial-and-evaluation", // for non-commercial use only
-  colWidths: [200, 100, 100], // initial width of the first 3 columns
+/*   colWidths: [100, 100], // initial width of the first 3 columns
   colWidths: function (index) {
-    if (index == 0) return 110;
+    if (index == 0) return 60;
+    if (index == 1) return 120;
     return 50;
-  },
+  }, */
   cells(row, col, prop) {
     const cellProperties = { readOnly: false /* , type: 'numeric' */ };
     const visualRowIndex = this.instance.toVisualRow(row);
@@ -575,8 +576,8 @@ function generateScheme(sheet, options) {
   MatrixHelpers.clearEmptyColumns(sheet);
   MatrixHelpers.clearEmptyRows(sheet);
   //make sheet row and column identifiers lowercase
-  sheet.forEach(elem => elem[0] = elem[0]?.toLocaleLowerCase("tr-TR") || elem[0])
-  sheet[0].forEach(cell => cell = cell?.toLocaleLowerCase("tr-TR") || cell)
+  //sheet.forEach(elem => elem[0] = elem[0]?.toLowerCase() || elem[0])
+  sheet[0].forEach(cell => cell = cell?.toLowerCase() || cell)
 
 
   if (options.strategy !== "stringSimilarity") MatrixHelpers.matrixParseFloatExceptLabels(sheet);

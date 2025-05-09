@@ -437,9 +437,13 @@ export class Maplib{
     //id = id.toLocaleLowerCase('TR-tr');
     let lowercaseID = id.toLowerCase()
     let uppercaseID = id.toUpperCase()
-    let elem = this.container.querySelector(`g#features g[id="${id}"]`) || 
-    this.container.querySelector(`g#features g[id="${lowercaseID}"]`) || 
-    this.container.querySelector(`g#features g[id="${uppercaseID}"]`);
+    let e1 = this.container.querySelector(`g#features g[id="${id}"]`);
+/*     let e2 = this.container.querySelector(`g#features g[id="${lowercaseID}"]`);
+    let e3 = this.container.querySelector(`g#features g[id="${uppercaseID}"]`);
+    let e4 = this.container.querySelector(`g#features g[iso2="${id}"]`);
+    let e5 = this.container.querySelector(`g#features g[iso2="${lowercaseID}"]`);
+    let e6 = this.container.querySelector(`g#features g[iso2="${uppercaseID}"]`); */
+    let elem = e1 // || e2 || e3 || e4 || e5 || e6;
     if(!elem) {
       console.warn(id, ' not found');
       return undefined;

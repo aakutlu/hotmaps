@@ -1,7 +1,7 @@
-,col1,col2,col3
-rectangle
-square
-perfectcircleislands
-hexagon
-ellipse
-path
+_id,_name,col1,col2,col3
+SI-1,Rectangle
+SI-2,Square
+SI-3,Perfectcircleislands
+SI-4,Hexagon
+SI-5,Ellipse
+SI-6,Path

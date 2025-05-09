@@ -431,10 +431,12 @@
   </g>
 
   <g id="legendRulerV">
-    <rect x="0" y="160" width="31" height="47" fill="red" stroke="black" stroke-width="0" opacity=".5" />
+    <rect x="0" y="170" width="31" height="47" fill="red" stroke="black" stroke-width="0" opacity="0" />
   </g>
-
+  <g id="legendRulerWide">
+    <rect x="0" y="170" width="93" height="47" fill="green" stroke="black" stroke-width="0" opacity="0" />
+  </g>
   <g id="legendRulerH">
-    <rect x="0" y="200" width="125" height="8" fill="blue" stroke="black" stroke-width="0" opacity=".5" />
+    <rect x="-6" y="200" width="125" height="8" fill="blue" stroke="black" stroke-width="0" opacity="0" />
   </g>
 </svg>

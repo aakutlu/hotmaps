@@ -1,8 +1,8 @@
-,col1,col2,col3
-Pristina
-Kosovska Mitrovica
-Đakovica
-Gnjilane
-Peć
-Uroševac
-Prizren
+_id,_name,col1,col2,col3
+XK-PR,Pristina
+XK-KM,Kosovska Mitrovica
+XK-DA,Đakovica
+XK-GN,Gnjilane
+XK-PE,Peć
+XK-UR,Uroševac
+XK-PZ,Prizren
