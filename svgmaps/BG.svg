@@ -11,12 +11,12 @@
       g#features *{
         cursor: pointer;
         stroke: white;
-        stroke-width: 2px;
+        stroke-width: 1px;
         vector-effect:non-scaling-stroke;
       }
       g#labels *{
         font-family: Poppins, monospace;
-        font-size: .6em;
+        font-size: .5em;
         pointer-events: none;
         user-select: none;
         stroke: white;
@@ -26,8 +26,8 @@
         stroke-linejoin: round;
       }
       g#legendContainer *{
-      pointer-events: none;
-      user-select: none;
+        pointer-events: none;
+        user-select: none;
       }
       g#features g:hover{
         opacity: .5;
@@ -150,7 +150,7 @@
   </g>
   <g id="labels" text-anchor="middle" dominant-baseline="middle">
     <text id="BG-01" x="110" y="328" title="Blagoevgrad">Blagoevgrad</text>
-    <text id="BG-02" x="482" y="239" title="Burgas">Burgas</text>
+    <text id="BG-02" x="470" y="220" title="Burgas">Burgas</text>
     <text id="BG-03" x="508" y="135" title="Varna">Varna</text>
     <text id="BG-04" x="321" y="133" title="Veliko Tarnovo">Veliko Tarnovo</text>
     <text id="BG-05" x="34" y="55" title="Vidin">Vidin</text>
@@ -174,8 +174,20 @@
     <text id="BG-23" x="98" y="209" title="Sofia">Sofia</text>
     <text id="BG-24" x="310" y="241" title="Stara Zagora">Stara Zagora</text>
     <text id="BG-25" x="395" y="138" title="Targovishte">Targovishte</text>
-    <text id="BG-26" x="349" y="325" title="Haskovo">Haskovo</text>
+    <text id="BG-26" x="349" y="310" title="Haskovo">Haskovo</text>
     <text id="BG-28" x="414" y="254" title="Yambol">Yambol</text>
     <text id="BG-27" x="455" y="122" title="Shumen">Shumen</text>
+  </g>
+  <!-- viewBox="-20 -20 650 450"  -->
+  <g id="legendRulerV">
+    <rect x="480" y="340" width="50" height="75" fill="red" stroke="black" stroke-width="1" opacity="0" />
+  </g>
+
+  <g id="legendRulerWide">
+    <rect x="430" y="340" width="150" height="75" fill="green" stroke="black" stroke-width="1" opacity="0" />
+  </g>
+
+  <g id="legendRulerH">
+    <rect x="380" y="380" width="240" height="16" fill="blue" stroke="black" stroke-width="1" opacity="0" />
   </g>
 </svg>

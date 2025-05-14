@@ -12,7 +12,7 @@
       g#features *{
          cursor: pointer;
          stroke: white;
-         stroke-width: 2px;
+         stroke-width: 1px;
          vector-effect:non-scaling-stroke;
       }
       g#labels *{
@@ -119,5 +119,17 @@
       <text id="CU-01" x="88"  y="60" title="Pinar del Río">Pinar del Río</text>
       <text id="CU-99" x="151" y="121" title="Isla de la Juventud">Isla de la Juventud</text>
       <text id="CU-06" x="319" y="76" title="Cienfuegos">Cienfuegos</text>
+   </g>
+   <!-- viewBox="-10 -20 800 300" -->
+   <g id="legendRulerV">
+     <rect x="130" y="150" width="80" height="120" fill="red" stroke="black" stroke-width="1" opacity="0" />
+   </g>
+
+   <g id="legendRulerWide">
+     <rect x="50" y="150" width="240" height="120" fill="green" stroke="black" stroke-width="1" opacity="0" />
+   </g>
+
+   <g id="legendRulerH">
+     <rect x="50" y="200" width="400" height="27" fill="blue" stroke="black" stroke-width="1" opacity="0" />
    </g>
 </svg>

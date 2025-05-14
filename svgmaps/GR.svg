@@ -1,21 +1,19 @@
 
 <svg 
-  id="" 
+  id="GR" 
   version="1.1" 
   xmlns="http://www.w3.org/2000/svg" 
   xmlns:xlink="http://www.w3.org/1999/xlink" 
   xmlns:svg="http://www.w3.org/2000/svg" 
-  width="910" 
-  height="942" 
   viewBox="-10 -30 900 912" 
   xml:space="preserve"
-  style="background-color:floralwhite;">
+  style="background-color:whitesmoke;">
   <defs >
     <style >
       g#features *{
         cursor: pointer;
-        stroke: white;
-        stroke-width: 2px;
+        stroke: black;
+        stroke-width: 1px;
         vector-effect:non-scaling-stroke;
       }
       g#labels *{
@@ -97,11 +95,11 @@
       <text id="GR-A" x="520" y="76" title="East Macedonia and Thrace">East Macedonia and Thrace</text>
       <text id="GR-B" x="310" y="110" title="Central Macedonia">Central Macedonia</text>
       <text id="GR-C" x="190" y="170" title="West Macedonia">West Macedonia</text>
-      <text id="GR-D" x="110" y="250" title="Epirus">Epirus</text>
+      <text id="GR-D" x="115" y="250" title="Epirus">Epirus</text>
       <text id="GR-E" x="240" y="260" title="Thessaly">Thessaly</text>
       <text id="GR-F" x="100" y="410" title="Ionian Islands">Ionian Islands</text>
-      <text id="GR-G" x="190" y="410" title="West Greece">West Greece</text>
-      <text id="GR-H" x="320" y="360" title="Central Greece">Central Greece</text>
+      <text id="GR-G" x="190" y="424" title="West Greece">West Greece</text>
+      <text id="GR-H" x="300" y="360" title="Central Greece">Central Greece</text>
       <text id="GR-I" x="390" y="426" title="Attica">Attica</text>
       <text id="GR-J" x="266" y="500" title="Peloponnese">Peloponnese</text>
       <text id="GR-K" x="570" y="300" title="North Aegean">North Aegean</text>
@@ -111,10 +109,10 @@
   </g>
 
   <g id="legendRulerV">
-    <rect x="30" y="550" width="118" height="178" fill="red" stroke="black" stroke-width="1" opacity=".5" />
+    <rect x="30" y="550" width="118" height="178" fill="red" stroke="black" stroke-width="1" opacity="0" />
   </g>
 
   <g id="legendRulerH">
-    <rect x="30" y="820" width="474" height="32" fill="blue" stroke="black" stroke-width=".2" opacity=".5" />
+    <rect x="30" y="820" width="474" height="32" fill="blue" stroke="black" stroke-width=".2" opacity="0" />
   </g>
 </svg>

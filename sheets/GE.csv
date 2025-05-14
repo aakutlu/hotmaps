@@ -1,13 +1,13 @@
-,col1,col2,col3
-Abkhazia
-Ajaria
-Guria
-Imereti
-K'akheti
-Kvemo Kartli
-Mtskheta-Mtianeti
-Rach'a-Lechkhumi-Kvemo Svaneti
-Samtskhe-Javakheti
-Shida Kartli
-Samegrelo-Zemo Svaneti
-Tbilisi
+_id,_name,col1,col2,col3
+GE-AB,Abkhazia
+GE-AJ,Ajaria
+GE-GU,Guria
+GE-IM,Imereti
+GE-KA,K'akheti
+GE-KK,Kvemo Kartli
+GE-MM,Mtskheta-Mtianeti
+GE-RL,Rach'a-Lechkhumi-Kvemo Svaneti
+GE-SJ,Samtskhe-Javakheti
+GE-SK,Shida Kartli
+GE-SZ,Samegrelo-Zemo Svaneti
+GE-TB,Tbilisi

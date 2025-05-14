@@ -7,13 +7,14 @@
   style="background-color:whitesmoke;">
   <defs>
     <style>
-      g#features * {
+      g#features *{
         cursor: pointer;
-        stroke: white;
-        stroke-width: 1px;
+        stroke: black;
+        stroke-width: .5px;
         vector-effect: non-scaling-stroke;
+        fill-rule: evenodd;
       }
-      g#labels * {
+      g#labels *{
         font-family: monospace;
         font-size: .4em;
         font-weight: bold;
@@ -22,11 +23,11 @@
         user-select: none;
         pointer-events: none;
       }
-      g#legendContainer * {
+      g#legendContainer *{
         user-select: none;
         pointer-events: none;
       }
-      g:has(> path):hover {
+      g:has(> path):hover{
         opacity: .5;
         cursor: pointer;
       }
@@ -226,19 +227,19 @@
       <path d="M349.13,64.33L351.6,66.15L353.6,65.83L354.38,66.41L357.05,66.4L357.93,67.28L360.06,66.46L363.6,66.27L364.18,67.45L366.68,68.68L368.28,67.95L372.31,68.29L374.62,69.69L374.79,68.94L375.91,68.99L376.34,68.35L377.96,70.22L380.25,69.18L381.07,70.11L383.11,69.83L382.8,69.09L383.4,68.93L384.87,70.46L384.42,71.43L385.82,71.6L385.88,72.69L386.92,72.16L387.21,70.69L387.9,70.78L387.9,70.78L389.37,74.22L389,75.42L390.43,76.12L390.65,74.68L390.15,74.22L390.94,73.52L390.94,73.52L392.33,73.07L392.33,73.07L395.27,75.65L396.06,75.54L393.59,77.35L394.87,78.07L393.77,81.72L395.07,81.86L395.3,82.44L391.87,84.61L392.37,86.28L392.78,85.91L392.89,87.11L393.81,87.84L393.79,90.53L395.58,91.14L394.89,92.23L396.86,94.11L393.3,96.12L393.91,97.09L393.47,98.3L394.44,98.77L393.61,100.54L394.93,104.67L394.87,106.42L393.44,107.73L393.71,108.36L395.02,108.22L395.02,108.22L394.74,110.5L393.79,110.85L392.93,109.89L391.6,109.7L391.37,108.07L389.25,108.37L389.02,109.7L388.99,108.34L386.54,106.79L385.84,107.39L384.6,106.9L383.72,105.63L380.4,106.84L376.33,105.92L375.61,106.75L375.86,108.37L374.63,109.92L373.83,108.52L372.52,109.3L372.92,107.47L371.29,106.63L369.07,107.88L363.45,104.6L358.47,103.66L358.47,103.66L359.76,103.2L360.45,101.47L361.54,101.13L361.27,99.94L363.46,99.9L362.96,98.93L364.14,97.91L363.82,97.32L367.39,92.21L367.15,91.61L364.51,89.04L362.67,88.18L359.54,87.72L357.9,88.85L356.37,87.68L355.73,85.31L357.37,80.06L355.66,79.57L356.42,77.27L355.25,76.17L354.12,77.26L351.71,77.52L350.16,77.1L349.6,75.44L348.29,75.09L347.71,77.1L344.3,77.09L343.8,76.06L343.01,75.89L343.01,75.89L343.7,73.66L343.28,72.51L342.12,72.61L341.48,71.72L342.41,71.33L342.82,69.79L343.85,69.45L344.24,67.68L345.54,66.97L345.98,65.95L347.31,65.37L349.04,65.89L348.55,64.94z"/>
       <title>Zamora</title>
     </g>
-    <g id="ES-CE" title="Ceuta" transform="translate(-30 -270)">
+    <g id="ES-CE" title="Ceuta" transform="translate(-60 -290)">
       <path d="M307.58,403.44L306.37,404.14L304.7,406.67L303.69,406.52L302.89,405.33L301.84,406.23L300.93,406.12L299.28,403.98L295.55,402.49L294.01,396.97L294.09,393.34L292.44,390.53L293.45,389.1L297.99,388.31L300.99,391.04L303.27,392.09L304,394.5L307.18,397.64L308.08,397.79L308.08,397.07L310.73,394.91L311.36,395.82L310.91,396.65L313.32,399.43L314.7,399.83L317.21,398.23L318.28,398.42L318.83,395.32L321.66,393.52L322.1,392.41L323.99,395.01L325.44,395.08L325.23,397.67L324.39,397.58L322.91,399.44L321.02,400.17L320.1,399.88L316.67,401.88L312.63,400.66L309.92,404.08z"/>
       <title>Ceuta</title>
     </g>
-    <g id="ES-ML" title="Melilla" transform="translate(-70 -230)">
+    <g id="ES-ML" title="Melilla" transform="translate(-100 -260)">
       <path d="M350.43,412.76L351.96,413.5L351.48,416.08L353.51,417.8L354.69,420.1L355.8,420.99L357.64,421.19L357.99,422.11L357.9,422.74L357.55,421.77L356.69,422.05L356,421.22L354.43,422.02L354.92,423.25L354.11,423.54L354.17,425.4L355.52,427.44L356.81,427.85L356.23,428.99L353.85,430.31L351.07,430.83L348.92,428.07L345.53,425.46L345.73,423.66L344.68,420.96L347.34,413.39L349.81,411.72z"/>
       <title>Melilla</title>
     </g>
-    <g id="ES-TF" title="Santa Cruz de Tenerife" transform="translate(-200 -170)">
+    <g id="ES-TF" title="Santa Cruz de Tenerife" transform="translate(-230 -206)">
       <path d="M467.05,435.23l0.81,0.25l0.58,1.36l-1.45,2.56l-0.81,0.27l-0.68,2.84l-2.23,-1.87l-3.35,-0.75l0.79,-1.98l1.63,0.62l1.39,-0.32l1.43,-1.27l-0.23,-0.87L467.05,435.23zM487.56,422.5l0.45,0.6l1.49,0.03l2.88,2.47l0.12,1.15l-3.06,2.47l-2.21,-0.03l-2.42,-2.53l0.84,-3.56L487.56,422.5zM521.35,409.62l1,0.6l0.03,1.37l-3.39,1.62l-0.57,1.21l-3.25,2.47l-0.06,2.58l-1.92,3.52l-0.1,1.99l-3.63,4.2l-4.78,0.72l-1.08,-2.84l-3.09,-4.2l-0.09,-1.99l-2.53,-3.14l2.75,-1.31l2.51,0.78l2.33,-1.06l2.19,0.25l2.78,-0.87l1.74,-1.39l1.4,-2.37l2.34,-1.03l0.16,-0.69l3.3,0.39L521.35,409.62zM467.29,400.24l1.94,0.87l2.45,-0.19l1.64,3.33l-1.36,2.3l0.57,1.85l-0.31,1.92l-2.45,4.04l-0.87,-0.68l-0.37,-2.35l-1.44,-1.95l-1.69,-4.63l-0.85,-0.69l0.08,-1.18L467.29,400.24z"/>
       <title>Santa Cruz de Tenerife</title>
     </g>
-    <g id="ES-GC" title="Las Palmas" transform="translate(-280 -104)">
+    <g id="ES-GC" title="Las Palmas" transform="translate(-310 -145)">
       <path d="M544.03,423.74l0.55,0.56l-0.48,1.3l-0.33,-0.62l0.23,2.96l1.45,1.8l-0.24,2.01l0.71,0.65l-0.81,0.16l-0.02,2.42l-0.9,0.38l-0.56,1.61l-3.89,1.25l-0.36,0.94l-3.16,-0.43l-3.5,-2.96l-1.34,-2.59l0.27,-3.62l3.32,-2.22l0.2,-3.05l2.18,-0.22l1.18,0.97l2.23,-0.39l1.81,1.03l0.91,-0.38l-0.2,-1.01L544.03,423.74zM591.05,403.75l1.42,1.04l0.32,1.15l0.19,4.94l-1.33,2.51l0.55,2.79l-2.06,5.13l-2.93,1.57l-6.35,1.44l-3.44,4.14l-4.46,-1.08l-1.06,0.36l0.59,-1.55l1.28,0.36l2.47,-0.56l4.48,-3.38l0.56,-3.94l1.26,-1.36l0.51,-2.51l1.5,-1.37l1.99,-3.96l0.78,-2.81l-0.28,-1.44L591.05,403.75zM603.86,386.86l1.43,1.14l0.13,0.85l-1.4,1.98l0.54,1.37l-1.18,3.39l-1.81,1.41l-5.88,1.58l-1.52,2.38l-0.47,-0.69l-2.24,0.11l-0.26,-1.1l1.62,-1.53l0.39,-3.6l1.88,-1.57l1.48,-0.04l1.51,-1.6l0.84,0.29l1.06,-0.69l1.59,0.59L603.86,386.86z"/>
       <title>Las Palmas</title>
     </g>
@@ -246,65 +247,65 @@
   
   <g id="labels" text-anchor="middle" dominant-baseline="middle">
     <text id="ES-A" x="544" y="220" title="Alicante">Alicante</text>
-    <text id="ES-AB" x="499" y="206" title="Albacete">Albacete</text>
-    <text id="ES-AL" x="484" y="261" title="Almería">Almería</text>
+    <text id="ES-AB" x="496" y="200" title="Albacete">Albacete</text>
+    <text id="ES-AL" x="485" y="270" title="Almería">Almería</text>
     <text id="ES-AV" x="405" y="130" title="Avila">Avila</text>
-    <text id="ES-B" x="620" y="84" title="Barcelona">Barcelona</text>
-    <text id="ES-BA" x="373" y="207" title="Badajoz">Badajoz</text>
-    <text id="ES-BI" x="467" y="23" title="Vizcaya">Vizcaya</text>
-    <text id="ES-BU" x="452" y="61" title="Burgos">Burgos</text>
-    <text id="ES-C" x="297" y="26" title="A Coruña">A Coruña</text>
-    <text id="ES-CA" x="380" y="290" title="Cadiz">Cadiz</text>
+    <text id="ES-B" x="620" y="90" title="Barcelona">Barcelona</text>
+    <text id="ES-BA" x="368" y="207" title="Badajoz">Badajoz</text>
+    <text id="ES-BI" x="472" y="21" title="Vizcaya">Vizcaya</text>
+    <text id="ES-BU" x="446" y="61" title="Burgos">Burgos</text>
+    <text id="ES-C" x="295" y="30" title="A Coruña">A Coruña</text>
+    <text id="ES-CA" x="376" y="290" title="Cadiz">Cadiz</text>
     <text id="ES-CC" x="365" y="165" title="Caceres">Caceres</text>
     <text id="ES-CO" x="410" y="235" title="Cordoba">Cordoba</text>
     <text id="ES-CR" x="439" y="196" title="Ciudad Real">Ciudad Real</text>
-    <text id="ES-CS" x="552" y="145" title="Castellón">Castellón</text>
-    <text id="ES-CU" x="491" y="157" title="Cuenca">Cuenca</text>
-    <text id="ES-GI" x="634" y="71" title="Girona">Girona</text>
-    <text id="ES-GR" x="457" y="257" title="Granada">Granada</text>
-    <text id="ES-GU" x="479" y="126" title="Guadalajara">Guadalajara</text>
+    <text id="ES-CS" x="560" y="148" title="Castellón">Castellón</text>
+    <text id="ES-CU" x="491" y="160" title="Cuenca">Cuenca</text>
+    <text id="ES-GI" x="640" y="67" title="Girona">Girona</text>
+    <text id="ES-GR" x="450" y="266" title="Granada">Granada</text>
+    <text id="ES-GU" x="479" y="122" title="Guadalajara">Guadalajara</text>
     <text id="ES-H" x="347" y="253" title="Huelva">Huelva</text>
-    <text id="ES-HU" x="554" y="69" title="Huesca">Huesca</text>
+    <text id="ES-HU" x="554" y="67" title="Huesca">Huesca</text>
     <text id="ES-J" x="454" y="236" title="Jaén">Jaén</text>
-    <text id="ES-L" x="590" y="71" title="Lleida">Lleida</text>
+    <text id="ES-L" x="592" y="71" title="Lleida">Lleida</text>
     <text id="ES-LE" x="376" y="48" title="León">León</text>
-    <text id="ES-LO" x="483" y="63" title="La Rioja">La Rioja</text>
-    <text id="ES-LU" x="330" y="31" title="Lugo">Lugo</text>
-    <text id="ES-M" x="440" y="134" title="Madrid">Madrid</text>
+    <text id="ES-LO" x="480" y="63" title="La Rioja">La Rioja</text>
+    <text id="ES-LU" x="328" y="31" title="Lugo">Lugo</text>
+    <text id="ES-M" x="442" y="136" title="Madrid">Madrid</text>
     <text id="ES-MA" x="413" y="280" title="Malaga">Malaga</text>
     <text id="ES-MU" x="510" y="231" title="Murcia">Murcia</text>
-    <text id="ES-NA" x="507" y="49" title="Navarra">Navarra</text>
+    <text id="ES-NA" x="504" y="47" title="Navarra">Navarra</text>
     <text id="ES-O" x="377" y="21" title="Asturias">Asturias</text>
     <text id="ES-OR" x="325" y="66" title="Ourense">Ourense</text>
-    <text id="ES-P" x="420" y="57" title="Palencia">Palencia</text>
+    <text id="ES-P" x="417" y="57" title="Palencia">Palencia</text>
     <text id="ES-PM" x="642" y="180" title="Balears">Balears</text>
-    <text id="ES-PO" x="299" y="59" title="Pontevedra">Pontevedra</text>
-    <text id="ES-S" x="434" y="27" title="Cantabria">Cantabria</text>
+    <text id="ES-PO" x="295" y="59" title="Pontevedra">Pontevedra</text>
+    <text id="ES-S" x="432" y="24" title="Cantabria">Cantabria</text>
     <text id="ES-SA" x="372" y="124" title="Salamanca">Salamanca</text>
-    <text id="ES-SE" x="385" y="252" title="Sevilla">Sevilla</text>
-    <text id="ES-SG" x="435" y="111" title="Segovia">Segovia</text>
+    <text id="ES-SE" x="380" y="254" title="Sevilla">Sevilla</text>
+    <text id="ES-SG" x="430" y="111" title="Segovia">Segovia</text>
     <text id="ES-SO" x="475" y="91" title="Soria">Soria</text>
     <text id="ES-SS" x="490" y="27" title="Guipúzcoa">Guipúzcoa</text>
-    <text id="ES-TE" x="534" y="131" title="Teruel">Teruel</text>
-    <text id="ES-TO" x="429" y="164" title="Toledo">Toledo</text>
+    <text id="ES-TE" x="530" y="131" title="Teruel">Teruel</text>
+    <text id="ES-TO" x="429" y="166" title="Toledo">Toledo</text>
     <text id="ES-T" x="585" y="113" title="Tarragona">Tarragona</text>
     <text id="ES-V" x="533" y="177" title="Valencia">Valencia</text>
-    <text id="ES-VA" x="411" y="86" title="Valladolid">Valladolid</text>
-    <text id="ES-VI" x="472" y="40" title="Alava">Alava</text>
-    <text id="ES-Z" x="529" y="81" title="Zaragoza">Zaragoza</text>
-    <text id="ES-ZA" x="369" y="87" title="Zamora">Zamora</text>
-    <text id="ES-CE" x="312" y="390" title="Ceuta" transform="translate(-30 -270)">Ceuta</text>
-    <text id="ES-ML" x="351" y="406" title="Melilla" transform="translate(-70 -230)">Melilla</text>
-    <text id="ES-TF" x="491" y="397" title="Santa Cruz de Tenerife" transform="translate(-200 -170)">Santa Cruz de Tenerife</text>
-    <text id="ES-GC" x="560" y="413" title="Las Palmas" transform="translate(-280 -104)">Las Palmas</text>
+    <text id="ES-VA" x="413" y="92" title="Valladolid">Valladolid</text>
+    <text id="ES-VI" x="476" y="40" title="Alava">Alava</text>
+    <text id="ES-Z" x="520" y="90" title="Zaragoza">Zaragoza</text>
+    <text id="ES-ZA" x="376" y="87" title="Zamora">Zamora</text>
+    <text id="ES-CE" x="312" y="390" title="Ceuta" transform="translate(-60 -290)">Ceuta</text>
+    <text id="ES-ML" x="351" y="406" title="Melilla" transform="translate(-100 -260)">Melilla</text>
+    <text id="ES-TF" x="506" y="400" title="Santa Cruz de Tenerife" transform="translate(-230 -206)">Santa Cruz de Tenerife</text>
+    <text id="ES-GC" x="560" y="400" title="Las Palmas" transform="translate(-310 -145)">Las Palmas</text>
   </g>
 
   <g id="other" stroke-width=".2" stroke="black" stroke-dasharray="4 3 1">
-    <path d="M240,100 l 80,0"/>
-    <path d="M240,160 l 80,0"/>
-    <path d="M240,220 l 80,0"/>
-    <path d="M240,280 l 80,0"/>
-    <path d="M240,340 l 80,0"/>
+    <path d="M220,90 l 80,0"/>
+    <path d="M220,130 l 80,0"/>
+    <path d="M220,180 l 80,0"/>
+    <path d="M220,240 l 80,0"/>
+    <!-- <path d="M220,290 l 80,0"/> -->
   </g>
 
   <g id="legendRulerV">

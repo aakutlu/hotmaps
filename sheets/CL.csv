@@ -1,17 +1,17 @@
-,col1,col2,col3
-CL-AI
-CL-MA
-CL-TA
-CL-AN
-CL-AT
-CL-CO
-CL-RM
-CL-VS
-CL-AR
-CL-LI
-CL-LL
-CL-ML
-CL-AP
-CL-LR
-CL-BI
-CL-NU
+_id,_name,col1,col2,col3
+CL-AI,Aisén del General Carlos Ibáñez del Campo
+CL-MA,Magallanes y Antártica Chilena
+CL-TA,Tarapacá
+CL-AN,Antofagasta
+CL-AT,Atacama
+CL-CO,Coquimbo
+CL-RM,Región Metropolitana de Santiago
+CL-VS,Valparaíso
+CL-AR,Araucanía
+CL-LI,Libertador General Bernardo O'Higgins
+CL-LL,Los Lagos
+CL-ML,Maule
+CL-AP,Arica y Parinacota
+CL-LR,Los Ríos
+CL-BI,Biobío
+CL-NU,Ñuble

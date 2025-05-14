@@ -10,12 +10,12 @@
       g#features *{
         cursor: pointer;
         stroke: white;
-        stroke-width: 2px;
+        stroke-width: 1px;
         vector-effect:non-scaling-stroke;
       }
       g#labels *{
         font-family: Poppins, monospace;
-        font-size: .4em;
+        font-size: .3em;
         pointer-events: none;
         user-select: none;
         stroke: white;
@@ -100,21 +100,21 @@
     </g>
   </g>
   <g id="labels" text-anchor="middle" dominant-baseline="middle">
-    <text id="CL-AI" x="512.7417755126953" y="494.8318176269531" title="Aisén del General Carlos Ibáñez del Campo">Aisén del General Carlos Ibáñez del Campo</text>
-    <text id="CL-MA" x="546.5670776367188" y="623.496826171875" title="Magallanes y Antártica Chilena">Magallanes y Antártica Chilena</text>
-    <text id="CL-TA" x="570.3818969726562" y="40.77193260192871" title="Tarapacá">Tarapacá</text>
-    <text id="CL-AN" x="577.4718933105469" y="91.12189865112305" title="Antofagasta">Antofagasta</text>
-    <text id="CL-AT" x="562.772216796875" y="152.65191650390625" title="Atacama">Atacama</text>
-    <text id="CL-CO" x="550.4423217773438" y="205.2818832397461" title="Coquimbo">Coquimbo</text>
-    <text id="CL-RM" x="551.2172241210938" y="254.26195526123047" title="Región Metropolitana de Santiago">Región Metropolitana de Santiago</text>
-    <text id="CL-VS" x="551.15720811486244" y="236.5719223022461" title="Valparaíso">Valparaíso</text>
-    <text id="CL-AR" x="530.2720031738281" y="341.90692138671875" title="Araucanía">Araucanía</text>
-    <text id="CL-LI" x="546.3170166015625" y="268.3468780517578" title="Libertador General Bernardo O'Higgins">Libertador General Bernardo O'Higgins</text>
-    <text id="CL-LL" x="514.7122650146484" y="407.5218505859375" title="Los Lagos">Los Lagos</text>
-    <text id="CL-ML" x="539.1172790527344" y="288.82203674316406" title="Maule">Maule</text>
-    <text id="CL-AP" x="566.0473937988281" y="13.506921768188477" title="Arica y Parinacota">Arica y Parinacota</text>
-    <text id="CL-LR" x="523.0620269775391" y="367.6069641113281" title="Los Ríos">Los Ríos</text>
-    <text id="CL-BI" x="528.0369110107422" y="320.2977752685547" title="Biobío">Biobío</text>
-    <text id="CL-NU" x="533.6794738769531" y="305.79579162597656" title="Ñuble">Ñuble</text>
+    <text id="CL-AI" x="516" y="498" title="Aisén">Aisén</text>
+    <text id="CL-MA" x="546" y="623" title="Magallanes">Magallanes</text>
+    <text id="CL-TA" x="570" y="40" title="Tarapacá">Tarapacá</text>
+    <text id="CL-AN" x="577" y="91" title="Antofagasta">Antofagasta</text>
+    <text id="CL-AT" x="562" y="152" title="Atacama">Atacama</text>
+    <text id="CL-CO" x="550" y="205" title="Coquimbo">Coquimbo</text>
+    <text id="CL-RM" x="551" y="254" title="Metropolitana">Metropolitana</text>
+    <text id="CL-VS" x="551" y="236" title="Valparaíso">Valparaíso</text>
+    <text id="CL-AR" x="530" y="341" title="Araucanía">Araucanía</text>
+    <text id="CL-LI" x="546" y="268" title="O'Higgins">O'Higgins</text>
+    <text id="CL-LL" x="514" y="407" title="Los Lagos">Los Lagos</text>
+    <text id="CL-ML" x="539" y="288" title="Maule">Maule</text>
+    <text id="CL-AP" x="566" y="16" title="Arica">Arica</text>
+    <text id="CL-LR" x="523" y="367" title="Los Ríos">Los Ríos</text>
+    <text id="CL-BI" x="528" y="320" title="Biobío">Biobío</text>
+    <text id="CL-NU" x="533" y="305" title="Ñuble">Ñuble</text>
   </g>
 </svg>

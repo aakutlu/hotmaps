@@ -102,19 +102,19 @@
     <text id="DE-BW" x="200" y="658" title="Baden-Wurttemberg">Baden-Wurttemberg</text>
     <text id="DE-BY" x="353" y="632" title="Bavaria">Bavaria</text>
     <text id="DE-BE" x="481" y="274" title="Berlin">Berlin</text>
-    <text id="DE-BB" x="455" y="277" title="Brandenburg">Brandenburg</text>
+    <text id="DE-BB" x="500" y="310" title="Brandenburg">Brandenburg</text>
     <text id="DE-HB" x="182" y="189" title="Bremen">Bremen</text>
     <text id="DE-HH" x="265" y="162" title="Hamburg">Hamburg</text>
     <text id="DE-HE" x="200" y="475" title="Hesse">Hesse</text>
-    <text id="DE-MV" x="423" y="126" title="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</text>
-    <text id="DE-NI" x="207" y="259" title="Lower Saxony">Lower Saxony</text>
+    <text id="DE-MV" x="423" y="150" title="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</text>
+    <text id="DE-NI" x="207" y="246" title="Lower Saxony">Lower Saxony</text>
     <text id="DE-NW" x="114" y="384" title="North Rhine-Westphalia">North Rhine-Westphalia</text>
-    <text id="DE-RP" x="92" y="532" title="Rhineland-Palatinate">Rhineland-Palatinate</text>
+    <text id="DE-RP" x="92" y="540" title="Rhineland-Palatinate">Rhineland-Palatinate</text>
     <text id="DE-SL" x="64" y="590" title="Saarland">Saarland</text>
     <text id="DE-SN" x="483" y="435" title="Saxony">Saxony</text>
-    <text id="DE-ST" x="383" y="327" title="Saxony-Anhalt">Saxony-Anhalt</text>
+    <text id="DE-ST" x="370" y="327" title="Saxony-Anhalt">Saxony-Anhalt</text>
     <text id="DE-SH" x="250" y="92" title="Schleswig-Holstein">Schleswig-Holstein</text>
-    <text id="DE-TH" x="344" y="436" title="Thuringia">Thuringia</text>
+    <text id="DE-TH" x="320" y="436" title="Thuringia">Thuringia</text>
   </g>
 
   <g id="legendRulerV">

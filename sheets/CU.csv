@@ -1,17 +1,17 @@
-,col1,col2,col3
-CU-16
-CU-05
-CU-04
-CU-15
-CU-03
-CU-13
-CU-10
-CU-11
-CU-12
-CU-14
-CU-09
-CU-08
-CU-07
-CU-01
-CU-99
-CU-06
+_id,_name,col1,col2,col3
+CU-16,Mayabeque
+CU-05,Villa Clara
+CU-04,Matanzas
+CU-15,Artemisa
+CU-03,Ciudad de la Habana
+CU-13,Santiago de Cuba
+CU-10,Las Tunas
+CU-11,Holguín
+CU-12,Granma
+CU-14,Guantánamo
+CU-09,Camagüey
+CU-08,Ciego de Ávila
+CU-07,Sancti Spíritus
+CU-01,Pinar del Río
+CU-99,Isla de la Juventud
+CU-06,Cienfuegos

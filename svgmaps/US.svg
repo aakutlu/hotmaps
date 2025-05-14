@@ -247,26 +247,26 @@
     <text id="US-HI" x="289" y="546" title="Hawaii">Hawaii</text>
     <text id="US-AK" x="115" y="500" title="Alaska">Alaska</text>
     <text id="US-FL" x="770" y="505" title="Florida">Florida</text>
-    <text id="US-NH" x="760" y="44" title="New Hampshire">New Hampshire</text>
+    <text id="US-NH" x="794" y="44" title="New Hampshire" text-anchor="end">New Hampshire</text> <!-- right -->
     <text id="US-MI" x="662" y="173" title="Michigan">Michigan</text>
-    <text id="US-VT" x="774" y="70" title="Vermont">Vermont</text>
+    <text id="US-VT" x="794" y="70" title="Vermont" text-anchor="end">Vermont</text> <!-- right -->
     <text id="US-ME" x="895" y="88" title="Maine">Maine</text>
-    <text id="US-RI" x="924" y="206" title="Rhode Island">Rhode Island</text>
+    <text id="US-RI" x="894" y="209" title="Rhode Island" text-anchor="start">Rhode Island</text> <!-- left -->
     <text id="US-NY" x="814" y="164" title="New York">New York</text>
     <text id="US-PA" x="785" y="209" title="Pennsylvania">Pennsylvania</text>
-    <text id="US-NJ" x="904" y="265" title="New Jersey">New Jersey</text>
-    <text id="US-DE" x="910" y="289" title="Delaware">Delaware</text>
-    <text id="US-MD" x="910" y="314" title="Maryland">Maryland</text>
+    <text id="US-NJ" x="878" y="263" title="New Jersey" text-anchor="start">New Jersey</text> <!-- left -->
+    <text id="US-DE" x="888" y="287" title="Delaware" text-anchor="start">Delaware</text> <!-- left -->
+    <text id="US-MD" x="888" y="314" title="Maryland" text-anchor="start">Maryland</text> <!-- left -->
     <text id="US-VA" x="790" y="279" title="Virginia">Virginia</text>
-    <text id="US-WV" x="896" y="360" title="West Virginia">West Virginia</text>
+    <text id="US-WV" x="862" y="360" title="West Virginia" text-anchor="start">West Virginia</text> <!-- left -->
     <text id="US-OH" x="702" y="234" title="Ohio">Ohio</text>
     <text id="US-IN" x="645" y="254" title="Indiana">Indiana</text>
     <text id="US-IL" x="591" y="259" title="Illinois">Illinois</text>
-    <text id="US-CT" x="902" y="244" title="Connecticut">Connecticut</text>
+    <text id="US-CT" x="876" y="244" title="Connecticut" text-anchor="start">Connecticut</text> <!-- left -->
     <text id="US-WI" x="576" y="151" title="Wisconsin">Wisconsin</text>
     <text id="US-NC" x="770" y="328" title="North Carolina">North Carolina</text>
-    <text id="US-DC" x="900" y="328" title="Washington D.C.">Washington D.C.</text>
-    <text id="US-MA" x="760" y="94" title="Massachusetts">Massachusetts</text>
+    <text id="US-DC" x="862" y="328" title="Washington D.C." text-anchor="start">Washington D.C.</text> <!-- left -->
+    <text id="US-MA" x="794" y="94" title="Massachusetts" text-anchor="end">Massachusetts</text> <!-- right -->
     <text id="US-TN" x="659" y="337" title="Tennessee">Tennessee</text>
     <text id="US-AR" x="551" y="369" title="Arkansas">Arkansas</text>
     <text id="US-MO" x="545" y="293" title="Missouri">Missouri</text>
@@ -300,4 +300,18 @@
   <g id="other">
     <path id="helper-lines" stroke="black" stroke-width="0.5" d="m 794.39016,47.157283 73.07859,75.280217 z m 0.26938,26.634695 52.22515,51.701522 z m 0.7597,25.084055 61.36201,62.030217 z m 81.17451,70.481747 14.46339,31.37602 z m -24.10683,13.56964 22.00201,53.49373 z m -16.29942,44.19758 39.48402,31.97397 z m -28.67028,11.20153 78.65965,70.25422 z m 25.22845,8.86097 53.16934,37.9439 z m -29.21442,0.16058 56.92894,75.93637 z m -64.71762,39.10438 121.6876,69.49144 z"/>
   </g>
+  <!-- viewBox="-30 -30 1000 700"  -->
+
+<g id="legendRulerV">
+  <rect x="580" y="520" width="100" height="150" fill="red" stroke="black" stroke-width="1" opacity="0" />
+</g>
+
+<g id="legendRulerWide">
+  <rect x="480" y="520" width="300" height="150" fill="green" stroke="black" stroke-width="1" opacity="0" />
+</g>
+
+<g id="legendRulerH">
+  <rect x="400" y="590" width="500" height="33" fill="blue" stroke="black" stroke-width="1" opacity="0" />
+</g>
+
 </svg>
